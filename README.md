@@ -5,15 +5,16 @@
 
 ## Crear un bot de Telegram
 El primer paso para crear un bot iniciar **BotFather** desde Telegram.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png" alt="BotFather" width="500"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png" alt="BotFather" width="500"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png" alt="BotFather" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png" alt="BotFather" width="450"/><br>
 
-Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.
-![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/03_nombre_bot.png)
+Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images//03_nombre_bot.png" alt="BotFather" width="450"/><br>
+
 
 Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el nombre y añadir una foto.
-![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/04_cambio_nombre.png)
-![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/05_cambio_foto.png)
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/04_cambio_nombre.png" alt="BotFather" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/05_cambio_foto.png" alt="BotFather" width="450"/>
 
 
 ## Instalación python-telegram-bot
