@@ -5,9 +5,9 @@
 
 ## Crear un bot de Telegram
 El primer paso para crear un bot iniciar **BotFather** desde Telegram.
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png)" alt="BotFather" width="100"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png" alt="BotFather" width="100"/>
 
-![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png
+![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png)
 
 Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.
 ![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/03_nombre_bot.png)
