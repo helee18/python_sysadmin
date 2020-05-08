@@ -4,10 +4,9 @@
 **Telegram**, una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. **Python** es un lenguaje de programación multiplataforma con el que se puede programar las funciones que queremos que resuelva el bot.
 
 ## Crear un bot de Telegram
-El primer paso para crear un bot iniciar **BotFather** desde Telegram.
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png" alt="BotFather" width="100"/>
-
-![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png)
+El primer paso para crear un bot iniciar **BotFather** desde Telegram.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png" alt="BotFather" width="200"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png" alt="BotFather" width="200"/><br>
 
 Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.
 ![alt text](https://github.com/helee18/python_sysadmin/blob/master/images/03_nombre_bot.png)
