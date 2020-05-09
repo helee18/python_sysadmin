@@ -1,5 +1,4 @@
-# Python para Sysadmin con Telegram
-### Helena Gutiérrez Ibáñez - ASIR
+![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
 **Telegram**, una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello **Python** es un lenguaje de programación multiplataforma con el que se puede programar las funciones que queremos que resuelva el bot.
 
