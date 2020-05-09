@@ -1,11 +1,9 @@
 ![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
-**Telegram**, una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello **Python** es un lenguaje de programación multiplataforma con el que se puede programar las funciones que queremos que resuelva el bot.
+[Telegram](https://web.telegram.org/), una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello se puede hacer uso de [Python](https://www.python.org/), un lenguaje de programación multiplataforma, programando las funciones que queremos que resuelva el bot.
 
-- <a href="#crear_bot">Crear un bot de Telegram</a>
-- <a href="#instalar_python_telgram_bot">Instalación python-telegram-bot</a>
-
-<section id="crear_bot"></section>
+- Crear un bot de Telegram
+- Instalar python-telegram-bot
 
 ## Crear un bot de Telegram
 
@@ -21,11 +19,9 @@ Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/05_cambio_foto.png" alt="setuserpic" width="450"/>
 
 
-<section id="instalar_python_telgram_bot"></section>
+## Instalar python-telegram-bot
 
-## Instalación python-telegram-bot
-
-**Python-telegram-bot** que presenta una serie de clases de alto nivel para hacer el desarrollo de bots mas facil.
+[Python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) que presenta una serie de clases de alto nivel para hacer el desarrollo de bots mas facil.
 ```
 $ pip install python-telegram-bot --upgrade
 ```
