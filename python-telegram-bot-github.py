@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Importamos la libreria os
+# Importamos el modulo os
 import os
 
 os.system("apt-get update")
@@ -12,6 +12,6 @@ os.system("git clone https://github.com/python-telegram-bot/python-telegram-bot 
 os.system("apt install python3-setuptools -y")
 
 # Instalamos
-os.system("cd python-telegram-bot/")
+os.chdir("./python-telegram-bot/")
 os.system("python3 setup.py install")
 os.system("apt install build-essential python-dev -y")

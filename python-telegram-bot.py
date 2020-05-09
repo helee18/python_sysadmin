@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Importamos la libreria os
+# Importamos el modulo os
 import os
 
 os.system("apt-get update")
