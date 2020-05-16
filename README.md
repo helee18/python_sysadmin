@@ -4,7 +4,9 @@
 
 - Crear un bot de Telegram
 - Instalar python-telegram-bot
-- Script bot
+- Elementos básicos del script del bot
+
+<br>
 
 ## Crear un bot de Telegram
 
@@ -19,42 +21,53 @@ Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/04_cambio_nombre.png" alt="setname" width="450"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/05_cambio_foto.png" alt="setuserpic" width="450"/>
 
+<br>
 
 ## Instalar python-telegram-bot
 
+### Entorno de desarrollo virutal 
 Para instalar el modulo `python-telegram-bot` utilizamos un entorno de desarrollo virtual, el cual permite gestionar módulos de python en un entorno aislado, un directorio, sin tener permisos de administrador.
 
 Primero tendremos que instalar de modulo `venv` que es el que nos permitira crear el entorno virtual.
 ```
 $ sudo apt-get install python3-venv
 ```
+
 Después creamos un enterno, al que le ponemos un nombre.
 ```
-$ python3 -m venv python-telegram-bot
+$ python3 -m venv [nombre]
 ```
+
 Activamos el entorno de desarollo.
 ```
-$ source python-telegram-bot/bin/activate
+$ source [nombre]/bin/activate
 ```
-Una vez activamos estaremos dentro de él, y es donde tenemos que instalar el modulo de pythom-telegram-bot, o cualquier otro.
 
-Una vez terminado de trabajar dentro del entorno, salimos de este desactivandolo y no tendremos acceso a ninguno de los modulos intalados dentro de este.
+Una vez activamos en entorno de desarrollo virtual estaremos dentro de él, y es donde tenemos que instalar el modulo de pythom-telegram-bot, o cualquier otro.
+
+Cuando se termine de trabajar dentro del entorno, salimos de este desactivandolo y no tendremos acceso a ninguno de los modulos instalados dentro de este.
 ```
 $ deactivate
 ```
 <br>
 
+### [Instalación con pip](https://github.com/helee18/python_sysadmin/blob/master/setup.py)
+
 Instalamos [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) que presenta una serie de clases de alto nivel para hacer el desarrollo de bots mas facil.
 ```
+$ sudo apt-get install python3-pip
 $ pip3 install python-telegram-bot --upgrade
 ```
 <br>
+
+### [Instalación clonando el repositorio](https://github.com/helee18/python_sysadmin/blob/master/setup2.py)
 
 Otra forma de instalarlo es clonando el repositorio de github.
 ```
 $ git clone https://github.com/python-telegram-bot/python-telegram-bot --recursive
 $ cd python-telegram-bot/
 ```
+
 Cuando se intenta instalar puede que de un fallo:
 ```
 $ sudo python3 setup.py install
@@ -66,21 +79,27 @@ Traceback (most recent call last):
     from setuptools import setup, find_packages
 ModuleNotFoundError: No module named 'setuptools'
 ```
+
 Por lo que tendremos que instalar manualmente las `setuptools` y después intalarlo:
 ```
 $ sudo apt-get install python3-setuptools
 $ sudo python3 setup.py install
 ```
+
 Durante la instalación aparece lo siguiente:
 ```
 WARNING: The tornado.speedups extension module could not be compiled. No C extensions are essential for Tornado to run, although they do result in significant speed improvements for websockets.
 The output above this warning shows how the compilation failed.
 ```
+
 Esto quiere decir que no se pudo compilar la extensión `tornado.speedups`.
 Y segun el sistema operativo te dice el comando a ejecutar para instalar lo necesario para una mejora de velocidad:
 ```
 $ sudo apt-get install build-essential python-dev
 ```
+<br>
 
-## Script bot
+## [Elementos básicos del script del bot](https://github.com/helee18/python_sysadmin/blob/master/bot.py)
+
+Al principio
 
