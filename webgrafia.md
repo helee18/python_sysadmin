@@ -38,8 +38,10 @@ https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html
 
 https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide-to-Version-12.0#what-exactly-is-callbackcontext
 
-### Handler
+### Dispatcher
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html
+
+### Handler
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html
