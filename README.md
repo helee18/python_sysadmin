@@ -1,4 +1,5 @@
 <a name="top"></a>
+
 ![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
 [Telegram](https://web.telegram.org/), una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello se puede hacer uso de [Python](https://www.python.org/), un lenguaje de programación multiplataforma, programando las funciones que queremos que resuelva el bot.
@@ -24,6 +25,7 @@ Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y progra
 <br>
 
 <a name="crear"></a>
+
 ## Crear un bot de Telegram
 
 El primer paso para crear un bot iniciar **BotFather**, el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br>
@@ -37,7 +39,7 @@ Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/04_cambio_nombre.png" alt="setname" width="450"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/05_cambio_foto.png" alt="setuserpic" width="450"/>
 
-<br><div style="text-align: right">[Inicio](#top)</div>
+<br>[Inicio](#top)
 
 <a name="instalar"></a>
 
@@ -117,7 +119,7 @@ Y segun el sistema operativo te dice el comando a ejecutar para instalar lo nece
 ```
 $ sudo apt-get install build-essential python-dev
 ```
-<br><div style="text-align: right">[Inicio](#top)</div>
+<br>[Inicio](#top)
 
 <a name="basicos"></a>
 
@@ -169,6 +171,22 @@ CallbackContext es un objeto que contiene contexto adicional de update, error o 
 ```
 def main():
     updater = Updater('TOKEN', use_context=True)
+```
+
+Para mayor seguridada, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py) en el que definamos una variable a la que le asignamos el token. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otro archivo, tendremos que crear el archivo en el mismo directorio en el que esté antes de ejecutarlo.
+```
+token='TOKEN'
+```
+
+Para poder hacer uso de esa variable, la importamos al principio del script del bot.
+```
+from auth import token
+```
+
+Y en el script del bot, en vez de poner el token directamente, solo mencionamos la variable.
+```
+def main():
+    updater = Updater(token, use_context=True)
 ```
 
 <a name="espera"></a>
@@ -235,4 +253,4 @@ Fuera definimos la función en la que hacemos uso de `logger` previamente defini
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 ```
-<br><div style="text-align: right">[Inicio](#top)</div>
+<br>[Inicio](#top)

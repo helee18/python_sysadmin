@@ -42,6 +42,20 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html
 
-### Handler
+### CommandHnadler
+
+https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html 
+
+### Update
+
+https://python-telegram-bot.readthedocs.io/en/stable/telegram.update.html
+
+### MessageHandler
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html
+
+
+### Filters
+
+https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html 
+
