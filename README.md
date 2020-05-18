@@ -1,13 +1,29 @@
 ![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
+<a name="top"></a>
 [Telegram](https://web.telegram.org/), una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello se puede hacer uso de [Python](https://www.python.org/), un lenguaje de programación multiplataforma, programando las funciones que queremos que resuelva el bot.
 
-- Crear un bot de Telegram
-- Instalar python-telegram-bot
-- Elementos básicos del script del bot
+Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y programaremos al bot para que, segun el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
+
+- [Crear un bot de Telegram](#crear)
+- [Instalar python-telegram-bot](#instalar)
+    - [Entorno de desarrollo virutal](#venv)
+    - [Instalación con pip](#pip)
+    - [Instalación clonando el repositorio](#github)
+- [Elementos básicos del script del bot](#basicos)
+    - [Importar módulos](#import)
+    - [Logging](#logging)
+    - [Función main](#main)
+    - [Introducción del token](#token)
+    - [Inicio bot y espera](#espera)
+    - [Comando /start](#start)
+    - [Comandos no definidos](#echo)
+    - [Log de errores](#error)
+
 
 <br>
 
+<a name="crear"></a>
 ## Crear un bot de Telegram
 
 El primer paso para crear un bot iniciar **BotFather**, el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br>
@@ -21,9 +37,13 @@ Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/04_cambio_nombre.png" alt="setname" width="450"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/05_cambio_foto.png" alt="setuserpic" width="450"/>
 
-<br>
+<br>[Inicio](#top)
+
+<a name="instalar"></a>
 
 ## Instalar python-telegram-bot
+
+<a name="venv"></a>
 
 ### Entorno de desarrollo virutal 
 Para instalar el modulo `python-telegram-bot` utilizamos un entorno de desarrollo virtual, el cual permite gestionar módulos de python en un entorno aislado, un directorio, sin tener permisos de administrador.
@@ -50,12 +70,16 @@ Cuando se termine de trabajar dentro del entorno, salimos de este desactivandolo
 $ deactivate
 ```
 
+<a name="pip"></a>
+
 ### [Instalación con pip](https://github.com/helee18/python_sysadmin/blob/master/setup.py)
 Instalamos [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) que presenta una serie de clases de alto nivel para hacer el desarrollo de bots mas facil.
 ```
 $ sudo apt-get install python3-pip
 $ pip3 install python-telegram-bot --upgrade
 ```
+
+<a name="github"></a>
 
 ### [Instalación clonando el repositorio](https://github.com/helee18/python_sysadmin/blob/master/setup2.py)
 Otra forma de instalarlo es clonando el repositorio de github.
@@ -93,12 +117,18 @@ Y segun el sistema operativo te dice el comando a ejecutar para instalar lo nece
 ```
 $ sudo apt-get install build-essential python-dev
 ```
-<br>
+<br>[Inicio](#top)
+
+<a name="basicos"></a>
 
 ## [Elementos básicos del script del bot](https://github.com/helee18/python_sysadmin/blob/master/bot.py)
 
+<a name="import"></a>
+
 ### Importar módulos
 Al principio del script importamos los módulos de python necesarios. En este caso importamos el módulo `logging` para el registro y los submódulos `Updater`, `CommandHandler`, `MessageHandler` y `Filters` de la librería `telegram.ext` a la que podemos acceder gracias a python-telegram-bot.
+
+<a name="logging"></a>
 
 ### Logging
 Habilitamos el registro del historial de eventos. Con `format` configuramos salga la fecha y hora, el nombre del bot, el nivel de registro y el mensaje que muestra. 
@@ -117,12 +147,16 @@ logger = logging.getLogger(__name__)
 
 Después, para el registro de errores definiremos una función en la que haremos uso de `logger.warning`.
 
+<a name="main"></a>
+
 ### Función main
 Al final del codigo, llamamos a la función principal `main`, en la cual tendremos todo el codigo del bot. Para llamar a la función, comprobamos que el codigo se esta ejecutando en el script principal, y no sea importado en otro. Esto se comprueba comparando que el atributo `__name__` con `__main__` ya que `__name__` adopta el nombre de `__main__` cuando se ejecuta en el script principal o adopta le nombre del modulo importado cuando no es así.
 ```
 if __name__ == '__main__':
     main()
 ```
+
+<a name="token"></a>
 
 ### Introducción del token
 Definimos la función `main` y dentro de esta programamos el script del bot. Lo primero que tenemos que definir el `updater`, donde introducimos nuestro `token`.
@@ -137,6 +171,8 @@ def main():
     updater = Updater('TOKEN', use_context=True)
 ```
 
+<a name="espera"></a>
+
 ### Inicio bot y espera
 Le indicamos al bot que inicie la espera de mensajes por parte de Telegram.
 ```
@@ -148,8 +184,48 @@ También le decimos que se bloquee y se quede a la espera hasta recibir mensajes
 updater.idle()
 ```
 
+<a name="start"></a>
+
+### Comando `/start`
+Siempre que querramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador `add_handler`. Para manejar el comando utilizaremos `CommandHandler` y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama.
+```
+updater.dispatcher.add_handler(CommandHandler('start', start))
+```
+
+Fuera de la función principal tenemos que definir esta nueva función, con los parametros de entrada `update` y `context` y dentro de esta le diremos al bot que tiene que hacer en cada caso.
+
+En este caso simplemente devolveremos un emnsaje confirmando que ha conectado y funciona.
+
+`Update` es un objeto que representa una actualización entrate, `message` se refiere a un mensaje y `reply_text` a la respuesta que va a dar el bot, especificada dentro. Con `from_user.first_name` mostraremos el nombre del usuario que esta mandando el comando al bot.
+```
+def start(update, context):
+    update.message.reply_text(
+        'Welcome to PythonSysadminBot ' + update.message.from_user.first_name
+    )
+```
+
+<a name="echo"></a>
+
+### Comandos no definidos
+Definimos una función con la cual se repetiran todos los mensajes o comandos que le mandemos al bot y este no entienda, es decir, que repetira el mensaje o comando que reciba si no hay una función definida para este.
+
+Utilizaremos `ManssageHandler` para manejar los mensajes introducidos. Esta clase de handler puede contener texto, archivos multimedia o actualizaciones de estado.
+
+Con `Filters.text` filtramos la cadena de caracteres que pasamos. Y llamamos a la función `echo`.
+```
+updater.dispatcher.add_handler(MessageHandler(Filters.text, echo))
+```
+
+Definimos la función y es aquí donde programammos al bot para que repita el mensaje recibido. Con `update.message.text` le decimos al bot que lo que tiene que devolver el mismo mensaje entrante.
+```
+def echo(update, context):
+    update.message.reply_text(update.message.text)
+```
+
+<a name="error"></a>
+
 ### Log de errores
-Podemos añadir un controlador de errores en los `Dispatcher`. Dentro de la función `main` llamamos a la función.
+Podemos añadir un controlador de errores en los `Dispatcher`. Dentro de la función `main` llamamos a la función `error`.
 ```
 updater.dispatcher.add_error_handler(error)
 ```
@@ -159,19 +235,4 @@ Fuera definimos la función en la que hacemos uso de `logger` previamente defini
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 ```
-
-### Comandos no definidos
-Cuando el bot reciba comandos que no entienda, los repitirá.
-
-Siempre que querramos definir un comando de entrada que tenga que llamar a una función lo haremos dentro de la función principal (`main`) con `add_handler`. Asi registramos un nuevo controlador (`handler`).
-
-En este caso
-```
-updater.dispatcher.add_handler(MessageHandler(Filters.text, echo))
-```
-
-
-```
-def echo(update, context):
-    update.message.reply_text(update.message.text)
-```
+<br>[Inicio](#top)
