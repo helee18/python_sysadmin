@@ -3,6 +3,7 @@
 # Importamos los modulos y submodulos necesarios
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from config.auth import token
 
 # Habilitamos el registro
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -24,7 +25,7 @@ def echo(update, context):
 
 def main():
     # Introducimos nuestro Token
-    updater = Updater('1166829225:AAGl0qJmYnUggGmNvX4RU2a8BQyD1u5FCmE', use_context=True)
+    updater = Updater(token, use_context=True)
 
     # Definimos los comandos y las funciones a ejecutar
     updater.dispatcher.add_handler(CommandHandler('start', start))
