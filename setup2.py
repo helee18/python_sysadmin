@@ -21,10 +21,10 @@ os.system("git clone https://github.com/python-telegram-bot/python-telegram-bot 
 os.system("sudo apt-get install python3-setuptools -y")
 
 # Instalamos python-telegram-bot
-os.chdir("./python-telegram-bot/")
+os.system("cd ./python-telegram-bot/")
 os.system("python3 setup.py install")
 os.system("sudo apt-get install build-essential python-dev -y")
 
 # Ejecutamos el script de nuestro bot
-os.chdir("..")
+os.system("cd ..")
 os.system("python3 bot.py")
