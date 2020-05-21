@@ -18,6 +18,7 @@ Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y progra
     - [Introducción del token](#token)
     - [Inicio bot y espera](#espera)
     - [Comando /start](#start)
+    - [Comando /help](#help)
     - [Comandos no definidos](#echo)
     - [Log de errores](#error)
 
@@ -173,7 +174,7 @@ def main():
     updater = Updater('TOKEN', use_context=True)
 ```
 
-Para mayor seguridad, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py), dentro de la carpeta una carpeta (auth) en mi caso, en el que definamos una variable a la que le asignamos el `token`. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otro archivo, tendremos que crear el archivo en el mismo directorio en el que esté antes de ejecutarlo.
+Para mayor seguridad, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py), dentro de la carpeta una carpeta (auth) en mi caso, en el que definamos una variable a la que le asignamos el `token`. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otra maquina, tendremos que crear `auth/auth.py` en el mismo directorio en el que esté el script antes de ejecutarlo.
 ```
 token='TOKEN'
 ```
@@ -234,6 +235,25 @@ def start(update, context):
         'Welcome to PythonSysadminBot ' + update.message.from_user.first_name
     )
 ```
+
+<a name="help"></a>
+
+### Comando `/help`
+Para que  en cualquier comento se pueda recordar los comandos disponibles en el bot, creamos una función llamada `help` que nos liste todos los comandos que podemos utilizar.
+```
+updater.dispatcher.add_handler(CommandHandler('help', help))
+```
+
+Para poder poner el titulo en negrita (Lista de comandos) le ponemos `*` al principio y al final y despues declaramos que lo lea como si fuese Markdown `parse_mode= 'Markdown'`. Y para introducir saltos te línea, añadimos `\n`.
+```
+def help(update,context):
+    update.message.reply_text(
+        '*Lista de comandos* \n'
+        '/start - bienvenida al bot' , 
+        parse_mode= 'Markdown'
+    )
+```
+
 
 <a name="echo"></a>
 
