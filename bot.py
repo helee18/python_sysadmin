@@ -3,7 +3,7 @@
 # Importamos los modulos y submodulos necesarios
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from config.auth import token
+from auth.auth import token
 
 # Habilitamos el registro
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
