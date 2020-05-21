@@ -173,14 +173,14 @@ def main():
     updater = Updater('TOKEN', use_context=True)
 ```
 
-Para mayor seguridad, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py), dentro de la carpeta una carpeta (config) en mi caso, en el que definamos una variable a la que le asignamos el `token`. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otro archivo, tendremos que crear el archivo en el mismo directorio en el que esté antes de ejecutarlo.
+Para mayor seguridad, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py), dentro de la carpeta una carpeta (auth) en mi caso, en el que definamos una variable a la que le asignamos el `token`. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otro archivo, tendremos que crear el archivo en el mismo directorio en el que esté antes de ejecutarlo.
 ```
 token='TOKEN'
 ```
 
 Para poder hacer uso de esa variable, la importamos al principio del script del bot.
 ```
-from config.auth import token
+from auth.auth import token
 ```
 
 Y en el script del bot, en vez de poner el `token` directamente, solo mencionamos la variable.
@@ -192,13 +192,13 @@ def main():
 Para que el archivo que tiene nuestro `token` no se suba por error a nuestro repositorio, añadiremos un archivo oculto `.gitignore` en el que añadiremos lo que no queremos que se suba.
 ```
 bot-venv/
-config/
+auth/
 ```
 
 Subiremos este archivo a nuestro repositorio y después ignorará los archivos que no deseemos que este en nuestro repositorio en github.
 ```
 git add .gitignore
-git commit -m "bot-venv y config"
+git commit -m "bot-venv y auth"
 git push
 ```
 
