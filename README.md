@@ -21,6 +21,9 @@ Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y progra
     - [Comando /help](#help)
     - [Comandos no definidos](#echo)
     - [Log de errores](#error)
+- [Comandos para consultar el servidor](#consultas)
+    - [Función para ejecutar comandos en Linux](#f_terminal)
+    - [Comando /ip][#ip]
 
 
 <br>
@@ -219,7 +222,7 @@ updater.idle()
 <a name="start"></a>
 
 ### Comando `/start`
-Siempre que querramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador `add_handler`. Para manejar el comando utilizaremos `CommandHandler` y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama.
+Siempre que querramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador `add_handler`. Para manejar el comando utilizaremos `CommandHandler` y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama. Haremos uso de `updater`, previamente declarado, que nos ayudará a codificar el bot ya que hace referencia al token identificativo.
 ```
 updater.dispatcher.add_handler(CommandHandler('start', start))
 ```
@@ -254,7 +257,6 @@ def help(update,context):
     )
 ```
 
-
 <a name="echo"></a>
 
 ### Comandos no definidos
@@ -287,3 +289,69 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 ```
 <br>[Inicio](#top)
+
+<a name="consultas"></a>
+
+## [Comandos para consultar el servidor](https://github.com/helee18/python_sysadmin/blob/master/bot.py)
+
+<a name="f_terminal"></a>
+
+### Función para ejecutar comandos en Linux
+Definimos una función cuya finalidad es leer lo que nos devuelve el terminal al ejecutar el comando que nosotros le pasemos. Cuando nosotros mandemos ciertos comandos al bot, este llamará a la función y nos responderá con lo que el terminal muestre.
+
+Definimos la función y declaramos una variable vacía que será la que almacenará lo que muestre el terminal como resultado del comando que le pasemos.
+```
+def terminal(entrada):
+    salida = ""
+```
+
+Para interactuar con el sistema operativo tenemos que importar al principio del script la librería `os`.
+```
+import os
+```
+
+Hacemos uso del módulo `os` utilizando `popen`, que abre una tubería para la comunicación con el terminal mediante el paso de mensajes. De esta forma se pueden ejecutar los comandos que queramos a la vez que se esta ejecutando el script. Esto lo guardamos en una variable (f).
+```
+f = os.popen(entrada)
+```
+
+Después utilizamos el método `readlines()` para leer las líneas de lo almacenado en la variable f y con un bucle vamos almacenando caracter a caracter en la variable salida, previamente declarada.
+```
+for i in f.readlines():
+        salida += i 
+```
+
+Eliminamos el ultimo caracter, que sera el salto de línea o retorno de carro (\n).
+```
+salida = salida[:-1]
+```
+
+Por último devolvemos la variable en la que se almacena la respuesta para poder usarla en la función del comando y poder mostrarla por la conversación con el bot por Telegram.
+```
+return salida
+```
+
+<a name="ip"></a>
+
+### Comando `/ip`
+Con este comando consultamos cual es la ip del servidor en el que se está ejecutando el script del bot.
+
+Para ello primero tenemos qe declarar un nuevo controlador `add_handler` dentro de la función `main` en el que indicamos el comando de entrada que recibe el bot y la función a la que llamamos con `CommandHandler`, como con todos los comandos.
+```
+updater.dispatcher.add_handler(CommandHandler('ip', ip))
+```
+
+Declaramos la función `ip` en la que simplemente llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y lo almacena. El comando que le pasamos para que nos devuelva la ip es `hostname -I`. 
+```
+ip = terminal("hostname -I")
+```
+
+Lo que nos devuelve la función lo almacenamos en una variable a la cual el eliminamos el ultimo caracter.
+```
+ip = ip[:-1]
+```
+
+Por último hacemos que el bot responda con el resultado del comando ejecutado, en este caso la ip del servidor.
+```
+update.message.reply_text(ip)
+```

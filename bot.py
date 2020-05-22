@@ -4,12 +4,28 @@
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from auth.auth import token
+import os
 
 # Habilitamos el registro
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+
+# Funcion ejecutar comandos Linux
+
+def terminal(entrada):
+    salida = ""
+    # Ejecutamos el comando en el terminal
+    f = os.popen(entrada)
+    # Leemos caracter a caracter y lo guardamos en la variable a devolver
+    for i in f.readlines():
+        salida += i 
+    # Eliminamos el salto de linea
+    salida = salida[:-1]
+ 
+    # Devolvemos la variable con la respuesta al comando
+    return salida 
 
 # Función para errores
 
@@ -33,9 +49,18 @@ def help(update,context):
     # Listamos todos los comandos
     update.message.reply_text(
         '*Lista de comandos* \n'
-        '/start - bienvenida al bot' , 
+        '/start - bienvenida al bot \n' 
+        '/ip - ip del servidor \n', 
         parse_mode= 'Markdown'
     )
+
+def ip(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    ip = terminal("hostname -I")
+    # Eliminamos el ultimo caracter
+    ip = ip[:-1] 
+    # Respondemos al comando con el mensaje
+    update.message.reply_text(ip) 
 
 # Funcion principal
 
@@ -46,6 +71,7 @@ def main():
     # Definimos los comandos y las funciones a ejecutar
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help))
+    updater.dispatcher.add_handler(CommandHandler('ip', ip))
 
     # Log para errores
     updater.dispatcher.add_error_handler(error)

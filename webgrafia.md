@@ -59,3 +59,13 @@ https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html 
 
+
+### Modulo os
+
+https://docs.python.org/3/library/os.html 
+
+## Función terminal
+
+https://www.tutorialspoint.com/python/file_readlines.htm
+
+https://stackoverflow.com/questions/15535205/what-does-1-mean-do-in-python
