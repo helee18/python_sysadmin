@@ -64,7 +64,7 @@ https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html
 
 https://docs.python.org/3/library/os.html 
 
-## Función terminal
+### Función terminal
 
 https://www.tutorialspoint.com/python/file_readlines.htm
 
