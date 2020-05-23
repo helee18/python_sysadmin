@@ -15,16 +15,15 @@ Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y progra
     - [`Importar módulos`](#import)
     - [`Logging`](#logging)
     - [`Función main`](#main)
-    - [Introducción del token](#token)
-    - [Inicio bot y espera](#espera)
-    - [Comando /start](#start)
-    - [Comando /help](#help)
-    - [Comandos no definidos](#echo)
-    - [Log de errores](#error)
-- [Comandos para consultar el servidor](#consultas)
-    - [Función para ejecutar comandos en Linux](#f_terminal)
-    - [Comando /ip](#ip)
-
+    - [`Introducción del token`](#token)
+    - [`Inicio bot y espera`](#espera)
+    - [`Comando /start`](#start)
+    - [`Comando /help`](#help)
+    - [`Comandos no definidos`](#echo)
+    - [`Log de errores`](#error)
+- [`Comandos para consultar el servidor`](#consultas)
+    - [`Función para ejecutar comandos en Linux`](#f_terminal)
+    - [`Comando /ip`](#ip)
 
 <br>
 
@@ -297,9 +296,9 @@ def error(update, context):
 <a name="f_terminal"></a>
 
 ### Función para ejecutar comandos en Linux
-Definimos una función cuya finalidad es leer lo que nos devuelve el terminal al ejecutar el comando que nosotros le pasemos. Cuando nosotros mandemos ciertos comandos al bot, este llamará a la función y nos responderá con lo que el terminal muestre.
+Definimos una función cuya finalidad es leer lo que nos devuelve el sistema al ejecutar el comando que nosotros le pasemos. Cuando nosotros mandemos ciertos comandos al bot, este llamará a la función y nos responderá con lo que el terminal muestre.
 
-Definimos la función y declaramos una variable vacía que será la que almacenará lo que muestre el terminal como resultado del comando que le pasemos.
+Definimos la función y declaramos una variable vacía que será con la que referenciaremos a lo que muestre el terminal como resultado del comando que le pasemos.
 ```
 def terminal(entrada):
     salida = ""
@@ -310,15 +309,15 @@ Para interactuar con el sistema operativo tenemos que importar al principio del 
 import os
 ```
 
-Hacemos uso del módulo [`os`](https://docs.python.org/3/library/os.html) utilizando [`popen`](https://docs.python.org/3/library/os.html#os.popen), que abre una tubería para la comunicación con el terminal mediante el paso de mensajes. De esta forma se pueden ejecutar los comandos que queramos a la vez que se esta ejecutando el script. Esto lo guardamos en una variable (f).
+Hacemos uso del módulo [`os`](https://docs.python.org/3/library/os.html) utilizando [`popen`](https://docs.python.org/3/library/os.html#os.popen), que abre una tubería para la comunicación con el sistema mediante el paso de mensajes. De esta forma se pueden ejecutar los comandos que queramos a la vez que se esta ejecutando el script. Esto lo guardamos en una variable (f).
 ```
 f = os.popen(entrada)
 ```
 
-Después utilizamos el método `readlines()` para leer las líneas de lo almacenado en la variable f y con un bucle vamos almacenando caracter a caracter en la variable salida, previamente declarada.
+Después utilizamos el método `readlines()` para leer las líneas del contenido referenciado con la variable f y con un bucle vamos referenciando caracter a caracter en la variable salida, previamente declarada.
 ```
 for i in f.readlines():
-        salida += i 
+    salida += i 
 ```
 
 Eliminamos el ultimo caracter, que sera el salto de línea o retorno de carro (\n).
@@ -326,7 +325,7 @@ Eliminamos el ultimo caracter, que sera el salto de línea o retorno de carro (\
 salida = salida[:-1]
 ```
 
-Por último devolvemos la variable en la que se almacena la respuesta para poder usarla en la función del comando y poder mostrarla por la conversación con el bot por Telegram.
+Por último devolvemos la variable con la respuesta para poder usarla en la función del comando y poder mostrarla por la conversación con el bot por Telegram.
 ```
 return salida
 ```
@@ -341,12 +340,12 @@ Para ello primero tenemos qe declarar un nuevo controlador [`add_handler`](https
 updater.dispatcher.add_handler(CommandHandler('ip', ip))
 ```
 
-Declaramos la función `ip` en la que simplemente llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y lo almacena. El comando que le pasamos para que nos devuelva la ip es `hostname -I`. 
+Declaramos la función `ip` en la que simplemente llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es `hostname -I`.
 ```
 ip = terminal("hostname -I")
 ```
 
-Lo que nos devuelve la función lo almacenamos en una variable a la cual el eliminamos el ultimo caracter.
+Eliminamos el ultimo caracter del contenido que nos devuelve la función, al que referenciamos con una variable (ip.)
 ```
 ip = ip[:-1]
 ```
@@ -355,3 +354,7 @@ Por último hacemos que el bot responda con el resultado del comando ejecutado, 
 ```
 update.message.reply_text(ip)
 ```
+
+
+
+<br>[Inicio](#top)
