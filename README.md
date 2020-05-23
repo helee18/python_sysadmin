@@ -2,19 +2,19 @@
 
 ![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
-[Telegram](https://web.telegram.org/), una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello se puede hacer uso de [Python](https://www.python.org/), un lenguaje de programación multiplataforma, programando las funciones que queremos que resuelva el bot.
+[`Telegram`](https://web.telegram.org/), una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma, programando las funciones que queremos que resuelva el bot.
 
 Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y programaremos al bot para que, segun el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
 
-- [Crear un bot de Telegram](#crear)
-- [Instalar python-telegram-bot](#instalar)
-    - [Entorno de desarrollo virutal](#venv)
-    - [Instalación con pip](#pip)
-    - [Instalación clonando el repositorio](#github)
-- [Elementos básicos del script del bot](#basicos)
-    - [Importar módulos](#import)
-    - [Logging](#logging)
-    - [Función main](#main)
+- [`Crear un bot de Telegram`](#crear)
+- [`Instalar python-telegram-bot`](#instalar)
+    - [`Entorno de desarrollo virutal`](#venv)
+    - [`Instalación con pip`](#pip)
+    - [`Instalación clonando el repositorio`](#github)
+- [`Elementos básicos del script del bot`](#basicos)
+    - [`Importar módulos`](#import)
+    - [`Logging`](#logging)
+    - [`Función main`](#main)
     - [Introducción del token](#token)
     - [Inicio bot y espera](#espera)
     - [Comando /start](#start)
@@ -23,7 +23,7 @@ Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y progra
     - [Log de errores](#error)
 - [Comandos para consultar el servidor](#consultas)
     - [Función para ejecutar comandos en Linux](#f_terminal)
-    - [Comando /ip][#ip]
+    - [Comando /ip](#ip)
 
 
 <br>
@@ -79,7 +79,7 @@ $ deactivate
 <a name="pip"></a>
 
 ### [Instalación con pip](https://github.com/helee18/python_sysadmin/blob/master/setup.py)
-Instalamos [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) que presenta una serie de clases de alto nivel para hacer el desarrollo de bots mas facil.
+Instalamos [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) que presenta una serie de clases de alto nivel para hacer el desarrollo de bots mas facil.
 ```
 $ sudo apt-get install python3-pip
 $ pip3 install python-telegram-bot --upgrade
@@ -132,21 +132,21 @@ $ sudo apt-get install build-essential python-dev
 <a name="import"></a>
 
 ### Importar módulos
-Al principio del script importamos los módulos de python necesarios. En este caso importamos el módulo `logging` para el registro y los submódulos `Updater`, `CommandHandler`, `MessageHandler` y `Filters` de la librería `telegram.ext` a la que podemos acceder gracias a python-telegram-bot.
+Al principio del script importamos los módulos de python necesarios. En este caso importamos el módulo [`logging`](https://docs.python.org/3/library/logging.html) para el registro y los submódulos [`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html), [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html), [`MessageHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html) y [`Filters`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html) de la librería [`telegram.ext`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html) a la que podemos acceder gracias a python-telegram-bot.
 
 <a name="logging"></a>
 
 ### Logging
-Habilitamos el registro del historial de eventos. Con `format` configuramos salga la fecha y hora, el nombre del bot, el nivel de registro y el mensaje que muestra. 
+Habilitamos el registro del historial de eventos con [`basicConfig`](https://docs.python.org/3/library/logging.html#logging.basicConfig). Con `format` configuramos salga la fecha y hora, el nombre del bot, el nivel de registro y el mensaje que muestra. 
 
-La librería `logging` tiene distintos niveles `Debug`, `Info`, `Warning`, `Error` y `Critical` de menos a mayor importancia.
+La librería [`logging`](https://docs.python.org/3/library/logging.html) tiene distintos niveles `Debug`, `Info`, `Warning`, `Error` y `Critical` de menos a mayor importancia.
 
-En caso de que no configuremos el nivel, por defecto está configurado para mostrar mensajes de gategoría mínima `warning`. Configuramos que el nivel minimo sea `info` para que muestre también mensajes que no sean algo inesperado, como que el sistema funcione correctamente.
+En caso de que no configuremos el nivel, por defecto está configurado para mostrar mensajes de gategoría mínima `warning`. Configuramos que el nivel minimo sea `info` para que muestre también mensajes que no sean algo inesperado, como que el sistema funcione correctamente. 
 ```
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 ```
 
-Para registrar las acciones durante la ejecución del programa haremos uso de la funcion `logging.getLogger(nombre del logger)` y como nombre del logger pondremos `__name__` que, en un modulo, es el nombre de este en el espacio de nombres de Python.
+Para registrar las acciones durante la ejecución del programa haremos uso de la funcion [`logging.getLogger(nombre del logger)`](https://docs.python.org/3/library/logging.html#logging.getLogger) y como nombre del logger pondremos `__name__` que, en un modulo, es el nombre de este en el espacio de nombres de Python.
 ```
 logger = logging.getLogger(__name__)
 ```
@@ -167,7 +167,7 @@ if __name__ == '__main__':
 ### Introducción del token
 Definimos la función `main` y dentro de esta programamos el script del bot. Lo primero que tenemos que definir el `updater`, donde introducimos nuestro `token`.
 
-`Updater` es una clase que ayuda al programador a codificar el bot. Recibe actualicaciones de telegram y las manda al `Dispatcher`. El `Dispatcher` maneja las actualizaciones y las manda a los `Handlers`. 
+[`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) es una clase que ayuda al programador a codificar el bot. Recibe actualicaciones de telegram y las manda al [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html). El [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html) maneja las actualizaciones y las manda a los [`Handlers`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.handler.html). 
 
 Añadimos `user_content=True` para usar las nuevas devoluciones basadas en contexto (`context based callbacks`). Puede producirse un fallo de uso de la antigua API dependiendo de la versión si no se añade. En la versión 13 no hace falta definirlo porque por defecto es `True`.
 
@@ -193,7 +193,7 @@ def main():
     updater = Updater(token, use_context=True)
 ```
 
-Para que el archivo que tiene nuestro `token` no se suba por error a nuestro repositorio, añadiremos un archivo oculto `.gitignore` en el que añadiremos lo que no queremos que se suba.
+Para que el archivo que tiene nuestro `token` no se suba por error a nuestro repositorio, añadiremos un archivo oculto [`.gitignore`](https://github.com/helee18/python_sysadmin/blob/master/.gitignore) en el que añadiremos lo que no queremos que se suba.
 ```
 bot-venv/
 auth/
@@ -222,7 +222,7 @@ updater.idle()
 <a name="start"></a>
 
 ### Comando `/start`
-Siempre que querramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador `add_handler`. Para manejar el comando utilizaremos `CommandHandler` y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama. Haremos uso de `updater`, previamente declarado, que nos ayudará a codificar el bot ya que hace referencia al token identificativo.
+Siempre que querramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler). Para manejar el comando utilizaremos [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama. Haremos uso de `updater`, previamente declarado, que nos ayudará a codificar el bot ya que hace referencia al token identificativo.
 ```
 updater.dispatcher.add_handler(CommandHandler('start', start))
 ```
@@ -231,7 +231,7 @@ Fuera de la función principal tenemos que definir esta nueva función, con los 
 
 En este caso simplemente devolveremos un emnsaje confirmando que ha conectado y funciona.
 
-`Update` es un objeto que representa una actualización entrate, `message` se refiere a un mensaje y `reply_text` a la respuesta que va a dar el bot, especificada dentro. Con `from_user.first_name` mostraremos el nombre del usuario que esta mandando el comando al bot.
+[`Update`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.update.html) es un objeto que representa una actualización entrate, [`message`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.update.html#telegram.Update.message) se refiere a un mensaje y [`reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) a la respuesta que va a dar el bot, especificada dentro. Con `from_user.first_name` mostraremos el nombre del usuario que esta mandando el comando al bot.
 ```
 def start(update, context):
     update.message.reply_text(
@@ -262,14 +262,14 @@ def help(update,context):
 ### Comandos no definidos
 Definimos una función con la cual se repetiran todos los mensajes o comandos que le mandemos al bot y este no entienda, es decir, que repetira el mensaje o comando que reciba si no hay una función definida para este.
 
-Utilizaremos `ManssageHandler` para manejar los mensajes introducidos. Esta clase de handler puede contener texto, archivos multimedia o actualizaciones de estado.
+Utilizaremos [`MessageHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html) para manejar los mensajes introducidos. Esta clase de handler puede contener texto, archivos multimedia o actualizaciones de estado.
 
-Con `Filters.text` filtramos la cadena de caracteres que pasamos. Y llamamos a la función `echo`.
+Con [`Filters.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html#telegram.ext.filters.Filters.successful_payment) filtramos la cadena de caracteres que pasamos. Y llamamos a la función `echo`.
 ```
 updater.dispatcher.add_handler(MessageHandler(Filters.text, echo))
 ```
 
-Definimos la función y es aquí donde programammos al bot para que repita el mensaje recibido. Con `update.message.text` le decimos al bot que lo que tiene que devolver el mismo mensaje entrante.
+Definimos la función y es aquí donde programammos al bot para que repita el mensaje recibido. Con [`update.message.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.text) le decimos al bot que lo que tiene que devolver el mismo mensaje entrante.
 ```
 def echo(update, context):
     update.message.reply_text(update.message.text)
@@ -278,12 +278,12 @@ def echo(update, context):
 <a name="error"></a>
 
 ### Log de errores
-Podemos añadir un controlador de errores en los `Dispatcher`. Dentro de la función `main` llamamos a la función `error`.
+Podemos añadir un controlador de errores en los [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html). Dentro de la función `main` llamamos a la función `error`.
 ```
 updater.dispatcher.add_error_handler(error)
 ```
 
-Fuera definimos la función en la que hacemos uso de `logger` previamente definido y `warning` para el registro de mensajes a este nivel, donde funciona correctamente pero se produce una situación inesperada o se predice un problema futuro.
+Fuera definimos la función en la que hacemos uso de `logger` previamente definido y [`warning`](https://docs.python.org/3/library/logging.html#logging.Logger.warning) para el registro de mensajes a este nivel, donde funciona correctamente pero se produce una situación inesperada o se predice un problema futuro.
 ```
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -305,12 +305,12 @@ def terminal(entrada):
     salida = ""
 ```
 
-Para interactuar con el sistema operativo tenemos que importar al principio del script la librería `os`.
+Para interactuar con el sistema operativo tenemos que importar al principio del script la librería [`os`](https://docs.python.org/3/library/os.html).
 ```
 import os
 ```
 
-Hacemos uso del módulo `os` utilizando `popen`, que abre una tubería para la comunicación con el terminal mediante el paso de mensajes. De esta forma se pueden ejecutar los comandos que queramos a la vez que se esta ejecutando el script. Esto lo guardamos en una variable (f).
+Hacemos uso del módulo [`os`](https://docs.python.org/3/library/os.html) utilizando [`popen`](https://docs.python.org/3/library/os.html#os.popen), que abre una tubería para la comunicación con el terminal mediante el paso de mensajes. De esta forma se pueden ejecutar los comandos que queramos a la vez que se esta ejecutando el script. Esto lo guardamos en una variable (f).
 ```
 f = os.popen(entrada)
 ```
@@ -336,7 +336,7 @@ return salida
 ### Comando `/ip`
 Con este comando consultamos cual es la ip del servidor en el que se está ejecutando el script del bot.
 
-Para ello primero tenemos qe declarar un nuevo controlador `add_handler` dentro de la función `main` en el que indicamos el comando de entrada que recibe el bot y la función a la que llamamos con `CommandHandler`, como con todos los comandos.
+Para ello primero tenemos qe declarar un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler) dentro de la función `main` en el que indicamos el comando de entrada que recibe el bot y la función a la que llamamos con [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html), como con todos los comandos.
 ```
 updater.dispatcher.add_handler(CommandHandler('ip', ip))
 ```
