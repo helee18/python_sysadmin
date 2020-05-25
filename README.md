@@ -4,7 +4,7 @@
 ---
 [`Telegram`](https://web.telegram.org/), una plataforma de mensajeria, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. Para ello se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma, programando las funciones que queremos que resuelva el bot.
 
-Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y programaremos al bot para que, segun el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
+Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y programaremos al bot para que, segun el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
 
 - [`Crear un bot de Telegram`](#crear)
 - [`Instalar python-telegram-bot`](#instalar)
@@ -21,9 +21,10 @@ Nos comunicaremos con el bot mediando comandos, estos comienzan por `/` y progra
     - [`Comando /help`](#help)
     - [`Comandos no definidos`](#echo)
     - [`Log de errores`](#error)
-- [`Comandos para consultar el servidor`](#consultas)
+- [`Comandos para monitorizar un servidor`](#monitorizar)
     - [`Función para ejecutar comandos en Linux`](#f_terminal)
     - [`Comando /ip`](#ip)
+    - [`Comando /red`](#red)
 
 <br>
 
@@ -208,14 +209,14 @@ git push
 <a name="espera"></a>
 
 ### Inicio bot y espera
-Le indicamos al bot que inicie la espera de mensajes por parte de Telegram.
+Dentro de la funcion principal le indicamos al bot que inicie la espera de mensajes por parte de Telegram.
 ```
-updater.start_polling()
+    updater.start_polling()
 ```
 
 También le decimos que se bloquee y se quede a la espera hasta recibir mensajes. Esto lo hará hasta que, con Ctrl-C, paremos el bot.
 ```
-updater.idle()
+    updater.idle()
 ```
 
 <a name="start"></a>
@@ -223,7 +224,7 @@ updater.idle()
 ### Comando `/start`
 Siempre que querramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler). Para manejar el comando utilizaremos [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama. Haremos uso de `updater`, previamente declarado, que nos ayudará a codificar el bot ya que hace referencia al token identificativo.
 ```
-updater.dispatcher.add_handler(CommandHandler('start', start))
+    updater.dispatcher.add_handler(CommandHandler('start', start))
 ```
 
 Fuera de la función principal tenemos que definir esta nueva función, con los parametros de entrada `update` y `context` y dentro de esta le diremos al bot que tiene que hacer en cada caso.
@@ -251,7 +252,7 @@ Para poder poner el titulo en negrita (Lista de comandos) le ponemos `*` al prin
 def help(update,context):
     update.message.reply_text(
         '*Lista de comandos* \n'
-        '/start - bienvenida al bot' , 
+        '/start - inicio del bot' , 
         parse_mode= 'Markdown'
     )
 ```
@@ -265,7 +266,7 @@ Utilizaremos [`MessageHandler`](https://python-telegram-bot.readthedocs.io/en/st
 
 Con [`Filters.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html#telegram.ext.filters.Filters.successful_payment) filtramos la cadena de caracteres que pasamos. Y llamamos a la función `echo`.
 ```
-updater.dispatcher.add_handler(MessageHandler(Filters.text, echo))
+    updater.dispatcher.add_handler(MessageHandler(Filters.text, echo))
 ```
 
 Definimos la función y es aquí donde programammos al bot para que repita el mensaje recibido. Con [`update.message.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.text) le decimos al bot que lo que tiene que devolver el mismo mensaje entrante.
@@ -279,7 +280,7 @@ def echo(update, context):
 ### Log de errores
 Podemos añadir un controlador de errores en los [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html). Dentro de la función `main` llamamos a la función `error`.
 ```
-updater.dispatcher.add_error_handler(error)
+    updater.dispatcher.add_error_handler(error)
 ```
 
 Fuera definimos la función en la que hacemos uso de `logger` previamente definido y [`warning`](https://docs.python.org/3/library/logging.html#logging.Logger.warning) para el registro de mensajes a este nivel, donde funciona correctamente pero se produce una situación inesperada o se predice un problema futuro.
@@ -289,9 +290,9 @@ def error(update, context):
 ```
 <br>[Inicio](#top)
 
-<a name="consultas"></a>
+<a name="monitorizar"></a>
 
-## [Comandos para consultar el servidor](https://github.com/helee18/python_sysadmin/blob/master/bot.py)
+## [Comandos para monitorizar un servidor](https://github.com/helee18/python_sysadmin/blob/master/bot.py)
 
 <a name="f_terminal"></a>
 
@@ -311,23 +312,23 @@ import os
 
 Hacemos uso del módulo [`os`](https://docs.python.org/3/library/os.html) utilizando [`popen`](https://docs.python.org/3/library/os.html#os.popen), que abre una tubería para la comunicación con el sistema mediante el paso de mensajes. De esta forma se pueden ejecutar los comandos que queramos a la vez que se esta ejecutando el script. Esto lo guardamos en una variable (f).
 ```
-f = os.popen(entrada)
+    f = os.popen(entrada)
 ```
 
 Después utilizamos el método `readlines()` para leer las líneas del contenido referenciado con la variable f y con un bucle vamos referenciando caracter a caracter en la variable salida, previamente declarada.
 ```
-for i in f.readlines():
-    salida += i 
+    for i in f.readlines():
+        salida += i 
 ```
 
 Eliminamos el ultimo caracter, que sera el salto de línea o retorno de carro (\n).
 ```
-salida = salida[:-1]
+    salida = salida[:-1]
 ```
 
 Por último devolvemos la variable con la respuesta para poder usarla en la función del comando y poder mostrarla por la conversación con el bot por Telegram.
 ```
-return salida
+    return salida
 ```
 
 <a name="ip"></a>
@@ -337,24 +338,42 @@ Con este comando consultamos cual es la ip del servidor en el que se está ejecu
 
 Para ello primero tenemos qe declarar un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler) dentro de la función `main` en el que indicamos el comando de entrada que recibe el bot y la función a la que llamamos con [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html), como con todos los comandos.
 ```
-updater.dispatcher.add_handler(CommandHandler('ip', ip))
+    updater.dispatcher.add_handler(CommandHandler('ip', ip))
 ```
 
-Declaramos la función `ip` en la que simplemente llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es `hostname -I`.
+Definimos la función `ip` en la que simplemente llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es `hostname -I`.
 ```
-ip = terminal("hostname -I")
+def ip(update,context):
+    ip = terminal("hostname -I")
 ```
 
 Eliminamos el ultimo caracter del contenido que nos devuelve la función, al que referenciamos con una variable (ip.)
 ```
-ip = ip[:-1]
+    ip = ip[:-1]
 ```
 
 Por último hacemos que el bot responda con el resultado del comando ejecutado, en este caso la ip del servidor.
 ```
-update.message.reply_text(ip)
+    update.message.reply_text('La ip del servidor es: \n' + ip) 
 ```
 
+<a name="red"></a>
 
+### Comando `/red`
+Añadimos un nuevo manejador, con [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler), a la función principal (`main`) para el comando `/red`, el cual nos mostrará la red a la que está conectador nuestro servidor.
+```
+    updater.dispatcher.add_handler(CommandHandler("red", red))
+```
+
+Al igual que en la función `ip`, llamaremos a la función `terminal` la cual ejecutará el comando que le pasamos y nos devolverá la respuesta a este.
+```
+def red(update,context):
+    ssidred = terminal("iwgetid")
+```
+
+Con una variable hacemos referencia a la respuesta que nos devuelve la función `terminal` y es está la que usamos dentro de [`reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) para que el bot nos responda con la red conectada.
+```
+    update.message.reply_text('La red a la que está conectado el servidor es: \n' + ssidred)
+```
 
 <br>[Inicio](#top)

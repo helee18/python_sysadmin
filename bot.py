@@ -49,7 +49,7 @@ def help(update,context):
     # Listamos todos los comandos
     update.message.reply_text(
         '*Lista de comandos* \n'
-        '/start - bienvenida al bot \n' 
+        '/start - inicio del bot \n' 
         '/ip - ip del servidor \n', 
         parse_mode= 'Markdown'
     )
@@ -60,7 +60,14 @@ def ip(update,context):
     # Eliminamos el ultimo caracter
     ip = ip[:-1] 
     # Respondemos al comando con el mensaje
-    update.message.reply_text(ip) 
+    update.message.reply_text('La ip del servidor es: \n' + ip) 
+
+def red(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    ssidred = terminal("iwgetid")
+    # Respondemos al comando con el mensaje
+    update.message.reply_text('La red a la que está conectado el servidor es: \n' + ssidred)
+
 
 # Funcion principal
 
@@ -72,6 +79,7 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help))
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
+    updater.dispatcher.add_handler(CommandHandler("red", red))
 
     # Log para errores
     updater.dispatcher.add_error_handler(error)
