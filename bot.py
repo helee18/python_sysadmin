@@ -54,30 +54,44 @@ def help(update,context):
         parse_mode= 'Markdown'
     )
 
+def nombre(update,context):
+     # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    nombre = terminal('hostname')
+    # Respondemos al comando con el mensaje
+    update.message.reply_text(
+        'El nombre del servidor es: \n' + nombre
+    ) 
+
 def ip(update,context):
+    # Nombre del servidor
+    nombre = terminal('hostname')
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
     ip = terminal('hostname -I')
     # Eliminamos el ultimo caracter
     ip = ip[:-1] 
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'La ip del servidor es: \n' + ip
+        'La ip del servidor ' + nombre + ' es: \n' + ip
     ) 
 
 def red(update,context):
+    # Nombre del servidor
+    nombre = terminal('hostname')
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
-    ssidred = terminal('iwgetid')
+    red = terminal('iwgetid')
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'La red a la que está conectado el servidor es: \n' + ssidred
+        'La red a la que está conectado el servidor ' + nombre + ' es: \n' + red
     )
 
 def particiones(update,context):
+    # Nombre del servidor
+    nombre = terminal('hostname')
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
     _fdisk = terminal('sudo fdisk -l | grep "Disco"')
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'Las particiones del servidor son: \n' + _fdisk
+        'Las particiones del servidor ' + nombre + ' son: \n' + _fdisk
     )
 
 # Funcion principal
@@ -89,6 +103,7 @@ def main():
     # Definimos los comandos y las funciones a ejecutar
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help))
+    updater.dispatcher.add_handler(CommandHandler('nombre', nombre))
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
     updater.dispatcher.add_handler(CommandHandler('red', red))
     updater.dispatcher.add_handler(CommandHandler('particiones', particiones))

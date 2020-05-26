@@ -23,6 +23,7 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
     - [`Log de errores`](#error)
 - [`Comandos para monitorizar un servidor`](#monitorizar)
     - [`Función para ejecutar comandos en Linux`](#f_terminal)
+    - [`Comando /nombre`](#nombre)
     - [`Comando /ip`](#ip)
     - [`Comando /red`](#red)
     - [`Comando /particines`](#particiones)
@@ -332,19 +333,43 @@ Por último devolvemos la variable con la respuesta para poder usarla en la func
     return salida
 ```
 
+<a name="nombre"></a>
+
+### Comando `/nombre`
+Podemos conocer el nombre del servidor añadiendo comando que le pida al sistema que le diga cual es el nombre del servidor en el que se esta ejecutando el script.
+
+Para ello primero tenemos qe declarar un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler) dentro de la función `main` en el que indicamos el comando de entrada que recibe el bot y la función a la que llamamos con [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html), como con todos los comandos.
+```
+    updater.dispatcher.add_handler(CommandHandler('nombre', nombre))
+```
+
+Definimos la función y en ella llamamos  al afunción `terminal` en la que se ejecutará el comando que nos devolverá el nombre del servidor.
+```
+def nombre(update,context):
+    nombre = terminal('hostname')
+```
+
+Hacemos que el bot nos responda con la información que le pedimos haciendo uso de una variable con la que hacemos referencia a lo que nos devuelve la función.
+```
+    update.message.reply_text(
+        'El nombre del servidor es: \n' + nombre
+    ) 
+```
+
 <a name="ip"></a>
 
 ### Comando `/ip`
 Con este comando consultamos cual es la ip del servidor en el que se está ejecutando el script del bot.
 
-Para ello primero tenemos qe declarar un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler) dentro de la función `main` en el que indicamos el comando de entrada que recibe el bot y la función a la que llamamos con [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html), como con todos los comandos.
+En la función principal añadimos un nuevo manejador para que cuando mandemos un mensaje al bot con el comando `/ip` llame a la función `ip`.
 ```
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
 ```
 
-Definimos la función `ip` en la que simplemente llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es `hostname -I`.
+Definimos la función `ip` en la que simplemente pedimos el nombre del servidor y llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es `hostname -I`.
 ```
 def ip(update,context):
+    nombre = terminal('hostname')
     ip = terminal("hostname -I")
 ```
 
@@ -356,8 +381,8 @@ Eliminamos el ultimo caracter del contenido que nos devuelve la función, al que
 Por último hacemos que el bot responda con el resultado del comando ejecutado, en este caso la ip del servidor.
 ```
     update.message.reply_text(
-        'La ip del servidor es: \n' + ip
-    ) 
+        'La red a la que está conectado el servidor ' + nombre + ' es: \n' + red
+    )
 ```
 
 <a name="red"></a>
@@ -368,16 +393,17 @@ Añadimos un nuevo manejador, con [`add_handler`](https://python-telegram-bot.re
     updater.dispatcher.add_handler(CommandHandler("red", red))
 ```
 
-Al igual que en la función `ip`, llamaremos a la función `terminal` la cual ejecutará el comando que le pasamos `iwgetid` y nos devolverá la respuesta a este.
+Al igual que en la función `ip`, pedimos el nombre del servidor y llamamos a la función `terminal` la cual ejecutará el comando que le pasamos `iwgetid` y nos devolverá la respuesta a este.
 ```
 def red(update,context):
-    ssidred = terminal("iwgetid")
+    nombre = terminal('hostname')
+    red = terminal("iwgetid")
 ```
 
 Con una variable hacemos referencia a la respuesta que nos devuelve la función `terminal` y es está la que usamos dentro de [`reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) para que el bot nos responda con la red conectada.
 ```
     update.message.reply_text(
-        'La red a la que está conectado el servidor es: \n' + ssidred
+        'Las particiones del servidor ' + nombre + ' son: \n' + _fdisk
     )
 ```
 
@@ -389,9 +415,10 @@ Para conocer las particiones de disco que tiene el servidor, añadimos un nuevo 
     updater.dispatcher.add_handler(CommandHandler("particiones", particiones))
 ```
 
-En la función llamamos a la función `terminal` en la que se ejecutará el comando `fdisk -l` listandonos así las particiones existentes. Para que solo nos salga una lista con las particiones y un poco de información pero no toda, pasamos por tubería `grep "Disco"`.
+En la función pedimos el nombre del servidor y llamamos a la función `terminal` en la que se ejecutará el comando `fdisk -l` listandonos así las particiones existentes. Para que solo nos salga una lista con las particiones y un poco de información pero no toda, pasamos por tubería `grep "Disco"`.
 ```
 def particiones(update,context):
+    nombre = terminal('hostname')
     _fdisk = terminal('sudo fdisk -l | grep "Disco"')
 ```
 
