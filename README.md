@@ -25,6 +25,7 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
     - [`Función para ejecutar comandos en Linux`](#f_terminal)
     - [`Comando /ip`](#ip)
     - [`Comando /red`](#red)
+    - [`Comando /particines`](#particiones)
 
 <br>
 
@@ -354,7 +355,9 @@ Eliminamos el ultimo caracter del contenido que nos devuelve la función, al que
 
 Por último hacemos que el bot responda con el resultado del comando ejecutado, en este caso la ip del servidor.
 ```
-    update.message.reply_text('La ip del servidor es: \n' + ip) 
+    update.message.reply_text(
+        'La ip del servidor es: \n' + ip
+    ) 
 ```
 
 <a name="red"></a>
@@ -365,7 +368,7 @@ Añadimos un nuevo manejador, con [`add_handler`](https://python-telegram-bot.re
     updater.dispatcher.add_handler(CommandHandler("red", red))
 ```
 
-Al igual que en la función `ip`, llamaremos a la función `terminal` la cual ejecutará el comando que le pasamos y nos devolverá la respuesta a este.
+Al igual que en la función `ip`, llamaremos a la función `terminal` la cual ejecutará el comando que le pasamos `iwgetid` y nos devolverá la respuesta a este.
 ```
 def red(update,context):
     ssidred = terminal("iwgetid")
@@ -373,7 +376,31 @@ def red(update,context):
 
 Con una variable hacemos referencia a la respuesta que nos devuelve la función `terminal` y es está la que usamos dentro de [`reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) para que el bot nos responda con la red conectada.
 ```
-    update.message.reply_text('La red a la que está conectado el servidor es: \n' + ssidred)
+    update.message.reply_text(
+        'La red a la que está conectado el servidor es: \n' + ssidred
+    )
+```
+
+<a name="particiones"></a>
+
+### Comando `/particiones`
+Para conocer las particiones de disco que tiene el servidor, añadimos un nuevo [`Handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.handler.html) dentro de la función principal que llama a su función correspondiente.
+```
+    updater.dispatcher.add_handler(CommandHandler("particiones", particiones))
+```
+
+En la función llamamos a la función `terminal` en la que se ejecutará el comando `fdisk -l` listandonos así las particiones existentes. Para que solo nos salga una lista con las particiones y un poco de información pero no toda, pasamos por tubería `grep "Disco"`.
+```
+def particiones(update,context):
+    _fdisk = terminal('sudo fdisk -l | grep "Disco"')
+```
+
+El bot nos responde con la lista de todas las particiones que tiene el servidor.
+```
+    update.message.reply_text(
+        'Las particiones del servidor son: \n' + _fdisk
+    )
+
 ```
 
 <br>[Inicio](#top)

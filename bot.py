@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # Funcion ejecutar comandos Linux
 
 def terminal(entrada):
-    salida = ""
+    salida = ''
     # Ejecutamos el comando en el terminal
     f = os.popen(entrada)
     # Leemos caracter a caracter y lo guardamos en la variable a devolver
@@ -56,18 +56,29 @@ def help(update,context):
 
 def ip(update,context):
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
-    ip = terminal("hostname -I")
+    ip = terminal('hostname -I')
     # Eliminamos el ultimo caracter
     ip = ip[:-1] 
     # Respondemos al comando con el mensaje
-    update.message.reply_text('La ip del servidor es: \n' + ip) 
+    update.message.reply_text(
+        'La ip del servidor es: \n' + ip
+    ) 
 
 def red(update,context):
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
-    ssidred = terminal("iwgetid")
+    ssidred = terminal('iwgetid')
     # Respondemos al comando con el mensaje
-    update.message.reply_text('La red a la que está conectado el servidor es: \n' + ssidred)
+    update.message.reply_text(
+        'La red a la que está conectado el servidor es: \n' + ssidred
+    )
 
+def particiones(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    _fdisk = terminal('sudo fdisk -l | grep "Disco"')
+    # Respondemos al comando con el mensaje
+    update.message.reply_text(
+        'Las particiones del servidor son: \n' + _fdisk
+    )
 
 # Funcion principal
 
@@ -79,7 +90,8 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help))
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
-    updater.dispatcher.add_handler(CommandHandler("red", red))
+    updater.dispatcher.add_handler(CommandHandler('red', red))
+    updater.dispatcher.add_handler(CommandHandler('particiones', particiones))
 
     # Log para errores
     updater.dispatcher.add_error_handler(error)
