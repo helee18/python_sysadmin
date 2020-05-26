@@ -27,6 +27,7 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
     - [`Comando /ip`](#ip)
     - [`Comando /red`](#red)
     - [`Comando /particines`](#particiones)
+    - [`Comando /arquitectura`](#arquitectura)
 
 <br>
 
@@ -428,6 +429,26 @@ El bot nos responde con la lista de todas las particiones que tiene el servidor.
         'Las particiones del servidor son: \n' + _fdisk
     )
 
+```
+
+<a name="arquitectura"></a>
+
+### Comando `/arquitectura`
+Para conocer la arquitectura del sistema añadimos un comando que funciones como los anteriores.
+
+Añadimos un manejador en la función principal (`main`) en el que al mandar al bot el comando `/arquitectura` llame a su función correspondiente `arquitectura` con [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html).
+```
+    updater.dispatcher.add_handler(CommandHandler('arquitectura', arquitectura))
+```
+
+En la función llamamos a la función que nos devuelve el nombre del servidor `nombre` y a la función `terminal` que ejecuta el comando `arch` que nos devuelve la arquitectura del sistema del servidor. Lo que nos devuelve cada función lo referenciamos con distintas variables que utilizamos para que nos responda el bot con la información.
+```
+def arquitectura(update,context):
+    nombre = terminal('hostname')
+    arquitectura = terminal('arch')
+    update.message.reply_text(
+        'La arquitectura del sistema del servidor ' + nombre + ' es: \n' + arquitectura
+    )
 ```
 
 <br>[Inicio](#top)

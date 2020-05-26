@@ -94,6 +94,16 @@ def particiones(update,context):
         'Las particiones del servidor ' + nombre + ' son: \n' + _fdisk
     )
 
+def arquitectura(update,context):
+    # Nombre del servidor
+    nombre = terminal('hostname')
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    arquitectura = terminal('arch')
+    # Respondemos al comando con el mensaje
+    update.message.reply_text(
+        'La arquitectura del sistema del servidor ' + nombre + ' es: \n' + arquitectura
+    )
+ 
 # Funcion principal
 
 def main():
@@ -107,6 +117,7 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
     updater.dispatcher.add_handler(CommandHandler('red', red))
     updater.dispatcher.add_handler(CommandHandler('particiones', particiones))
+    updater.dispatcher.add_handler(CommandHandler('arquitectura', arquitectura))
 
     # Log para errores
     updater.dispatcher.add_error_handler(error)
