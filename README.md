@@ -36,17 +36,17 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
 ## Crear un bot de Telegram
 
 El primer paso para crear un bot iniciar **BotFather**, el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01.jpg" alt="BotFather" width="400"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/02.jpg" alt="start" width="400"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01.jpg" alt="BotFather" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/02.jpg" alt="start" width="450"/><br>
 
 Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images//03.jpg" alt="newbot" width="400"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images//03.jpg" alt="newbot" width="450"/><br>
 
 Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el nombre con `/setname` y añadir una foto con `/setuserpic`. En cualquier momento podemos mandar el comadno `/help` para ver la lista de comandos que podemos usar dependiendo de lo que queramos hacer.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/04.jpg" alt="setname" width="450"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/05.jpg" alt="setuserpic" width="450"/>
 
-<br>[Inicio](#top)
+[Inicio](#top)<br>
 
 <a name="instalar"></a>
 
@@ -126,7 +126,7 @@ Y segun el sistema operativo te dice el comando a ejecutar para instalar lo nece
 ```
 $ sudo apt-get install build-essential python-dev
 ```
-<br>[Inicio](#top)
+[Inicio](#top)<br>
 
 <a name="basicos"></a>
 
@@ -291,7 +291,7 @@ Fuera definimos la función en la que hacemos uso de `logger` previamente defini
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 ```
-<br>[Inicio](#top)
+[Inicio](#top)<br>
 
 <a name="monitorizar"></a>
 
@@ -451,4 +451,4 @@ def arquitectura(update,context):
     )
 ```
 
-<br>[Inicio](#top)
+[Inicio](#top)<br>
