@@ -54,11 +54,9 @@ https://python-telegram-bot.readthedocs.io/en/stable/telegram.update.html
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html
 
-
 ### Filters
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html 
-
 
 ### Modulo os
 
@@ -69,3 +67,39 @@ https://docs.python.org/3/library/os.html
 https://www.tutorialspoint.com/python/file_readlines.htm
 
 https://stackoverflow.com/questions/15535205/what-does-1-mean-do-in-python
+
+https://uniwebsidad.com/libros/python/capitulo-9/metodos-del-objeto-file
+
+### Comando nombre y comando ip
+
+https://linux.die.net/man/1/hostname
+
+### Comando red
+
+https://linux.die.net/man/8/iwgetid
+
+### Comando particiones
+
+https://openwebinars.net/blog/9-comandos-basicos-fdisk-para-gestionar-el-disco-duro/
+
+https://linux.die.net/man/8/fdisk
+
+https://docs.oracle.com/cd/E19620-01/805-7644/6j76klop3/index.html
+
+### Comando arquitectura
+
+https://linux.die.net/man/1/arch 
+
+### Comando version
+
+https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html 
+
+### Comandos servicios
+
+https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments
+
+https://www.afternerd.com/blog/python-string-contains/
+
+https://uniwebsidad.com/libros/algoritmos-python/capitulo-12/excepciones
+
+
