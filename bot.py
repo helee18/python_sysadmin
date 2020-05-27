@@ -18,6 +18,7 @@ def terminal(entrada):
     salida = ''
     # Ejecutamos el comando en el terminal
     f = os.popen(entrada)
+
     # Leemos caracter a caracter y lo guardamos en la variable a devolver
     for i in f.readlines():
         salida += i 
@@ -48,61 +49,119 @@ def start(update, context):
 def help(update,context):
     # Listamos todos los comandos
     update.message.reply_text(
-        '*Lista de comandos* \n'
+        '*Lista de comandos* \n\n'
         '/start - inicio del bot \n' 
         '/ip - ip del servidor \n', 
         parse_mode= 'Markdown'
     )
 
 def nombre(update,context):
-     # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    # Nombre del servidor
     nombre = terminal('hostname')
+
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'El nombre del servidor es: \n' + nombre
+        'El nombre del servidor es: \n\n' + nombre
     ) 
 
 def ip(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
     # Nombre del servidor
     nombre = terminal('hostname')
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    # IP del servidor
     ip = terminal('hostname -I')
     # Eliminamos el ultimo caracter
     ip = ip[:-1] 
+
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'La ip del servidor ' + nombre + ' es: \n' + ip
+        'La ip del servidor ' + nombre + ' es: \n\n' + ip
     ) 
 
 def red(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
     # Nombre del servidor
     nombre = terminal('hostname')
-    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    # Red a la que está conectado el servidor
     red = terminal('iwgetid')
+
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'La red a la que está conectado el servidor ' + nombre + ' es: \n' + red
+        'La red a la que está conectado el servidor ' + nombre + ' es: \n\n' + red
     )
 
 def particiones(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
     # Nombre del servidor
     nombre = terminal('hostname')
-    # Llamamos a la funcion terminal, que ejecuta el comando pasado
-    _fdisk = terminal('sudo fdisk -l | grep "Disco"')
+    # Particiones de disco del servidor
+    particiones = terminal('sudo fdisk -l | grep "Disco"')
+
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'Las particiones del servidor ' + nombre + ' son: \n' + _fdisk
+        'Las particiones de disco del servidor ' + nombre + ' son: \n\n' + particiones
     )
 
 def arquitectura(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
     # Nombre del servidor
     nombre = terminal('hostname')
-    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    # Arquitectura del servidor
     arquitectura = terminal('arch')
+
     # Respondemos al comando con el mensaje
     update.message.reply_text(
-        'La arquitectura del sistema del servidor ' + nombre + ' es: \n' + arquitectura
+        'La arquitectura del sistema del servidor ' + nombre + ' es: \n\n' + arquitectura
     )
+
+def version(update,context):
+    # Llamamos a la funcion terminal, que ejecuta el comando pasado
+    # Nombre del servidor
+    nombre = terminal('hostname')
+    # Version del kernel del servidor
+    version = terminal('cat /proc/version')
+
+    # Respondemos al comando con el mensaje
+    update.message.reply_text(
+        'La versión de Linux del servidor ' + nombre + ' es: \n\n' + version
+    )
+
+def servicios(update,context):
+    # Comprobamos que ha entrado solo un argumento
+    if len(context.args) == 1:
+        # Declaramos el comando que se tiene que ejecutar
+        if 'estado_servicio' in update.message.text:
+            comando = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
+        elif 'iniciar_servicio' in update.message.text:
+            comando = '/etc/init.d/' + context.args[0] + ' start'
+        elif 'parar_servicio' in update.message.text:
+            comando = '/etc/init.d/' + context.args[0] + ' stop'
+        else:
+            comando = '/etc/init.d/' + context.args[0] + ' restart'
+
+        # Intentamos reiniciar y si da error lo notificamos
+        try: 
+            # Llamamos a la funcion terminal, que ejecuta el comando pasado
+            # Reiniciar servicio
+            respuesta = terminal(comando)
+
+            # Respondemos al comando con el mensaje
+            update.message.reply_text(
+                respuesta
+            )
+        except:
+            # Notificamos error
+            update.message.reply_text(
+                'Tiene que introducirse el nombre exacto del servicio'
+            )
+    else:
+        # En caso de que no se pase un argumento, notificarlo
+        update.message.reply_text(
+            'Se debe especificar el servicio.\n\n'
+            'Ejemplo:\n/reiniciar_servicio apache2'
+        )
  
 # Funcion principal
 
@@ -118,6 +177,11 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('red', red))
     updater.dispatcher.add_handler(CommandHandler('particiones', particiones))
     updater.dispatcher.add_handler(CommandHandler('arquitectura', arquitectura))
+    updater.dispatcher.add_handler(CommandHandler('version', version))
+    updater.dispatcher.add_handler(CommandHandler('estado_servicio', servicios, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler('iniciar_servicio', servicios, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler('parar_servicio', servicios, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler('reiniciar_servicio', servicios, pass_args=True))
 
     # Log para errores
     updater.dispatcher.add_error_handler(error)
