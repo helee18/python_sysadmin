@@ -28,6 +28,8 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
     - [`Comando /red`](#red)
     - [`Comando /particines`](#particiones)
     - [`Comando /arquitectura`](#arquitectura)
+    - [`Comando /version`](#version)
+    - [`Comandos /estado_servicio, /iniciar_servicio, /parar_servicio y /reiniciar_servicio`](#servicios)
 
 <br>
 
@@ -318,7 +320,7 @@ Hacemos uso del módulo [`os`](https://docs.python.org/3/library/os.html) utiliz
     f = os.popen(entrada)
 ```
 
-Después utilizamos el método `readlines()` para leer las líneas del contenido referenciado con la variable f y con un bucle vamos referenciando caracter a caracter en la variable salida, previamente declarada.
+Después utilizamos el método [`readlines()`](https://uniwebsidad.com/libros/python/capitulo-9/metodos-del-objeto-file) para leer las líneas del contenido referenciado con la variable f y con un bucle vamos referenciando caracter a caracter en la variable salida, previamente declarada.
 ```
     for i in f.readlines():
         salida += i 
@@ -344,7 +346,7 @@ Para ello primero tenemos qe declarar un nuevo controlador [`add_handler`](https
     updater.dispatcher.add_handler(CommandHandler('nombre', nombre))
 ```
 
-Definimos la función y en ella llamamos  al afunción `terminal` en la que se ejecutará el comando que nos devolverá el nombre del servidor.
+Definimos la función y en ella llamamos  al afunción `terminal` en la que se ejecutará el comando que nos devolverá el nombre del servidor ([`hostname`](https://linux.die.net/man/1/hostname)).
 ```
 def nombre(update,context):
     nombre = terminal('hostname')
@@ -367,7 +369,7 @@ En la función principal añadimos un nuevo manejador para que cuando mandemos u
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
 ```
 
-Definimos la función `ip` en la que simplemente pedimos el nombre del servidor y llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es `hostname -I`.
+Definimos la función `ip` en la que simplemente pedimos el nombre del servidor y llamamos a la función `terminal` en la que se ejecuta el comando que le pasemos y nos devuelve la respuesta del sistema. El comando que le pasamos para que nos devuelva la ip es [`hostname -I`](https://linux.die.net/man/1/hostname).
 ```
 def ip(update,context):
     nombre = terminal('hostname')
@@ -394,7 +396,7 @@ Añadimos un nuevo manejador, con [`add_handler`](https://python-telegram-bot.re
     updater.dispatcher.add_handler(CommandHandler("red", red))
 ```
 
-Al igual que en la función `ip`, pedimos el nombre del servidor y llamamos a la función `terminal` la cual ejecutará el comando que le pasamos `iwgetid` y nos devolverá la respuesta a este.
+Al igual que en la función `ip`, pedimos el nombre del servidor y llamamos a la función `terminal` la cual ejecutará el comando que le pasamos [`iwgetid`](https://linux.die.net/man/8/iwgetid) y nos devolverá la respuesta a este.
 ```
 def red(update,context):
     nombre = terminal('hostname')
@@ -416,7 +418,7 @@ Para conocer las particiones de disco que tiene el servidor, añadimos un nuevo 
     updater.dispatcher.add_handler(CommandHandler("particiones", particiones))
 ```
 
-En la función pedimos el nombre del servidor y llamamos a la función `terminal` en la que se ejecutará el comando `fdisk -l` listandonos así las particiones existentes. Para que solo nos salga una lista con las particiones y un poco de información pero no toda, pasamos por tubería `grep "Disco"`.
+En la función pedimos el nombre del servidor y llamamos a la función `terminal` en la que se ejecutará el comando [`fdisk -l`](https://linux.die.net/man/8/fdisk) listandonos así las particiones existentes. Para que solo nos salga una lista con las particiones y un poco de información pero no toda, pasamos por tubería [`grep "Disco"`](https://linux.die.net/man/1/grep).
 ```
 def particiones(update,context):
     nombre = terminal('hostname')
@@ -441,7 +443,7 @@ Añadimos un manejador en la función principal (`main`) en el que al mandar al 
     updater.dispatcher.add_handler(CommandHandler('arquitectura', arquitectura))
 ```
 
-En la función llamamos a la función que nos devuelve el nombre del servidor `nombre` y a la función `terminal` que ejecuta el comando `arch` que nos devuelve la arquitectura del sistema del servidor. Lo que nos devuelve cada función lo referenciamos con distintas variables que utilizamos para que nos responda el bot con la información.
+En la función llamamos a la función que nos devuelve el nombre del servidor `nombre` y a la función `terminal` que ejecuta el comando [`arch`](https://linux.die.net/man/1/arch) que nos devuelve la arquitectura del sistema del servidor. Lo que nos devuelve cada función lo referenciamos con distintas variables que utilizamos para que nos responda el bot con la información.
 ```
 def arquitectura(update,context):
     nombre = terminal('hostname')
@@ -450,5 +452,32 @@ def arquitectura(update,context):
         'La arquitectura del sistema del servidor ' + nombre + ' es: \n' + arquitectura
     )
 ```
+
+<a name="version"></a>
+
+### Comando `/version`
+Para conocer la versión de Linux del servidor tenemos que ejecutar el comando [`cat /proc/version`](https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html ) en el terminal de este. Podemos programar al bot para que lo haga al mendarle el comando `/version` al igual que con comandos anteriores.
+
+Primero añadimos un nuevo manejador en la función principal para que al recibir le bot el comando llame a la función correspondeinte.
+```
+    updater.dispatcher.add_handler(CommandHandler('version', version))
+```
+
+Y después definimos la función en la que, llamando a la función `terminal` y pasandole el comando que tiene que ejercutar para conocer el nombre del servidor y la versión del kernel. 
+
+Finalmente hacemos que el bot nos responda con la versión y nos diga el nombre del servidor, así siempre estamos seguros de que consultamos el servidor que queremos.
+```
+def version(update,context):
+    nombre = terminal('hostname')
+    version = terminal('cat /proc/version')
+    update.message.reply_text(
+        'La versión de Linux del servidor ' + nombre + ' es: \n\n' + version
+    )
+```
+
+<a name="servicios"></a>
+
+### Comandos `/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`
+Podemos administrar los servicios instalados en el servidor viendo su estado, iniciandolos, parandolos o reiniciandolos. Configuramos el bot para que pueda hacer estas tres cosas de la misma forma 
 
 [Inicio](#top)<br>
