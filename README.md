@@ -39,6 +39,9 @@ El primer paso para crear un bot iniciar **BotFather**, el bot principal que rec
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/01_conectar_botfather.png" alt="BotFather" width="450"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/02_start_botfather.png" alt="start" width="450"/><br>
 
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/01.jpg" alt="start" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/02.jpg" alt="start" width="450"/>
+
 Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images//03_nombre_bot.png" alt="newbot" width="450"/><br>
 
