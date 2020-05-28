@@ -478,6 +478,58 @@ def version(update,context):
 <a name="servicios"></a>
 
 ### Comandos `/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`
-Podemos administrar los servicios instalados en el servidor viendo su estado, iniciandolos, parandolos o reiniciandolos. Configuramos el bot para que pueda hacer estas tres cosas de la misma forma 
+Podemos administrar los servicios instalados en el servidor viendo su estado, iniciandolos, parandolos o reiniciandolos. Podemos configurar el bot para que lo haga pasandole un comando diciendo lo que queremos que haga junto con un argumento que será el servicio que queremos consultar o modificar su estado.
+
+Primnero declaramos cuatro nuevos manejadores para los cuatro comandos `/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`. Dentro de los [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) llamamos a la misma función `servicios` y configuramos que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca el nombre del servicio.
+```
+    updater.dispatcher.add_handler(CommandHandler('estado_servicio', servicios, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler('iniciar_servicio', servicios, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler('parar_servicio', servicios, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler('reiniciar_servicio', servicios, pass_args=True))
+```
+
+Definimos la función `servicios` y comprabamos con un condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) que se pasa un argumento. Para referirnos a los argumentos usamos [`context.args`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments) y calculamos cuantos son con [`len()`](https://docs.python.org/3/library/functions.html#len) En caso de que no sea un argumento, el bot nos responde con un aviso y nos da un ejemplo de como tenemos que hacer uso del comando.
+```
+    if len(context.args) == 1:
+
+    else:
+        update.message.reply_text(
+            'Se debe especificar el servicio.\n\n'
+            'Ejemplo:\n/reiniciar_servicio apache2'
+        )    
+```
+
+En el caso de que si que se pase un argumento tenemos que comprobar cuál es el comando que se ha pasado comprobando con [`in`](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations) si, por ejemplo, `estado_servidor` se encuentra en la texto recibido [`update.message.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.text). 
+
+Segun lo que pidamos el comando que pasaremos a la función `terminal` para ejecutarlo en el servidor será uno u otro. En todos los casos lo haremos con [`/etc/init.d/SERVICIO`](https://www.linuxtotal.com.mx/index.php?cont=info_admon_003) porque asi nos devuelve siempre un mensaje para confirmar si se ha ejecutado el comando. Usamos [`context.args[0]''](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#deep-linking-start-parameters) para referirnos al parametro que se ha pasado, el servicio, y añadirlo a la linea de comando que el bot va a ejecutar.
+
+En el caso del estado, añadimos a la linea de comando `grep "Activate"` para que en vez de salirnos toda la información solo nos salga la linea que dice si esta activado o parado.
+```
+        if 'estado_servicio' in update.message.text:
+            comando = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
+        elif 'iniciar_servicio' in update.message.text:
+            comando = '/etc/init.d/' + context.args[0] + ' start'
+        elif 'parar_servicio' in update.message.text:
+            comando = '/etc/init.d/' + context.args[0] + ' stop'
+        else:
+            comando = '/etc/init.d/' + context.args[0] + ' restart'
+```
+
+Una vez referienzado en una variable el comando que queremos ejecutar, llamamos a la función `terminal` y le pasamos de parametro la variable `comando` para que la ejecute y referenciamos con la variable `respuesta` lo que nos responde el sistema para que el bot nos lo devuelva como respuesta a nuestro mensaje.
+
+Esto puede dar un fallo si el nombre del servicio no es correcto, por lo que hacemos uso de las excepciones de python [`try`](https://docs.python.org/3/reference/compound_stmts.html#try) para que en caso de que de error y no se pueda ejecutar, con [`except`](https://docs.python.org/3/reference/compound_stmts.html#except) se notifique por el chat con el bot y no se quede solo reflejado en el servidor.
+```
+        try: 
+            respuesta = terminal(comando)
+
+            update.message.reply_text(
+                respuesta
+            )
+        except:
+            update.message.reply_text(
+                'Tiene que introducirse el nombre exacto del servicio'
+            )
+```
+
 
 [Inicio](#top)<br>

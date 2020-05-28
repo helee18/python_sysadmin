@@ -133,18 +133,21 @@ def servicios(update,context):
     if len(context.args) == 1:
         # Declaramos el comando que se tiene que ejecutar
         if 'estado_servicio' in update.message.text:
+            # Comando para ver el estado
             comando = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
         elif 'iniciar_servicio' in update.message.text:
+            # Comando para iniciar
             comando = '/etc/init.d/' + context.args[0] + ' start'
         elif 'parar_servicio' in update.message.text:
+            # Comando para parar
             comando = '/etc/init.d/' + context.args[0] + ' stop'
         else:
+            # Comando para reiniciar
             comando = '/etc/init.d/' + context.args[0] + ' restart'
 
         # Intentamos reiniciar y si da error lo notificamos
         try: 
             # Llamamos a la funcion terminal, que ejecuta el comando pasado
-            # Reiniciar servicio
             respuesta = terminal(comando)
 
             # Respondemos al comando con el mensaje
