@@ -1,2 +1,3 @@
 bot-venv/
-auth/
+auth.py
+__pycache__/
