@@ -32,6 +32,14 @@ https://medium.com/@goyoregalado/bots-de-telegram-en-python-134b964fcdf7
 
 https://www.youtube.com/watch?v=yTvw1dVcER8
 
+### Token e id
+
+https://medium.com/@goyoregalado/bots-de-telegram-en-python-134b964fcdf7
+
+https://swcarpentry.github.io/git-novice-es/06-ignore/
+
+https://www.youtube.com/watch?v=ZRecbgjxkig 
+
 ### Updater
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html
@@ -57,6 +65,10 @@ https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler
 ### Filters
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html 
+
+### Texto en negrita
+
+https://stackoverflow.com/questions/52163959/how-can-i-bold-text-in-telepot-telegram-bot  
 
 ### Modulo os
 
