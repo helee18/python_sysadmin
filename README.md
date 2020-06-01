@@ -358,13 +358,13 @@ def error(update, context):
 ### [Función para ejecutar comandos en Linux](https://github.com/helee18/python_sysadmin/blob/master/comandos_linux.py)
 Para poder interactuar con el sistema, definimos una función cuyo trabajo es ejecutar el comando linux que nosotros le pasemos y devolvernos la respuesta del sistema a este.
 
-# Cuando el bot reciba un comando, dentro de la función de este comando llamaremos a la función `terminal` la cual ejecutara el comando linux correspondiente.
-```
-def funcion(update,context):
-    if update.message.chat_id in ids:
-        respuesta_sistema = terminal('comando_linux')
-        update.message.reply_text(respuesta_sistema) 
-```
+#Cuando el bot reciba un comando, dentro de la función de este #comando llamaremos a la función `terminal` la cual ejecutara el #comando linux correspondiente.
+#```
+#def funcion(update,context):
+#    if update.message.chat_id in ids:
+#        respuesta_sistema = terminal('comando_linux')
+#        update.message.reply_text(respuesta_sistema) 
+#```
 
 Esta función la podemos definir en un script separado del resto de forma que se ejecute en un proceso distinto. Esto sirve para que, al ejecutarse un comando, si este tarda en responder no bloquee el bot y este pueda seguir a la escucha de más peticiones.
 
@@ -395,18 +395,18 @@ Después utilizamos el método [`readlines()`](https://uniwebsidad.com/libros/py
         salida += i 
 ```
 
-Eliminamos el ultimo caracter, que sera el salto de línea o retorno de carro (\n).
+Eliminamos el último caracter, que será el salto de línea o retorno de carro (\n).
 ```
     salida = salida[:-1]
 ```
 
-Por último devolvemos la variable con la respuesta para poder usarla en la función del comando y poder mostrarla por la conversación con el bot por Telegram.
+Por último devolvemos la variable con la respuesta para usarla y mostrar la información por la conversación con el bot por Telegram.
 ```
     return salida
 ```
 [Inicio](#top)<br>
 
-<a name="imagenes"></a>
+<a name="respuesta"></a>
 
 ### Responder con texto o una imagen
 Cuando mandamos un comando al bot, este ejecuta el comando linux correspondiente en el terminal con la función `terminal` y nos devuelve la respuesta del sistema. Nos puede interesar que esta respuesta nos la de el bot en forma de mensaje de texto o de imagen.
@@ -418,7 +418,10 @@ El primer paso es definir un nuevo manejador dentro la función principal, este 
     updater.dispatcher.add_handler(conv_handler)
 ```
 
-Usamos [`ConversationHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html) que es el controlador para mantener una conversación.
+Usamos [`ConversationHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html) que es el controlador para mantener una conversación. Para poder usarlo tenemos que importarlo al principio del script junto con el resto de submodulos de la librería [`telegram.ext`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html).
+```
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
+```
 ```
     conv_handler = ConversationHandler(
     
@@ -430,7 +433,7 @@ Lo primero que declaramos dentro del controlador es [`entry_points`](https://pyt
         entry_points=[CommandHandler('comando', funcion)],
 ```
 
-Lo siguiente que encontramos es [`states`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.states) que es un dictado donde definimos los distintos estados por los que pasa la conversación.
+Lo siguiente que declaramos es [`states`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.states) que es un dictado donde definimos los distintos estados por los que pasa la conversación.
 ```
         states={
             ESTADO: [ ]
@@ -447,12 +450,24 @@ En nuestro caso tenemos un solo estado que será `TIPO`.
 TIPO = range(1)
 ```
 
-Cuando definimos las funciones de los comandos tenemos que definir una variable global en la que haremos referiencia al comando linux que queremos ejecutar segun el comando que le hayamos mandado al bot.
+Por último declaramos [`fallbacks`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.fallbacks) donde definimos el comando que podemos usar en cualquier momento dentro de la conversación. Este llamará a una función en la que simplemente devolveremos [`ConversationHandler.END`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.END) para salir de la conversación.
 ```
-def adios(update,context):
+        fallbacks=[CommandHandler('cancel', cancel)]
+```
+```
+def cancel(update,context):
+    return ConversationHandler.END
+```
+
+Cuando definimos las funciones de los comandos tenemos que definir una variable global en la que haremos referiencia al comando linux que queremos ejecutar segun el comando que le hayamos mandado al bot.
+
+También declaranmos una variable en la que tendremos la respuesta que nos va a dar posteriormente el bot pero sin los datos que solicitamos del servidor.
+```
+def funcion(update,context):
     if update.message.chat_id in ids:
-        global comando_linux
+        global comando_linux, respuesta
         comando_linux = " "
+        respuesta = " "
 ```
 
 Después hacemos que el bot nos pregunte si queremos recibir la respuesta en modo de texto o imagen. Para esto hacemos que en el espacio del teclado del móvil aparezcan las dos opciones.
@@ -480,8 +495,37 @@ Por último hacemos que la función devuelva el nombre del estado al que queremo
         return TIPO
 ```
 
+Dentro del controlador de la conversación, en el estado, definimos dos manejadores de mensajes [`MessageHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html) en los que filtraremos los dos mensajes que pueden introducirse y la función a la que llamamos segun el mensaje. Para filtrar el mensaje usamos [`Filters.regex`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html?highlight=regex#telegram.ext.filters.Filters.regex) que nos permite filtrar el texto de entrada con patrones, en nuestro caso haremos uso de `^` y `$` para referirnos que empieza y acaba la cadena así.
+```
+        states={
+            TIPO: [MessageHandler(Filters.regex('^Texto$'), texto),
+                   MessageHandler(Filters.regex('^Imagen$'), imagen)]
+        },
+```
 
-# ELEGIR ENTRE TEXTO O IMAGEN #
+<a name="texto"></a>
+
+#### Responder con texto
+
+Si lo que hemos introducido es `Texto` llamaremos a la función `texto` donde llamamos a la función `terminal` le pasamos como parametro el comando linux previamente estalecido en la función del comando que introdujimos. Lo que devuelva la función `terminal` (la respuesta del terminal) lo "guardamos" en una variable.
+```
+def texto(update,context):
+    respuesta_sistema = terminal(comando_linux)
+```
+
+Programamos al bot para que responda haciendo uso de la variable `respuesta_sistema` y la variable `respuesta` declarada en la función del comando.
+```
+    update.message.reply_text(respuesta + '\n' + respuesta_sistema)
+```
+
+Por último salimos de la conversación devolviendo [`ConversationHandler.END`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.END).
+```
+    return ConversationHandler.END
+```
+
+<a name="imagen"></a>
+
+#### Responder con imagen
 
 # CUANDO ELIGES IMAGEN
 Para poder devolver la respuesta con una imagen, tenemos que instalar [`ImageMagick`](https://imagemagick.org/index.php) que hará posible guardar la respuesta y además seleccionar la tipografía y los colores.
