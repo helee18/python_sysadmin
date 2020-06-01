@@ -20,5 +20,8 @@ os.system("sudo apt-get install python3-pip -y")
 # Instalamos python-telegram-bot
 os.system("pip3 install python-telegram-bot --upgrade")
 
+# Instalamos imagemagick
+os.system("sudo apt-get install imagemagick -y")
+
 # Ejecutamos el script de nuestro bot
 os.system("python3 bot.py")
