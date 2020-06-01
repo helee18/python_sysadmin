@@ -1,14 +1,26 @@
 ## WEBGRAFIA
 
+### Segundo plano
+
+https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/
+
 ### Creacion del bot
 
 https://core.telegram.org/bots
 
 https://www.youtube.com/watch?v=h2J6-03MsnQ 
 
+### Modulo os
+
+https://docs.python.org/3/library/os.html 
+
 ### Entorno de desarrollo
 
 https://www.youtube.com/watch?v=73coNZ-5hWM 
+
+https://openwebinars.net/blog/entornos-de-desarrollo-virtuales-con-python3/
+
+https://docs.python.org/3/library/venv.html
 
 ### Instalación telegram-python-bot
 
@@ -40,49 +52,21 @@ https://swcarpentry.github.io/git-novice-es/06-ignore/
 
 https://www.youtube.com/watch?v=ZRecbgjxkig 
 
-### Updater
+### Paquetes de python telegram bot
 
-https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html
+https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html
+
+### Callbackcontext
 
 https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide-to-Version-12.0#what-exactly-is-callbackcontext
-
-### Dispatcher
-
-https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html
-
-### CommandHnadler
-
-https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html 
 
 ### Update
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.update.html
 
-### MessageHandler
-
-https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html
-
-### Filters
-
-https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html 
-
 ### Texto en negrita
 
 https://stackoverflow.com/questions/52163959/how-can-i-bold-text-in-telepot-telegram-bot  
-
-### Modulo os
-
-https://docs.python.org/3/library/os.html 
-
-### Comandos
-
-https://descubriendolaorangepi.wordpress.com/2017/02/18/desarrollando-un-bot-de-telegram-en-python-que-permita-consultar-y-controlar-un-sistema-linux-armbian/
-
-https://linux.die.net
-
-https://openwebinars.net/blog/9-comandos-basicos-fdisk-para-gestionar-el-disco-duro/
-
-https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html 
 
 ### Función terminal
 
@@ -91,6 +75,24 @@ https://www.tutorialspoint.com/python/file_readlines.htm
 https://stackoverflow.com/questions/15535205/what-does-1-mean-do-in-python
 
 https://uniwebsidad.com/libros/python/capitulo-9/metodos-del-objeto-file
+
+### Conversacion
+
+https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot.py
+
+https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot.png
+
+https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot2.py
+
+### Comandos
+
+https://descubriendolaorangepi.wordpress.com/2017/02/18/desarrollando-un-bot-de-telegram-en-python-que-permita-consultar-y-controlar-un-sistema-linux-armbian/
+
+https://linux.die.net
+
+https://www.servidoresadmin.com/comando-linux-df/
+
+https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html 
 
 ### Comandos servicios
 
