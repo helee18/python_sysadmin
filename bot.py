@@ -25,10 +25,16 @@ def echo(update, context):
 # Funciones para comandos
 
 def start(update, context):
-    # Confirmamos que se ha iniciado bien con un mensaje de bienvenida
-    update.message.reply_text(
-        'Welcome to PythonSysadminBot ' + update.message.from_user.first_name
-    )
+    # Comprobamos si es un usuario autorizado
+    if update.message.chat_id in ids:
+        # Confirmamos que se ha iniciado bien con un mensaje de bienvenida
+        update.message.reply_text(
+            'Welcome to PythonSysadminBot ' + update.message.from_user.first_name
+        )
+    else:
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
 
 def help(update,context):
     # Comprobamos si es un usuario autorizado
@@ -41,6 +47,7 @@ def help(update,context):
             parse_mode= 'Markdown'
         )
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
@@ -57,6 +64,7 @@ def nombre(update,context):
             'El nombre del servidor es: \n\n' + nombre
         ) 
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
@@ -67,17 +75,15 @@ def ip(update,context):
         # Llamamos a la funcion terminal, que ejecuta el comando pasado
         # Nombre del servidor
         nombre = terminal('hostname')
-        # Llamamos a la funcion terminal, que ejecuta el comando pasado
         # IP del servidor
-        ip = terminal('hostname -I')
-        # Eliminamos el ultimo caracter
-        ip = ip[:-1] 
+        ip = terminal('hostname -I') 
 
         # Respondemos al comando con el mensaje
         update.message.reply_text(
             'La ip del servidor ' + nombre + ' es: \n\n' + ip
         ) 
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
@@ -96,24 +102,28 @@ def red(update,context):
             'La red a la que está conectado el servidor ' + nombre + ' es: \n\n' + red
         )
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
 
-def particiones(update,context):
+def espacio(update,context):
     # Comprobamos si es un usuario autorizado
     if update.message.chat_id in ids:
         # Llamamos a la funcion terminal, que ejecuta el comando pasado
         # Nombre del servidor
         nombre = terminal('hostname')
-        # Particiones de disco del servidor
-        particiones = terminal('sudo fdisk -l | grep "Disco"')
+        # Espacio del servidor
+        #espacio = terminal('df -h')
+        terminal('df -h | convert -font Courier -pointsize 50 -fill white -background black label:@- ./images/test.png')
 
         # Respondemos al comando con el mensaje
-        update.message.reply_text(
-            'Las particiones de disco del servidor ' + nombre + ' son: \n\n' + particiones
-        )
+        #update.message.reply_text(
+        #    'El espacio del servidor ' + nombre + ' son: \n' + espacio
+        #)
+        update.message.bot.send_photo(photo=open('./images/test.png', 'rb'))
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
@@ -132,6 +142,7 @@ def arquitectura(update,context):
             'La arquitectura del sistema del servidor ' + nombre + ' es: \n\n' + arquitectura
         )    
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
@@ -150,6 +161,7 @@ def version(update,context):
             'La versión de Linux del servidor ' + nombre + ' es: \n\n' + version
         )   
     else:
+        # Si no es un usuario autorizado
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
@@ -211,7 +223,7 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('nombre', nombre))
     updater.dispatcher.add_handler(CommandHandler('ip', ip))
     updater.dispatcher.add_handler(CommandHandler('red', red))
-    updater.dispatcher.add_handler(CommandHandler('particiones', particiones))
+    updater.dispatcher.add_handler(CommandHandler('espacio', espacio))
     updater.dispatcher.add_handler(CommandHandler('arquitectura', arquitectura))
     updater.dispatcher.add_handler(CommandHandler('version', version))
     updater.dispatcher.add_handler(CommandHandler('estado_servicio', servicios, pass_args=True))
