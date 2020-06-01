@@ -358,7 +358,7 @@ def error(update, context):
 ### [Función para ejecutar comandos en Linux](https://github.com/helee18/python_sysadmin/blob/master/comandos_linux.py)
 Para poder interactuar con el sistema, definimos una función cuyo trabajo es ejecutar el comando linux que nosotros le pasemos y devolvernos la respuesta del sistema a este.
 
-Cuando el bot reciba un comando, dentro de la función de este comando llamaremos a la función `terminal` la cual ejecutara el comando linux correspondiente.
+# Cuando el bot reciba un comando, dentro de la función de este comando llamaremos a la función `terminal` la cual ejecutara el comando linux correspondiente.
 ```
 def funcion(update,context):
     if update.message.chat_id in ids:
@@ -409,7 +409,77 @@ Por último devolvemos la variable con la respuesta para poder usarla en la func
 <a name="imagenes"></a>
 
 ### Responder con texto o una imagen
-Nos puede interesar que, tras ejecutar el comando linux en el sistema, el bot nos responda con un mensaje de texto o con una imagen del terminal con la respuesta.
+Cuando mandamos un comando al bot, este ejecuta el comando linux correspondiente en el terminal con la función `terminal` y nos devuelve la respuesta del sistema. Nos puede interesar que esta respuesta nos la de el bot en forma de mensaje de texto o de imagen.
+
+Para poder decirle al bot de que forma queremos que nos responda, tenemos que configurar una conversación entre el bot y el usuario.
+
+El primer paso es definir un nuevo manejador dentro la función principal, este tendrá dentro la variable `conv_handler` que declararemos encima, también dentro de la función principal, con la estructura de la conversación.
+```
+    updater.dispatcher.add_handler(conv_handler)
+```
+
+Usamos [`ConversationHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html) que es el controlador para mantener una conversación.
+```
+    conv_handler = ConversationHandler(
+    
+    )
+```
+
+Lo primero que declaramos dentro del controlador es [`entry_points`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.entry_points), se trata de una lista en la que establecemos cuales son los comandos que inician la conversación. En este caso añadimos todos los comandos que quieran ejecutar un comando linux en el sistema.
+```
+        entry_points=[CommandHandler('comando', funcion)],
+```
+
+Lo siguiente que encontramos es [`states`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.states) que es un dictado donde definimos los distintos estados por los que pasa la conversación.
+```
+        states={
+            ESTADO: [ ]
+        },
+```
+
+El nombre del estado es un objeto que tenemos que declarar al principio del script. Lo haremos con un rango de tanto como estados tengamos. Esto le asignará un valor numérico a cada estado.
+```
+ESTADO1, ESTADO2 = range(2)
+```
+
+En nuestro caso tenemos un solo estado que será `TIPO`.
+```
+TIPO = range(1)
+```
+
+Cuando definimos las funciones de los comandos tenemos que definir una variable global en la que haremos referiencia al comando linux que queremos ejecutar segun el comando que le hayamos mandado al bot.
+```
+def adios(update,context):
+    if update.message.chat_id in ids:
+        global comando_linux
+        comando_linux = " "
+```
+
+Después hacemos que el bot nos pregunte si queremos recibir la respuesta en modo de texto o imagen. Para esto hacemos que en el espacio del teclado del móvil aparezcan las dos opciones.
+
+Primero tenemos que declarar una variable con las opciones que van a aparecer.
+```
+        keyboard = [['Texto', 'Imagen']]
+```
+
+Después con [`message.reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) le decimos al bot que tiene que responder. Con [`reply_makeup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) configuramos lo que va a aparecer en el teclado. [`ReplyKeyboardMarkup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html) representa al teclado y dentro establecemos lo que va a aparecer con la variable [`keyboard`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html#telegram.ReplyKeyboardMarkup.keyboard) y con [`one_time_keyboard=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html#telegram.ReplyKeyboardMarkup.one_time_keyboard) hacemos que se oculte tras usarlo pero no que desaparezca del todo, eso lo haremos posteriormente.
+
+Para poder usar el módulo [`ReplyKeyboardMarkup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html) tenemos que importarlo al principio del script.
+```
+from telegram import ReplyKeyboardMarkup
+```
+```
+        update.message.reply_text(
+            '¿Quieres la respuesta en modo texto o en modo imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+```
+
+Por último hacemos que la función devuelva el nombre del estado al que queremos pasar.
+```
+        return TIPO
+```
+
 
 # ELEGIR ENTRE TEXTO O IMAGEN #
 
