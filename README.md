@@ -11,6 +11,43 @@ $ python3 bot.py &
 
 Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y programaremos al bot para que, según el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
 
+- [`Crear un bot de Telegram`](#crear)
+- [`Instalar python-telegram-bot`](#instalar)
+    - [`Entorno de desarrollo virutal`](#venv)
+    - [`Instalación con pip`](#pip)
+    - [`Instalación clonando el repositorio`](#github)
+- [`Elementos básicos del script del bot`](#basicos)
+    - [`Importar módulos`](#import)
+    - [`Logging`](#logging)
+    - [`Función main`](#main)
+    - [`Introducción del token`](#token)
+    - [`Inicio bot y espera`](#inicio)
+    - [`Controladores de comandos`](#controladores_comandos)
+    - [`Funciones de comandos`](#funciones)
+    - [`Control de usuarios`](#usuarios)
+    - [`Comando `/start``](#start)
+    - [`Comando `/help``](#help)
+    - [`Comandos no definidos`](#echo)
+    - [`Log de errores`](#error)
+- [`Ejecución del script del bot`](#ejecutar)
+- [`Funciones para ejecutar comandos en Linux`](#comandos_linux)
+    - [`Función que devuelve la respuesta en forma de texto`](#terminal_texto)
+    - [`Función que devuelve la respuesta en forma de imagen`](#terminal_imagen)
+- [`Conversación bot-usuario`](#conversacion)
+    - [`Responder con texto`](#texto)
+    - [`Responder con imagen`](#imagen)
+- [`Comandos para monitorizar un servidor`](#monitorizar)
+    - [`Comando /nombre`](#nombre)
+    - [`Comando /ip`](#ip)
+    - [`Comando /red`](#red)
+    - [`Comando /arquitectura`](#arquitectura)
+    - [`Comando /version`](#version)
+    - [`Comando /espacio`](#espacio)
+    - [`Comando /memoria`](#memoria)
+    - [`Comando /procesos`](#procesos)
+    - [`Comando /usuarios`](#usuarios)
+    - [`Comando servicios (/estado_servicio, /iniciar_servicio, /parar_servicio y /reiniciar_servicio)`](#servicios)
+
 <a name="crear"></a>
 
 ## Crear un bot de Telegram
@@ -22,11 +59,13 @@ El primer paso para crear un bot tenemos que iniciar [`BotFather`](https://teleg
 Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather03.jpg" alt="newbot" width="450"/><br>
 
-Desde el BotFather se puede modificar los bots. Por ejemplo, se puede cambiar el nombre con `/setname` y añadir una foto con `/setuserpic`. En cualquier momento podemos mandar el comadno `/help` para ver la lista de comandos que podemos usar dependiendo de lo que queramos hacer.<br>
+Desde el [`BotFather`](https://telegram.me/BotFather) se puede modificar los bots. Por ejemplo, se puede cambiar el nombre con `/setname` y añadir una foto con `/setuserpic`. En cualquier momento podemos mandar el comadno `/help` para ver la lista de comandos que podemos usar dependiendo de lo que queramos hacer.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather04.jpg" alt="setname" width="450"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather05.jpg" alt="setuserpic" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather05.jpg" alt="setuserpic" width="450"/><br>
 
-# AÑADIR DESCRIPCIÓN #
+Podemos añadir una descripción para nuestro bot con `\setdescription`. Esta aparecerá antes de iniciarlo.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather06.jpg" alt="setdescription" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="450"/><br>
 
 [Inicio](#top)<br>
 
@@ -110,6 +149,20 @@ Esto quiere decir que no se pudo compilar la extensión `tornado.speedups`. Y se
 $ sudo apt-get install build-essential python-dev
 ```
 [Inicio](#top)<br>
+
+<a name="ejecutar"></a>
+
+## Ejecución del script del bot
+
+Segundo planno siempre 
+
+Cuando administramos el servidor es convemiente cambiar permisos
+
+Cambiar permisos
+
+[Inicio](#top)<br>
+
+<a name="basicos"></a>
 
 ## [Elementos básicos del script del bot](https://github.com/helee18/python_sysadmin/blob/master/ejemplo-bot.py)
 
@@ -209,9 +262,9 @@ También le decimos que se bloquee y se quede a la espera hasta recibir mensajes
 ```
 [Inicio](#top)<br>
 
-<a name="recepcion"></a>
+<a name="controladores_comandos"></a>
 
-### Recepción de comandos
+### Controladores de comandos
 Siempre que queramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler). Para manejar el comando utilizaremos [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama. Haremos uso de `updater`, previamente declarado, que nos ayudará a codificar el bot ya que hace referencia al token identificativo.
 ```
     updater.dispatcher.add_handler(CommandHandler('comando', funcion))
@@ -297,22 +350,19 @@ Para poder recordar la lista de comandos que podemos utilizar en el bot y para q
 ```
 
 Y en la función vamos añadiendo los comandos que vamos configurando para poder tenerlos en una lista y consultarlo en cualquier momento.
-
-Para poder poner el titulo en negrita (Lista de comandos) le ponemos `*` al principio y al final y despues declaramos que lo lea como si fuese Markdown `parse_mode= 'Markdown'`. Y para introducir saltos te línea, añadimos `\n`.
 ```
 def help(update,context):
     if update.message.chat_id in ids:
         update.message.reply_text(
-            '*Lista de comandos* \n\n'
-            '/start - inicio del bot \n' 
-            '/ip - ip del servidor \n', 
-            parse_mode= 'Markdown'
+            'Lista de comandos \n\n'
+            '/start - inicio del bot \n\n'
         )
     else:
         update.message.reply_text(
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="450"/><br>
 [Inicio](#top)<br>
 
 <a name="echo"></a>
@@ -526,6 +576,9 @@ Por último declaramos [`fallbacks`](https://python-telegram-bot.readthedocs.io/
 ```
 ```
 def cancel(update,context):
+    update.message.reply_text(
+        'Se ha cancelado el comando'
+    )
     return ConversationHandler.END
 ```
 
@@ -675,7 +728,9 @@ def funcion(update,context):
 ### Comando `/nombre`
 Podemos conocer el nombre del servidor añadiendo comando que le pida al sistema que le diga cual es el nombre del servidor en el que se esta ejecutando el script ([`hostname`](https://linux.die.net/man/1/hostname)).
 ```
-                      CommandHandler('nombre', nombre),
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('nombre', nombre),
+                      ...],
 ```
 ```
 def nombre(update,context):
@@ -708,7 +763,9 @@ En el resto de comandos añadimos el nombre del servidor a la respuesta llamando
 ### Comando `/ip`
 Con este comando consultamos cual es la ip del servidor en el que se está ejecutando el script del bot. El comando linux que le pasamos para que nos devuelva la ip es [`hostname -I`](https://linux.die.net/man/1/hostname).
 ```
-                      CommandHandler('ip', ip),
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('ip', ip)],
 ```
 ```
 def ip(update,context):
@@ -736,7 +793,10 @@ def ip(update,context):
 ### Comando `/red`
 Conoceremos la red a la que está conectador nuestro servidor con [`iwgetid`](https://linux.die.net/man/8/iwgetid).
 ```
-                      CommandHandler('red', red),
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('red', red)],
+
 ```
 ```
 def red(update,context):
@@ -759,40 +819,14 @@ def red(update,context):
 ```
 [Inicio](#top)<br>
 
-<a name="espacio"></a>
-
-### Comando `/espacio`
-Podemos conocer el espacio del sistema del servidor con el comando de linux [`df -h`](https://linux.die.net/man/1/df) que nos muestra el espacio total, ocupado y libre en nuestro sistema en Gb, Mb y Kb. 
-```
-                      CommandHandler('espacio', espacio),
-```
-```
-def espacio(update,context):
-    if update.message.chat_id in ids:
-        global comando_linux, respuesta
-        comando_linux = 'df -h'
-        respuesta = 'El espacio del servidor ' + terminal_texto('hostname') + ' es: '
-
-        keyboard = [['Texto', 'Imagen']]
-        update.message.reply_text(
-            '¿Quieres la respuesta en texto o en imagen?',
-            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        )
-        
-        return TIPO
-    else:
-        update.message.reply_text(
-            'No perteneces a los usuarios autorizados'
-        )
-```
-[Inicio](#top)<br>
-
 <a name="arquitectura"></a>
 
 ### Comando `/arquitectura`
 En este caso usamos el comando linux [`arch`](https://linux.die.net/man/1/arch) que nos devuelve la arquitectura del sistema del servidor.
 ```
-                      CommandHandler('arquitectura', arquitectura),
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('arquitectura', arquitectura)],          
 ```
 ```
 def arquitectura(update,context):
@@ -820,7 +854,9 @@ def arquitectura(update,context):
 ### Comando `/version`
 Para conocer la versión de Linux del servidor tenemos que ejecutar la linea de comando [`cat /proc/version`](https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html ) en el terminal de este.
 ```
-                      CommandHandler('version', version),
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('version', version)],      
 ```
 ```
 def version(update,context):
@@ -843,18 +879,139 @@ def version(update,context):
 ```
 [Inicio](#top)<br>
 
+<a name="espacio"></a>
+
+### Comando `/espacio`
+Podemos conocer el espacio del sistema del servidor con el comando de linux [`df -h`](https://linux.die.net/man/1/df) que nos muestra el espacio total, ocupado y libre en nuestro sistema en Gb, Mb y Kb. 
+```
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('espacio', espacio)],
+```
+```
+def espacio(update,context):
+    if update.message.chat_id in ids:
+        global comando_linux, respuesta
+        comando_linux = 'df -h'
+        respuesta = 'El espacio del servidor ' + terminal_texto('hostname') + ' es: '
+
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        return TIPO
+    else:
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+```
+[Inicio](#top)<br>
+
+<a name="memoria"></a>
+
+### Comando `/memoria`
+Para obtener datos de la memoria como el total, lo usado o libre, entre otra información, ejecutamos el comando [`free -h`](https://raiolanetworks.es/blog/memoria-ram-usada-memoria-ram-libre-linux/).
+```
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('memoria', memoria)],
+```
+```
+def memoria(update,context):
+    if update.message.chat_id in ids:
+        global comando_linux, respuesta
+        comando_linux = 'free -h'
+        respuesta = 'La memoria del servidor ' + terminal_texto('hostname') + ' es: '
+
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        return TIPO
+    else:
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+```
+[Inicio](#top)<br>
+
+<a name="procesos"></a>
+
+### Comando `/procesos`
+Para conocer los procesos que hay en ejecución en el servidor, hacemos que el bot ejecute el comando linux [`ps`](https://linux.die.net/man/1/ps).
+```
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('procesos', procesos)],
+```
+```
+def procesos(update,context):
+    if update.message.chat_id in ids:
+        global comando_linux, respuesta
+        comando_linux = 'ps'
+        respuesta = 'Los procesos que se están ejecutando en el servidor ' + terminal_texto('hostname') + ' son: '
+
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        return TIPO
+    else:
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+```
+[Inicio](#top)<br>
+
+<a name="usuarios"></a>
+
+### Comando `/usuarios`
+Con el comando [`w`](https://linux.die.net/man/1/w) podemos conocer los usuarios conectados al servidor en ese momento y qué esta haciendo. En la primera línea se muestra la hora actual, el tiempo que lleva el servidor en funcionamiento. cuantos usuarios están conectados y el prometio de carga en 1, 5 y 15 minutos.
+```
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('usuarios', usuarios)],
+```
+```
+def usuarios(update,context):
+    if update.message.chat_id in ids:
+        global comando_linux, respuesta
+        comando_linux = 'w'
+        respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
+
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        return TIPO
+    else:
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+```
+[Inicio](#top)<br>
+
 <a name="servicios"></a>
 
-### Comandos `/servicios`
+### Comandos (`/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`)
 Podemos administrar los servicios instalados en el servidor viendo su estado, iniciandolos, parandolos o reiniciandolos. Podemos configurar el bot para que lo haga pasandole un comando diciendo lo que queremos que haga junto con un argumento que será el servicio que queremos consultar o modificar su estado.
 
 En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca el nombre del servicio.
 ```
-
+    conv_handler = ConversationHandler(
+        entry_points=[...
                       CommandHandler('estado_servicio', servicios, pass_args=True),
                       CommandHandler('iniciar_servicio', servicios, pass_args=True),
                       CommandHandler('parar_servicio', servicios, pass_args=True),
-                      CommandHandler('reiniciar_servicio', servicios, pass_args=True),
+                      CommandHandler('reiniciar_servicio', servicios, pass_args=True)],               
 ```
 
 Aunque podrías hacerlo con la conversación con el bot, desarrollaremos la función de otra forma. 
@@ -914,8 +1071,12 @@ En este caso devolvemos un estado distinto que será `TIPO_SERVICIOS` el cual te
 TIPO, TIPO_SERVICIOS = range(2)
 ```
 ```
+        states={
+            ...
+
             TIPO_SERVICIOS: [MessageHandler(Filters.regex('^Texto$'), texto_servicios),
                              MessageHandler(Filters.regex('^Imagen$'), imagen_servicios)],
+        },
 ```
 
 Definimos las funciones `texto_servicios` e `imagen_servicios` que van a ser iguales que `texto` e `imagen` excepto porque la llamada a las funciones para ejecutar los comandos en linux van a estar dentro de una excepción.
@@ -927,7 +1088,7 @@ def texto_servicios(update,context):
         respuesta_sistema = terminal_texto(comando_linux)
 
         update.message.reply_text(
-            respuesta + '\n\n' + respuesta_sistema,
+            respuesta_sistema,
             reply_markup=ReplyKeyboardRemove()
         )
     except:

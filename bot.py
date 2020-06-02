@@ -67,7 +67,7 @@ def texto_servicios(update,context):
 
         # Respondemos al comando con el mensaje
         update.message.reply_text(
-            respuesta + '\n\n' + respuesta_sistema,
+            respuesta_sistema,
             reply_markup=ReplyKeyboardRemove()
         )
     except:
@@ -105,6 +105,9 @@ def imagen_servicios(update,context):
 # Funcion para terminar la conversacion
 
 def cancel(update,context):
+    update.message.reply_text(
+        'Se ha cancelado el comando'
+    )
     return ConversationHandler.END
 
 # Funciones para comandos
@@ -126,10 +129,22 @@ def help(update,context):
     if update.message.chat_id in ids:
         # Listamos todos los comandos
         update.message.reply_text(
-            '*Lista de comandos* \n\n'
-            '/start - inicio del bot \n' 
-            '/ip - ip del servidor \n', 
-            parse_mode= 'Markdown'
+            'LISTA DE COMANDOS \n\n'
+            '/start - inicio del bot \n\n'
+            '/cancel - cancelar un comando \n\n'
+            '/ip - ip del servidor \n\n'
+            '/red - red a la que está conectado el servidor \n\n'
+            '/arquitectura - arquitectura del sistema del servidor \n\n'
+            '/version - version de Linux del servidor \n\n'
+            '/espacio - espacio del sistema del servidor \n\n'
+            '/memoria - memoria del servidor \n\n'
+            '/procesos - procesos en ejecución en el servidor \n\n'
+            '/usuarios - usuarios conectados al servidor \n\n'
+            '/estado_servicio (servicio) - estado de un servicio \n\n'
+            '/iniciar_servicio (servicio) - iniciar un servicio \n\n'
+            '/parar_servicio (servicio) - parar un servicio \n\n'
+            '/reiniciar_servicio (servicio) - reiniciar un servicio \n\n'
+            'Ejemplo servicios:  /estado_servicio apache2 \n\n'
         )
     else:
         # Si no es un usuario autorizado
@@ -212,31 +227,6 @@ def red(update,context):
             'No perteneces a los usuarios autorizados'
         )
 
-def espacio(update,context):
-    # Comprobamos si es un usuario autorizado
-    if update.message.chat_id in ids:
-        # Declaramos las variable globales
-        global comando_linux, respuesta
-        # Definimos el comando linux que queremos ejecutar
-        comando_linux = 'df -h'
-        # Preparamos la respuesta
-        respuesta = 'El espacio del servidor ' + terminal_texto('hostname') + ' es: '
-
-        # Preguntamos y cambiamos el teclado por las opciones
-        keyboard = [['Texto', 'Imagen']]
-        update.message.reply_text(
-            '¿Quieres la respuesta en texto o en imagen?',
-            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        )
-        
-        # Devolvemos el estado de la conversacion al que pasamos
-        return TIPO
-    else:
-        # Si no es un usuario autorizado
-        update.message.reply_text(
-            'No perteneces a los usuarios autorizados'
-        )
-
 def arquitectura(update,context):
     # Comprobamos si es un usuario autorizado
     if update.message.chat_id in ids:
@@ -271,6 +261,106 @@ def version(update,context):
         comando_linux = 'cat /proc/version'
         # Preparamos la respuesta
         respuesta = 'La versión de Linux del servidor ' + terminal_texto('hostname') + ' es: '
+
+        # Preguntamos y cambiamos el teclado por las opciones
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        # Devolvemos el estado de la conversacion al que pasamos
+        return TIPO
+    else:
+        # Si no es un usuario autorizado
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+
+def espacio(update,context):
+    # Comprobamos si es un usuario autorizado
+    if update.message.chat_id in ids:
+        # Declaramos las variable globales
+        global comando_linux, respuesta
+        # Definimos el comando linux que queremos ejecutar
+        comando_linux = 'df -h'
+        # Preparamos la respuesta
+        respuesta = 'El espacio del servidor ' + terminal_texto('hostname') + ' es: '
+
+        # Preguntamos y cambiamos el teclado por las opciones
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        # Devolvemos el estado de la conversacion al que pasamos
+        return TIPO
+    else:
+        # Si no es un usuario autorizado
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+
+def memoria(update,context):
+    # Comprobamos si es un usuario autorizado
+    if update.message.chat_id in ids:
+        # Declaramos las variable globales
+        global comando_linux, respuesta
+        # Definimos el comando linux que queremos ejecutar
+        comando_linux = 'free -h'
+        # Preparamos la respuesta
+        respuesta = 'La memoria del servidor ' + terminal_texto('hostname') + ' es: '
+
+        # Preguntamos y cambiamos el teclado por las opciones
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        # Devolvemos el estado de la conversacion al que pasamos
+        return TIPO
+    else:
+        # Si no es un usuario autorizado
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+
+def procesos(update,context):
+    # Comprobamos si es un usuario autorizado
+    if update.message.chat_id in ids:
+        # Declaramos las variable globales
+        global comando_linux, respuesta
+        # Definimos el comando linux que queremos ejecutar
+        comando_linux = 'ps'
+        # Preparamos la respuesta
+        respuesta = 'Los procesos que se están ejecutando en el servidor ' + terminal_texto('hostname') + ' son: '
+
+        # Preguntamos y cambiamos el teclado por las opciones
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        # Devolvemos el estado de la conversacion al que pasamos
+        return TIPO
+    else:
+        # Si no es un usuario autorizado
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+
+def usuarios(update,context):
+    # Comprobamos si es un usuario autorizado
+    if update.message.chat_id in ids:
+        # Declaramos las variable globales
+        global comando_linux, respuesta
+        # Definimos el comando linux que queremos ejecutar
+        comando_linux = 'w'
+        # Preparamos la respuesta
+        respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
 
         # Preguntamos y cambiamos el teclado por las opciones
         keyboard = [['Texto', 'Imagen']]
@@ -345,9 +435,12 @@ def main():
         entry_points=[CommandHandler('nombre', nombre),
                       CommandHandler('ip', ip),
                       CommandHandler('red', red),
-                      CommandHandler('espacio', espacio),
                       CommandHandler('arquitectura', arquitectura),
                       CommandHandler('version', version),
+                      CommandHandler('espacio', espacio),
+                      CommandHandler('memoria', memoria),
+                      CommandHandler('procesos', procesos),
+                      CommandHandler('usuarios', usuarios),
                       CommandHandler('estado_servicio', servicios, pass_args=True),
                       CommandHandler('iniciar_servicio', servicios, pass_args=True),
                       CommandHandler('parar_servicio', servicios, pass_args=True),
