@@ -84,6 +84,17 @@ https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/
 
 https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot2.py
 
+https://support.google.com/analytics/answer/1034324?hl=en
+
+### Imagenes
+
+https://www.ostechnix.com/save-linux-command-output-image-file/
+
+https://imagemagick.org/script/convert.php
+
+https://www.imagemagick.org/discourse-server/viewtopic.php?t=34044
+
+
 ### Comandos
 
 https://descubriendolaorangepi.wordpress.com/2017/02/18/desarrollando-un-bot-de-telegram-en-python-que-permita-consultar-y-controlar-un-sistema-linux-armbian/

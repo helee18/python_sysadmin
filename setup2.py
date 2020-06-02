@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Solo para el ejemplo basico de bot, en el bot hace falta instalar 
+# y configurar imagemagick
+
 # Importamos el modulo os
 import os
 
@@ -25,9 +28,6 @@ os.system("cd ./python-telegram-bot/")
 os.system("python3 setup.py install")
 os.system("sudo apt-get install build-essential python-dev -y")
 
-# Instalamos imagemagick
-os.system("sudo apt-get install imagemagick -y")
-
 # Ejecutamos el script de nuestro bot
 os.system("cd ..")
-os.system("python3 bot.py")
+#os.system("python3 ejemplo-bot.py")
