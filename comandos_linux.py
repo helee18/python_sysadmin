@@ -22,11 +22,14 @@ def terminal_texto(entrada):
 
 def terminal_imagen(entrada):
     # Borramos la imagen si existe
-    if os.path.exists('./images/image.png'): 
-        os.popen('./images/image.png')
+    if os.path.exists('image.png'): 
+        os.popen('rm -f image.png')
 
     # Añadimos el conversor a imagen al comando
-    entrada = entrada + ' | convert -font Courier -pointsize 50 -fill white -background black label:@- ./images/image.png'
+    entrada = entrada + ' | convert -font Courier -fill white -background black label:@- image.png'
     
     # Ejecutamos el comando en el terminal
     os.popen(entrada)
+
+    # Dar permiso de ejecución
+    # os.popen('sudo chown helena:helena images/image.png')

@@ -2,10 +2,12 @@
 
 # Importamos los modulos y submodulos necesarios
 import logging
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from auth import token, ids
 from comandos_linux import terminal_texto, terminal_imagen
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
+import os
+import time
 
 # Habilitamos el registro
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -35,6 +37,7 @@ def texto(update,context):
     # Respondemos al comando con el mensaje
     update.message.reply_text(
         respuesta + '\n\n' + respuesta_sistema,
+        # Quitamos las opciones del teclado
         reply_markup=ReplyKeyboardRemove()
     )
 
@@ -45,15 +48,28 @@ def imagen(update,context):
     # Llamamos a la funcion terminal, que ejecuta el comando pasado
     terminal_imagen(comando_linux)
 
-    # Respondemos con la imagen
+    # Respondemos
     update.message.reply_text(
         respuesta,
+        # Quitamos las opciones del teclado
         reply_markup=ReplyKeyboardRemove()
     )
-    update.message.bot.send_photo(
-        chat_id=update.message.chat_id, 
-        photo=open('./images/image.png', 'rb')
-    )
+
+    # Intentamos responder con la imagen
+    try:
+        # Si aun no existe esperamos un segundo
+        if not os.path.exists('image.png'): 
+            time.sleep(1)
+        # Respondemos con la imagen
+        update.message.bot.send_photo(
+            chat_id=update.message.chat_id, 
+            photo=open('image.png', 'rb')
+        )
+    except:
+        # En caso de que haya algun error
+        update.message.reply_text(
+            '-No se puede mostrar la imagen-'
+        )
 
     # Terminamos la conversación
     return ConversationHandler.END
@@ -68,36 +84,64 @@ def texto_servicios(update,context):
         # Respondemos al comando con el mensaje
         update.message.reply_text(
             respuesta_sistema,
+            # Quitamos las opciones del teclado
             reply_markup=ReplyKeyboardRemove()
         )
     except:
         # Notificamos error
         update.message.reply_text(
-            'Tiene que introducirse el nombre exacto del servicio'
+            'Tiene que introducirse el nombre exacto del servicio (apache2 o ssh)',
+            # Quitamos las opciones del teclado
+            reply_markup=ReplyKeyboardRemove()
         )
     finally:
         # Terminamos la conversación
         return ConversationHandler.END
 
 def imagen_servicios(update,context):
+    # Intentamos ejecutar el comando
     try:
         # Llamamos a la funcion terminal, que ejecuta el comando pasado
         terminal_imagen(comando_linux)
-
-        # Respondemos con la imagen
-        update.message.reply_text(
-            respuesta,
-            reply_markup=ReplyKeyboardRemove()
-        )
-        update.message.bot.send_photo(
-            chat_id=update.message.chat_id, 
-            photo=open('./images/image.png', 'rb')
-        )
+        time.sleep(5)
+    # except:
+    #     # Notificamos error
+    #     update.message.reply_text(
+    #         'Tiene que introducirse el nombre exacto del servicio',
+    #         # Quitamos las opciones del teclado
+    #         reply_markup=ReplyKeyboardRemove()
+    #     )
+    #     # Terminamos la conversación
+    #     return ConversationHandler.END
+    
+        # Intentamos responder con la imagen
+        try:
+            # Si aun no existe esperamos un segundo
+            if not os.path.exists('image.png'): 
+                time.sleep(1)
+            # Respondemos con la imagen
+            update.message.bot.send_photo(
+                chat_id=update.message.chat_id, 
+                photo=open('image.png', 'rb'),
+                # Quitamos las opciones del teclado
+                reply_markup=ReplyKeyboardRemove()
+            )
+        except:
+            # En caso de que haya algun error
+            update.message.reply_text(
+                '-No se puede mostrar la imagen-',
+                # Quitamos las opciones del teclado
+                reply_markup=ReplyKeyboardRemove()
+            )
     except:
         # Notificamos error
         update.message.reply_text(
-            'Tiene que introducirse el nombre exacto del servicio'
+            'Tiene que introducirse el nombre exacto del servicio (apache2 o ssh',
+            # Quitamos las opciones del teclado
+            reply_markup=ReplyKeyboardRemove()
         )
+        # # Terminamos la conversación
+        # return ConversationHandler.END
     finally:
         # Terminamos la conversación
         return ConversationHandler.END
@@ -132,6 +176,7 @@ def help(update,context):
             'LISTA DE COMANDOS \n\n'
             '/start - inicio del bot \n\n'
             '/cancel - cancelar un comando \n\n'
+            '/nombre - nombre del servidor \n\n'
             '/ip - ip del servidor \n\n'
             '/red - red a la que está conectado el servidor \n\n'
             '/arquitectura - arquitectura del sistema del servidor \n\n'
@@ -358,7 +403,7 @@ def usuarios(update,context):
         # Declaramos las variable globales
         global comando_linux, respuesta
         # Definimos el comando linux que queremos ejecutar
-        comando_linux = 'w'
+        comando_linux = 'who'
         # Preparamos la respuesta
         respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
 
@@ -391,13 +436,13 @@ def servicios(update,context):
                 comando_linux = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
             elif 'iniciar_servicio' in update.message.text:
                 # Comando para iniciar
-                comando_linux = '/etc/init.d/' + context.args[0] + ' start'
+                comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' start'
             elif 'parar_servicio' in update.message.text:
                 # Comando para parar
-                comando_linux = '/etc/init.d/' + context.args[0] + ' stop'
+                comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' stop'
             else:
                 # Comando para reiniciar
-                comando_linux = '/etc/init.d/' + context.args[0] + ' restart'
+                comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' restart'
             
             # Preguntamos y cambiamos el teclado por las opciones
             keyboard = [['Texto', 'Imagen']]
@@ -411,7 +456,7 @@ def servicios(update,context):
         else:
             # En caso de que no se pase un argumento, notificarlo
             update.message.reply_text(
-                'Se debe especificar el servicio.\n\n'
+                'Se debe especificar el servicio (apache2 o ssh).\n\n'
                 'Ejemplo:\n/reiniciar_servicio apache2'
             ) 
     else:

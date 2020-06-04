@@ -112,5 +112,3 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handler
 https://www.afternerd.com/blog/python-string-contains/
 
 https://uniwebsidad.com/libros/algoritmos-python/capitulo-12/excepciones
-
-

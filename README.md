@@ -25,8 +25,8 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
     - [`Controladores de comandos`](#controladores_comandos)
     - [`Funciones de comandos`](#funciones)
     - [`Control de usuarios`](#usuarios)
-    - [`Comando `/start``](#start)
-    - [`Comando `/help``](#help)
+    - [`Comando /start`](#start)
+    - [`Comando /help `](#help)
     - [`Comandos no definidos`](#echo)
     - [`Log de errores`](#error)
 - [`Ejecución del script del bot`](#ejecutar)
@@ -152,13 +152,17 @@ $ sudo apt-get install build-essential python-dev
 
 <a name="ejecutar"></a>
 
-## Ejecución del script del bot
+##### Ejecución del script del bot
 
 Segundo planno siempre 
 
 Cuando administramos el servidor es convemiente cambiar permisos
 
-Cambiar permisos
+Cambiar permisos 
+
+Añadir helena a /etc/sudoers
+
+https://www.linuxito.com/seguridad/464-como-permitir-que-un-usuario-pueda-ejecutar-como-root-solo-un-comando-especifico-utilizando-sudo 
 
 [Inicio](#top)<br>
 
@@ -172,6 +176,10 @@ Cambiar permisos
 Al principio del script importamos los módulos de python necesarios. Los módulos son ficheros que contienen contenido python y almacenan variables y funciones que podemos usar en nuestro script.
 
 En este caso importamos el módulo [`logging`](https://docs.python.org/3/library/logging.html) para el registro y los submódulos [`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html), [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html), [`MessageHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.messagehandler.html) y [`Filters`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.filters.html) de la librería [`telegram.ext`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html) a la que podemos acceder gracias a [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot).
+```
+import logging
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+```
 
 [Inicio](#top)<br>
 
@@ -463,12 +471,12 @@ $ sudo apt-get install imagemagick
 
 Esta herramienta se usa con el comando [`convert`](https://imagemagick.org/script/convert.php), con [`label:@-`](http://www.imagemagick.org/Usage/text/#label) decimos que el texto que hay que convertir a imagen es el que hemos obtenido por respuesta al comando que se ha ejecutado a la vez y le decimos la ruta donde se va a guardar la imagen junto al nombre de esta.
 ```
-entrada | convert label:@- ./images/image.png
+entrada | convert label:@- image.png
 ```
 
-Podemos elegir la tipografía con [`font`](https://imagemagick.org/script/command-line-options.php#font), el tamaño de la letra con [`pointsize`](https://imagemagick.org/script/command-line-options.php#pointsize), el color de la letra [`fill`](https://imagemagick.org/script/command-line-options.php#fill) y el color del fondo [`background`](https://imagemagick.org/script/command-line-options.php#background)
+Podemos elegir la tipografía con [`font`](https://imagemagick.org/script/command-line-options.php#font), el color de la letra [`fill`](https://imagemagick.org/script/command-line-options.php#fill) y el color del fondo [`background`](https://imagemagick.org/script/command-line-options.php#background)
 ```
-comando_linux | convert -font Courier -pointsize 50 -fill white -background black label:@- ./images/image.png
+comando_linux | convert -font Courier -fill white -background black label:@- image.png
 ```
 
 Al ejecutarlo podemos encontrarnos con errores. Uno de ellos se soluciona comentando una de las líneas del archivo `/etc/ImageMagick-6/policy.xml`.
@@ -503,16 +511,16 @@ $ sudo nano /etc/ImageMagick-6/policy.xml
 
 Definimos la función `terminal_imagen` en la que ejecutamos el comando linux que le pasamos pero convirtiendo la respuesta del sistema en una imagen.
 
-Para que no haya problemas con las imagenes, al principio de esta función borramos con [`popen`](https://docs.python.org/3/library/os.html#os.popen) y [`rm`](https://linux.die.net/man/1/rm) la imagen si existe. Para borrarla utilizamos el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) y comprobamos que existe con [`os.path.exists`](https://docs.python.org/3/library/os.path.html#os.path.exists).
+Para que no haya problemas con las imagenes, al principio de esta función borramos con [`popen`](https://docs.python.org/3/library/os.html#os.popen) y [`rm -f`](https://linux.die.net/man/1/rm) la imagen si existe sin pedir confirmación de si queremos borrarla. Para borrarla utilizamos el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) y comprobamos que existe con [`os.path.exists`](https://docs.python.org/3/library/os.path.html#os.path.exists).
 ```
 def terminal_imagen(entrada):
-    if os.path.exists('./images/image.png'): 
-        os.popen('./images/image.png')
+    if os.path.exists('image.png'): 
+        os.popen('rm -f image.png')
 ```
 
 Tenemos que añadir al comando que recibe de entrada la parte de convertirlo en imagen.
 ```
-    entrada = entrada + ' | convert -font Courier -pointsize 50 -fill white -background black label:@- ./images/image.png'
+    entrada = entrada + ' | convert -font Courier -pointsize 50 -fill white -background black label:@- image.png'
 ```
 
 Con [`popen`](https://docs.python.org/3/library/os.html#os.popen) ejecutamos el comando en el sistema.
@@ -593,14 +601,14 @@ def funcion(update,context):
         respuesta = " "
 ```
 
-Después hacemos que el bot nos pregunte si queremos recibir la respuesta en modo de texto o imagen. Para esto hacemos que en el espacio del teclado del móvil aparezcan las dos opciones.
+Después hacemos que el bot nos pregunte si queremos recibir la respuesta en modo de texto o imagen. Para esto hacemos que aparezca un botón en la barra de mensaje al cual le das y aparecen las dos opciones en el espacio del teclado del móvil. Estas opciones pueden aparecer directamente en el teclado o puede hacer falta darle al botón.
 
 Primero tenemos que declarar una variable con las opciones que van a aparecer.
 ```
         keyboard = [['Texto', 'Imagen']]
 ```
 
-Después con [`message.reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) le decimos al bot que tiene que responder. Con [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) configuramos lo que va a aparecer en el teclado. [`ReplyKeyboardMarkup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html) representa al teclado y dentro establecemos lo que va a aparecer con la variable [`keyboard`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html#telegram.ReplyKeyboardMarkup.keyboard) y con [`one_time_keyboard=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html#telegram.ReplyKeyboardMarkup.one_time_keyboard) hacemos que se oculte tras usarlo pero no que desaparezca del todo, eso lo haremos posteriormente.
+Después con [`message.reply_text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.reply_text) le decimos al bot qué tiene que responder. Con [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) configuramos lo que va a aparecer en el teclado. [`ReplyKeyboardMarkup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html) representa al teclado y dentro establecemos lo que va a aparecer con la variable [`keyboard`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html#telegram.ReplyKeyboardMarkup.keyboard) y con [`one_time_keyboard=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html#telegram.ReplyKeyboardMarkup.one_time_keyboard) hacemos que se oculte tras usarlo pero no que desaparezca del todo, eso lo haremos posteriormente con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html).
 
 Para poder usar el módulo [`ReplyKeyboardMarkup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardmarkup.html) tenemos que importarlo al principio del script.
 ```
@@ -666,22 +674,44 @@ def imagen(update,context):
     terminal_imagen(comando_linux)
 ```
 
-Primero hacemos que el bot responda con la variable `respuesta`, declarada en la función del comando, y eliminamos del teclado la opción de elegir entre `Texto` o `Imagen` con  [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) y el módulo [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html).
+Hacemos que el bot responda primero con la variable `respuesta`, declarada en la función del comando, y eliminamos del teclado la opción de elegir entre `Texto` o `Imagen` con  [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) y el módulo [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html)
 ```
-    update.message.reply_text(
-        respuesta,
-        reply_markup=ReplyKeyboardRemove()
-    )
+        update.message.reply_text(
+            respuesta,
+            reply_markup=ReplyKeyboardRemove()
+        )
+```
+
+Para que el bot nos responda con la imagen, primero hacemos uso de las excepciones de python [`try`](https://docs.python.org/3/reference/compound_stmts.html#try) para que intente mostrarla y, en caso de que de error al mostrarla, con [`except`](https://docs.python.org/3/reference/compound_stmts.html#except) el bot responda con un mensaje avisando de que no se puede mostrar. 
+```
+    try:
+        
+    except:
+        update.message.reply_text(
+            '-No se puede mostrar la imagen-'
+        )
+```
+
+Antes de hacer que el bot nos mande la imagen, esperamos unos segundos porque puede tardar en crearse. Para esto hacemos uso del condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) y comprobando que no existe con [`not`](https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not) y [`os.path.exists`](https://docs.python.org/3/library/os.path.html#os.path.exists). En el caso de que no exista, utilizamos [`time.sleep(1)`](https://docs.python.org/3/library/time.html#time.sleep) para esperar un segundo en nuestro caso. 
+
+Al principio del script tenemos que importar [`os`]([`os`](https://docs.python.org/3/library/os.html)) y [`time`](https://docs.python.org/3/library/time.html) para poder usar estos módulos.
+```
+import os
+import time
+```
+```
+        if not os.path.exists('image.png'): 
+            time.sleep(1)
 ```
 
 Después hacemos que el bot nos mande la imagen con [`bot.send_photo`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.bot.html?highlight=bot.send_photo#telegram.Bot.send_photo). Dentro tenemos que añadir el parámetro `chat_id` y pasarle el chat_id actual ([`update.message.chat_id`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.chat_id)). 
 
 Para abrir la foto añadimos el parámetro `photo` y se la pasamos con la función [`open`](https://docs.python.org/3/library/functions.html#open) donde añadimos la ruta a la imagen y `rb` para que lo abra para lectura en modo binario.
 ```
-    update.message.bot.send_photo(
-        chat_id=update.message.chat_id, 
-        photo=open('./images/image.png', 'rb')
-    )
+        update.message.bot.send_photo(
+            chat_id=update.message.chat_id, 
+            photo=open('image.png', 'rb')
+        )
 ```
 
 Por último salimos de la conversación devolviendo [`ConversationHandler.END`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.END).
@@ -972,7 +1002,7 @@ def procesos(update,context):
 <a name="usuarios"></a>
 
 ### Comando `/usuarios`
-Con el comando [`w`](https://linux.die.net/man/1/w) podemos conocer los usuarios conectados al servidor en ese momento y qué esta haciendo. En la primera línea se muestra la hora actual, el tiempo que lleva el servidor en funcionamiento. cuantos usuarios están conectados y el prometio de carga en 1, 5 y 15 minutos.
+Con el comando [`who`](https://linux.die.net/man/1/finger) podemos conocer los usuarios conectados al servidor en ese momento.
 ```
     conv_handler = ConversationHandler(
         entry_points=[...
@@ -982,7 +1012,7 @@ Con el comando [`w`](https://linux.die.net/man/1/w) podemos conocer los usuarios
 def usuarios(update,context):
     if update.message.chat_id in ids:
         global comando_linux, respuesta
-        comando_linux = 'w'
+        comando_linux = 'who'
         respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
 
         keyboard = [['Texto', 'Imagen']]
@@ -1004,7 +1034,9 @@ def usuarios(update,context):
 ### Comandos (`/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`)
 Podemos administrar los servicios instalados en el servidor viendo su estado, iniciandolos, parandolos o reiniciandolos. Podemos configurar el bot para que lo haga pasandole un comando diciendo lo que queremos que haga junto con un argumento que será el servicio que queremos consultar o modificar su estado.
 
-En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca el nombre del servicio.
+<!-- # PARA PODER ADMINISTRAR LOS SERVICIOS SIN SER ROOT -->
+
+En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca un argumento con el nombre del servicio.
 ```
     conv_handler = ConversationHandler(
         entry_points=[...
@@ -1016,7 +1048,7 @@ En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos
 
 Aunque podrías hacerlo con la conversación con el bot, desarrollaremos la función de otra forma. 
 
-Con el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) comprobaremos que se pasa un argumento. Para referirnos a los argumentos usamos [`context.args`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments) y calculamos cuantos son con [`len()`](https://docs.python.org/3/library/functions.html#len) En caso de que no sea un argumento, el bot nos responde con un aviso y nos da un ejemplo de como tenemos que hacer uso del comando.
+Con el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) comprobaremos que se pasa un argumento. Para referirnos a los argumentos usamos [`context.args`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments) y calculamos cuantos son con [`len()`](https://docs.python.org/3/library/functions.html#len). En caso de que no sea un argumento, el bot nos responde con un aviso y nos da un ejemplo de como tenemos que hacer uso del comando.
 ```
 def servicios(update,context):
     if update.message.chat_id in ids:
@@ -1025,7 +1057,7 @@ def servicios(update,context):
         else:
             # En caso de que no se pase un argumento, notificarlo
             update.message.reply_text(
-                'Se debe especificar el servicio.\n\n'
+                'Se debe especificar el servicio (apache2 o ssh).\n\n'
                 'Ejemplo:\n/reiniciar_servicio apache2'
             ) 
     else:
@@ -1079,9 +1111,11 @@ TIPO, TIPO_SERVICIOS = range(2)
         },
 ```
 
-Definimos las funciones `texto_servicios` e `imagen_servicios` que van a ser iguales que `texto` e `imagen` excepto porque la llamada a las funciones para ejecutar los comandos en linux van a estar dentro de una excepción.
+Definimos las funciones `texto_servicios` e `imagen_servicios` que van a ser iguales que `texto` e `imagen` excepto porque no haremos uso de la variable `respuesta` ya que no la hemos creado en las funciones correspondientes a los servicios. 
 
-Hacemos uso de las excepciones de python [`try`](https://docs.python.org/3/reference/compound_stmts.html#try) para que en caso de que de error y no se pueda ejecutar, con [`except`](https://docs.python.org/3/reference/compound_stmts.html#except) se notifique por el chat con el bot y no se quede solo reflejado en el servidor. Dentro de [`finally`](https://docs.python.org/3/reference/compound_stmts.html#finally) devolvemos que se acabe la conversación.
+Además, en `texto_servicios` haremos uso de las excepciones de linux para intentar ejecutar el comando ([`try`](https://docs.python.org/3/reference/compound_stmts.html#try)) y si funciona mostrar el mensaje pero si da fallo ([`except`](https://docs.python.org/3/reference/compound_stmts.html#except)), mostrar un mensaje con cómo debe mandarse el mensaje al bot. Por último siempre saldremos de la conversación. 
+
+Tanto en el caso de que funcione cómo en el caso de que no, tenemos que eliminar el botón con las opciones de `Texto` o `Imagen` con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html).
 ```
 def texto_servicios(update,context):
     try:
@@ -1093,26 +1127,34 @@ def texto_servicios(update,context):
         )
     except:
         update.message.reply_text(
-            'Tiene que introducirse el nombre exacto del servicio'
+            'Tiene que introducirse el nombre exacto del servicio (apache2 o ssh)',
+            reply_markup=ReplyKeyboardRemove()
         )
     finally:
         return ConversationHandler.END
+```
 
+<!-- Además la llamada a las funciones para ejecutar los comandos en linux van a estar dentro de una excepción. -->
+
+<!-- Además haremos uso de dos excepciones en la función `imagen_servicios`. Tendremos la excepción por si falla el mostrar la imagen y otra antes, por si falla la ejecución del comando linux. En esta excepción  -->
+
+<!-- Hacemos uso de las excepciones de python [`try`](https://docs.python.org/3/reference/compound_stmts.html#try) para que en caso de que de error y no se pueda ejecutar, con [`except`](https://docs.python.org/3/reference/compound_stmts.html#except) se notifique por el chat con el bot y no se quede solo reflejado en el servidor, tenemos que hacer que desaparezcan las opciones del teclado con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html). Dentro de [`finally`](https://docs.python.org/3/reference/compound_stmts.html#finally) devolvemos que se acabe la conversación. -->
+```
 def imagen_servicios(update,context):
     try:
         terminal_imagen(comando_linux)
 
         update.message.reply_text(
-            respuesta,
             reply_markup=ReplyKeyboardRemove()
         )
         update.message.bot.send_photo(
             chat_id=update.message.chat_id, 
-            photo=open('./images/image.png', 'rb')
+            photo=open('image.png', 'rb')
         )
     except:
         update.message.reply_text(
-            'Tiene que introducirse el nombre exacto del servicio'
+            'Tiene que introducirse el nombre exacto del servicio',
+            reply_markup=ReplyKeyboardRemove()
         )
     finally:
         return ConversationHandler.END
