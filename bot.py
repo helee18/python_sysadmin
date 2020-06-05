@@ -60,6 +60,7 @@ def imagen(update,context):
         # Si aun no existe esperamos un segundo
         if not os.path.exists('image.png'): 
             time.sleep(1)
+
         # Respondemos con la imagen
         update.message.bot.send_photo(
             chat_id=update.message.chat_id, 
@@ -103,45 +104,26 @@ def imagen_servicios(update,context):
     try:
         # Llamamos a la funcion terminal, que ejecuta el comando pasado
         terminal_imagen(comando_linux)
-        time.sleep(5)
-    # except:
-    #     # Notificamos error
-    #     update.message.reply_text(
-    #         'Tiene que introducirse el nombre exacto del servicio',
-    #         # Quitamos las opciones del teclado
-    #         reply_markup=ReplyKeyboardRemove()
-    #     )
-    #     # Terminamos la conversación
-    #     return ConversationHandler.END
-    
-        # Intentamos responder con la imagen
-        try:
-            # Si aun no existe esperamos un segundo
-            if not os.path.exists('image.png'): 
-                time.sleep(1)
-            # Respondemos con la imagen
-            update.message.bot.send_photo(
-                chat_id=update.message.chat_id, 
-                photo=open('image.png', 'rb'),
-                # Quitamos las opciones del teclado
-                reply_markup=ReplyKeyboardRemove()
-            )
-        except:
-            # En caso de que haya algun error
-            update.message.reply_text(
-                '-No se puede mostrar la imagen-',
-                # Quitamos las opciones del teclado
-                reply_markup=ReplyKeyboardRemove()
-            )
+
+        # Si aun no existe esperamos un segundo
+        if not os.path.exists('image.png'): 
+            time.sleep(1)
+
+        # Respondemos con la imagen
+        update.message.bot.send_photo(
+            chat_id=update.message.chat_id, 
+            photo=open('image.png', 'rb'),
+            # Quitamos las opciones del teclado
+            reply_markup=ReplyKeyboardRemove()
+        ) 
     except:
-        # Notificamos error
+        # En caso de que haya algun error
         update.message.reply_text(
-            'Tiene que introducirse el nombre exacto del servicio (apache2 o ssh',
+            '-No se puede mostrar la imagen- \n'
+            'Puede que no se haya introducido el nombre exacto del servicio (apache2 o ssh)',
             # Quitamos las opciones del teclado
             reply_markup=ReplyKeyboardRemove()
         )
-        # # Terminamos la conversación
-        # return ConversationHandler.END
     finally:
         # Terminamos la conversación
         return ConversationHandler.END
@@ -303,7 +285,7 @@ def version(update,context):
         # Declaramos las variable globales
         global comando_linux, respuesta
         # Definimos el comando linux que queremos ejecutar
-        comando_linux = 'cat /proc/version'
+        comando_linux = 'uname -r'
         # Preparamos la respuesta
         respuesta = 'La versión de Linux del servidor ' + terminal_texto('hostname') + ' es: '
 

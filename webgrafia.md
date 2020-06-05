@@ -103,8 +103,6 @@ https://linux.die.net
 
 https://www.servidoresadmin.com/comando-linux-df/
 
-https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html 
-
 ### Comandos servicios
 
 https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments
@@ -112,3 +110,7 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handler
 https://www.afternerd.com/blog/python-string-contains/
 
 https://uniwebsidad.com/libros/algoritmos-python/capitulo-12/excepciones
+
+https://linuxparatodos.wordpress.com/2008/11/20/crear-usuario-sin-contrasena/
+
+https://askubuntu.com/questions/692701/allowing-user-to-run-systemctl-systemd-services-without-password

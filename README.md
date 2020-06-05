@@ -882,7 +882,7 @@ def arquitectura(update,context):
 <a name="version"></a>
 
 ### Comando `/version`
-Para conocer la versión de Linux del servidor tenemos que ejecutar la linea de comando [`cat /proc/version`](https://docs.bluehosting.cl/tutoriales/servidores/como-saber-la-version-de-instalacion-de-mi-distribucion-linux.html ) en el terminal de este.
+Para conocer la versión de Linux del servidor tenemos que ejecutar la linea de comando [`uname -r](https://linux.die.net/man/1/uname) en el terminal de este.
 ```
     conv_handler = ConversationHandler(
         entry_points=[...
@@ -1034,7 +1034,14 @@ def usuarios(update,context):
 ### Comandos (`/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`)
 Podemos administrar los servicios instalados en el servidor viendo su estado, iniciandolos, parandolos o reiniciandolos. Podemos configurar el bot para que lo haga pasandole un comando diciendo lo que queremos que haga junto con un argumento que será el servicio que queremos consultar o modificar su estado.
 
-<!-- # PARA PODER ADMINISTRAR LOS SERVICIOS SIN SER ROOT -->
+Para poder administrar los servicios sin necesitar contraseña, primero creamos un usuario, en mi caso `bot`, con [`adduser`](https://linux.die.net/man/8/adduser) y después, con [`passwd -d`](https://linux.die.net/man/1/passwd) le borramos la contraseña.
+```
+$ sudo adduser bot
+$ sudo passwd -d bot
+```
+
+Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario(`bot`), el host(`ALL`), que no va a tener contraseña(`NO PASSWD`) y los comandos que ejecutará sin contraseña.
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers.png" alt="sudoers" width="450"/>
 
 En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca un argumento con el nombre del servicio.
 ```
@@ -1077,13 +1084,13 @@ En el caso del estado, añadimos a la linea de comando `grep "Activate"` para qu
                 comando_linux = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
             elif 'iniciar_servicio' in update.message.text:
                 # Comando para iniciar
-                comando_linux = '/etc/init.d/' + context.args[0] + ' start'
+                comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' start'
             elif 'parar_servicio' in update.message.text:
                 # Comando para parar
-                comando_linux = '/etc/init.d/' + context.args[0] + ' stop'
+                comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' stop'
             else:
                 # Comando para reiniciar
-                comando_linux = '/etc/init.d/' + context.args[0] + ' restart'
+                comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' restart'
 ```
 
 Como en el resto de comandos, preguntamos si queremos `Texto` o `Imagen` y hacemos que el teclado solo muestre esas dos opciones.
@@ -1134,29 +1141,37 @@ def texto_servicios(update,context):
         return ConversationHandler.END
 ```
 
-<!-- Además la llamada a las funciones para ejecutar los comandos en linux van a estar dentro de una excepción. -->
+En el caso de `imagen_servicios` será una mezcla entre `texto_servicios` e `imagen` ya que podemos tener problemas con la imagen pero también puede darnos error el hecho de introducir el nombre del servicio mal. 
 
-<!-- Además haremos uso de dos excepciones en la función `imagen_servicios`. Tendremos la excepción por si falla el mostrar la imagen y otra antes, por si falla la ejecución del comando linux. En esta excepción  -->
-
-<!-- Hacemos uso de las excepciones de python [`try`](https://docs.python.org/3/reference/compound_stmts.html#try) para que en caso de que de error y no se pueda ejecutar, con [`except`](https://docs.python.org/3/reference/compound_stmts.html#except) se notifique por el chat con el bot y no se quede solo reflejado en el servidor, tenemos que hacer que desaparezcan las opciones del teclado con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html). Dentro de [`finally`](https://docs.python.org/3/reference/compound_stmts.html#finally) devolvemos que se acabe la conversación. -->
+Por esto mismo, en la respuesta del bot en el caso de que haya problemas comentaremos que puede ser por culpa de introducir mal el nombre del servicio.
 ```
 def imagen_servicios(update,context):
+    # Intentamos ejecutar el comando
     try:
+        # Llamamos a la funcion terminal, que ejecuta el comando pasado
         terminal_imagen(comando_linux)
 
-        update.message.reply_text(
-            reply_markup=ReplyKeyboardRemove()
-        )
+        # Si aun no existe esperamos un segundo
+        if not os.path.exists('image.png'): 
+            time.sleep(1)
+
+        # Respondemos con la imagen
         update.message.bot.send_photo(
             chat_id=update.message.chat_id, 
-            photo=open('image.png', 'rb')
-        )
+            photo=open('image.png', 'rb'),
+            # Quitamos las opciones del teclado
+            reply_markup=ReplyKeyboardRemove()
+        ) 
     except:
+        # En caso de que haya algun error
         update.message.reply_text(
-            'Tiene que introducirse el nombre exacto del servicio',
+            '-No se puede mostrar la imagen- \n'
+            'Puede que no se haya introducido el nombre exacto del servicio (apache2 o ssh)',
+            # Quitamos las opciones del teclado
             reply_markup=ReplyKeyboardRemove()
         )
     finally:
+        # Terminamos la conversación
         return ConversationHandler.END
 ```
 [Inicio](#top)<br>
