@@ -15,7 +15,7 @@ Helena Gutiérrez Ibáñez 2ºASIR
 
 [`Telegram`](https://web.telegram.org/), una plataforma de mensajería, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. 
 
-Para ello se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Programaremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada mensaje de entrada que recibirá el bot y como responderá este. El script tendremos que ejecutar en un servidor para que el bot funciones y lo ejecutaremos en [`segundo plano`](https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/).
+Para ello se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Programaremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada mensaje de entrada que recibirá el bot y como responderá este. El script tendremos que ejecutar en un servidor para que el bot funciones y lo ejecutaremos en [`segundo plano`](https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/). 
 ```
 $ python3 bot.py &
 ```
