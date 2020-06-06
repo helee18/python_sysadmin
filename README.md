@@ -10,8 +10,7 @@ Dispone de una serie de comandos para monitorizar el servidor, envía /help para
 
 Helena Gutiérrez Ibañez
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="400"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/><img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="400"/><br>
 
 [`Telegram`](https://web.telegram.org/), una plataforma de mensajería, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. 
 
