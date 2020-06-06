@@ -2,14 +2,23 @@
 
 ![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
+**¿Qué puede hacer este bot?**
+
+Este bot funciona como medio de comunicación entre un usuario y un servidor remotamente desde cualquier dispositivo.
+
+Dispone de una serie de comandos para monitorizar el servidor, envía /help para conocerlos todos.
+
+Helena Gutiérrez Ibañez
+
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="400"/><br>
+
 [`Telegram`](https://web.telegram.org/), una plataforma de mensajería, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. 
 
 Para ello se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Programaremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada mensaje de entrada que recibirá el bot y como responderá este. El script tendremos que ejecutar en un servidor para que el bot funciones y lo ejecutaremos en [`segundo plano`](https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/).
 ```
 $ python3 bot.py &
 ```
-
-Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y programaremos al bot para que, según el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
 
 - [`Crear un bot de Telegram`](#crear)
 - [`Instalar python-telegram-bot`](#instalar)
@@ -42,10 +51,10 @@ Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y progra
     - [`Comando /red`](#red)
     - [`Comando /arquitectura`](#arquitectura)
     - [`Comando /version`](#version)
+    - [`Comando /usuarios`](#usuarios)
     - [`Comando /espacio`](#espacio)
     - [`Comando /memoria`](#memoria)
     - [`Comando /procesos`](#procesos)
-    - [`Comando /usuarios`](#usuarios)
     - [`Comando servicios (/estado_servicio, /iniciar_servicio, /parar_servicio y /reiniciar_servicio)`](#servicios)
 
 <a name="crear"></a>
@@ -148,22 +157,6 @@ Esto quiere decir que no se pudo compilar la extensión `tornado.speedups`. Y se
 ```
 $ sudo apt-get install build-essential python-dev
 ```
-[Inicio](#top)<br>
-
-<a name="ejecutar"></a>
-
-##### Ejecución del script del bot
-
-Segundo planno siempre 
-
-Cuando administramos el servidor es convemiente cambiar permisos
-
-Cambiar permisos 
-
-Añadir helena a /etc/sudoers
-
-https://www.linuxito.com/seguridad/464-como-permitir-que-un-usuario-pueda-ejecutar-como-root-solo-un-comando-especifico-utilizando-sudo 
-
 [Inicio](#top)<br>
 
 <a name="basicos"></a>
@@ -273,6 +266,8 @@ También le decimos que se bloquee y se quede a la espera hasta recibir mensajes
 <a name="controladores_comandos"></a>
 
 ### Controladores de comandos
+Nos comunicaremos con el bot mediante comandos, estos comienzan por `/` y programaremos al bot para que, según el comando que reciba, realice una función u otra y haga en el servidor lo que nosotros le pidamos o nos muestre la información de este que nos interesa.
+
 Siempre que queramos configurar un comando, declaramos en la función principal (`main`) un nuevo controlador [`add_handler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html#telegram.ext.Dispatcher.add_handler). Para manejar el comando utilizaremos [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) y dentro tendremos que decir cual es el mensaje de entrada que recibe (el comando) y cual es la función a la que llama. Haremos uso de `updater`, previamente declarado, que nos ayudará a codificar el bot ya que hace referencia al token identificativo.
 ```
     updater.dispatcher.add_handler(CommandHandler('comando', funcion))
@@ -371,6 +366,7 @@ def help(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="450"/><br>
+
 [Inicio](#top)<br>
 
 <a name="echo"></a>
@@ -909,6 +905,36 @@ def version(update,context):
 ```
 [Inicio](#top)<br>
 
+<a name="usuarios"></a>
+
+### Comando `/usuarios`
+Con el comando [`who`](https://linux.die.net/man/1/finger) podemos conocer los usuarios conectados al servidor en ese momento.
+```
+    conv_handler = ConversationHandler(
+        entry_points=[...
+                      CommandHandler('usuarios', usuarios)],
+```
+```
+def usuarios(update,context):
+    if update.message.chat_id in ids:
+        global comando_linux, respuesta
+        comando_linux = 'who'
+        respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
+
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        return TIPO
+    else:
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+```
+[Inicio](#top)<br>
+
 <a name="espacio"></a>
 
 ### Comando `/espacio`
@@ -999,36 +1025,6 @@ def procesos(update,context):
 ```
 [Inicio](#top)<br>
 
-<a name="usuarios"></a>
-
-### Comando `/usuarios`
-Con el comando [`who`](https://linux.die.net/man/1/finger) podemos conocer los usuarios conectados al servidor en ese momento.
-```
-    conv_handler = ConversationHandler(
-        entry_points=[...
-                      CommandHandler('usuarios', usuarios)],
-```
-```
-def usuarios(update,context):
-    if update.message.chat_id in ids:
-        global comando_linux, respuesta
-        comando_linux = 'who'
-        respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
-
-        keyboard = [['Texto', 'Imagen']]
-        update.message.reply_text(
-            '¿Quieres la respuesta en texto o en imagen?',
-            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        )
-        
-        return TIPO
-    else:
-        update.message.reply_text(
-            'No perteneces a los usuarios autorizados'
-        )
-```
-[Inicio](#top)<br>
-
 <a name="servicios"></a>
 
 ### Comandos (`/estado_servicio`, `/iniciar_servicio`, `/parar_servicio` y `/reiniciar_servicio`)
@@ -1077,11 +1073,11 @@ En el caso de que si que se pase un argumento, veremos cuál es el comando que s
 
 Segun lo que pidamos el comando linux será uno u otro. En todos los casos lo haremos con [`/etc/init.d/SERVICIO`](https://www.linuxtotal.com.mx/index.php?cont=info_admon_003) porque asi nos devuelve siempre un mensaje para confirmar si se ha ejecutado el comando. Usamos [`context.args[0]`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#deep-linking-start-parameters) para referirnos al parametro que se ha pasado, el servicio, y añadirlo a la linea de comando que el bot va a ejecutar.
 
-En el caso del estado, añadimos a la linea de comando `grep "Activate"` para que en vez de salirnos toda la información solo nos salga la linea que dice si esta activado o parado.
+En el caso del estado, añadimos a la linea de comando [`head -n3`](https://linux.die.net/man/1/head) para que solo nos muestre las tres primeras línesas donde te dice el estado y desde cuándo.
 ```
             if 'estado_servicio' in update.message.text:
                 # Comando para ver el estado
-                comando_linux = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
+                comando_linux = '/etc/init.d/' + context.args[0] + ' status | head -n3'
             elif 'iniciar_servicio' in update.message.text:
                 # Comando para iniciar
                 comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' start'
