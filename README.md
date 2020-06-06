@@ -4,13 +4,14 @@
 ---
 **¿Qué puede hacer este bot?**
 
-Este bot funciona como medio de comunicación entre un usuario y un servidor remotamente desde cualquier dispositivo.
+Este bot funciona como medio de comunicación entre un usuario y un servidor remotamente desde cualquier dispositivo. 
 
-Dispone de una serie de comandos para monitorizar el servidor, envía /help para conocerlos todos.
+Dispone de una serie de comandos para monitorizar el servidor, envía /help para conocerlos todos. 
 
-Helena Gutiérrez Ibañez
+Helena Gutiérrez Ibáñez 2ºASIR
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/><img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="350"/><br>
 
 [`Telegram`](https://web.telegram.org/), una plataforma de mensajería, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. 
 
@@ -60,7 +61,7 @@ $ python3 bot.py &
 
 ## Crear un bot de Telegram
 
-El primer paso para crear un bot tenemos que iniciar [`BotFather`](https://telegram.me/BotFather), el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br>
+El primer paso para crear un bot tenemos que iniciar [`BotFather`](https://telegram.me/BotFather), el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br><br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather01.jpg" alt="BotFather" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather02.jpg" alt="start" width="350"/><br>
 
@@ -341,6 +342,8 @@ def start(update, context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/start.jpg" alt="start" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="help"></a>
@@ -1035,8 +1038,8 @@ $ sudo adduser bot
 $ sudo passwd -d bot
 ```
 
-Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario(`bot`), el host(`ALL`), que no va a tener contraseña(`NO PASSWD`) y los comandos que ejecutará sin contraseña.
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers.png" alt="sudoers" width="350"/>
+Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario(`bot`), el host(`ALL`), que no va a tener contraseña(`NO PASSWD`) y los comandos que ejecutará sin contraseña.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers.png" alt="sudoers" width="350"/><br>
 
 En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca un argumento con el nombre del servicio.
 ```
