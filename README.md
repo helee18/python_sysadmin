@@ -10,7 +10,7 @@ Dispone de una serie de comandos para monitorizar el servidor, envía /help para
 
 Helena Gutiérrez Ibañez
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/><img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="400"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/><img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="350"/><br>
 
 [`Telegram`](https://web.telegram.org/), una plataforma de mensajería, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. 
 
@@ -61,19 +61,19 @@ $ python3 bot.py &
 ## Crear un bot de Telegram
 
 El primer paso para crear un bot tenemos que iniciar [`BotFather`](https://telegram.me/BotFather), el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather01.jpg" alt="BotFather" width="450"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather02.jpg" alt="start" width="450"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather01.jpg" alt="BotFather" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather02.jpg" alt="start" width="350"/><br>
 
 Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather03.jpg" alt="newbot" width="450"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather03.jpg" alt="newbot" width="350"/><br>
 
 Desde el [`BotFather`](https://telegram.me/BotFather) se puede modificar los bots. Por ejemplo, se puede cambiar el nombre con `/setname` y añadir una foto con `/setuserpic`. En cualquier momento podemos mandar el comadno `/help` para ver la lista de comandos que podemos usar dependiendo de lo que queramos hacer.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather04.jpg" alt="setname" width="450"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather05.jpg" alt="setuserpic" width="450"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather04.jpg" alt="setname" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather05.jpg" alt="setuserpic" width="350"/><br>
 
 Podemos añadir una descripción para nuestro bot con `\setdescription`. Esta aparecerá antes de iniciarlo.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather06.jpg" alt="setdescription" width="450"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="450"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather06.jpg" alt="setdescription" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/><br>
 
 [Inicio](#top)<br>
 
@@ -300,7 +300,7 @@ ids = [ID1, ID2, ID3]
 ```
 
 Para poder conocer el `id` de un usuario, tenemos que iniciar el bot [`userinfobot`](https://telegram.me/userinfobot) y este nos dará nuestra información.
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/userinfobot.jpg" alt="start" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/userinfobot.jpg" alt="start" width="350"/>
 
 Al igual que con el `token` tenemos que importar la lista de `ids`.
 ```
@@ -364,7 +364,7 @@ def help(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="450"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="350"/><br>
 
 [Inicio](#top)<br>
 
@@ -1036,7 +1036,7 @@ $ sudo passwd -d bot
 ```
 
 Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario(`bot`), el host(`ALL`), que no va a tener contraseña(`NO PASSWD`) y los comandos que ejecutará sin contraseña.
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers.png" alt="sudoers" width="450"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers.png" alt="sudoers" width="350"/>
 
 En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca un argumento con el nombre del servicio.
 ```
