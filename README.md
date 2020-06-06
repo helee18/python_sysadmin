@@ -2,29 +2,20 @@
 
 ![Python para Sysadmin con Telegram](https://github.com/helee18/python_sysadmin/blob/master/images/titulo.png)
 ---
+
 **¿Qué puede hacer este bot?**
 
-Este bot funciona como medio de comunicación entre un usuario y un servidor remotamente desde cualquier dispositivo. 
+Este bot funciona como medio de comunicación entre un usuario y un servidor desde cualquier dispositivo. 
 
-Dispone de una serie de comandos para monitorizar el servidor, envía /help para conocerlos todos. 
+Dispone de una serie de comandos para monitorizar el servidor como puede ser: `/ip`, `/usuarios`, `/memoria` o `/parar_servicio`.
 
-Helena Gutiérrez Ibáñez 2ºASIR
-
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="350"/><br>
-
-[`Telegram`](https://web.telegram.org/), una plataforma de mensajería, tiene la opción de crear bots de todo tipo. Los administradores de sistemas pueden hacer uso de estos bots para manipular o consultar el estado de un servidor creando uno. 
-
-Para ello se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Programaremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada mensaje de entrada que recibirá el bot y como responderá este. El script tendremos que ejecutar en un servidor para que el bot funciones y lo ejecutaremos en [`segundo plano`](https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/). 
-```
-$ python3 bot.py &
-```
-
-- [`Crear un bot de Telegram`](#crear)
+- [`Bot de Telegram`](#bot)
+    - [`Crear un bot de Telegram`](#crear)
 - [`Instalar python-telegram-bot`](#instalar)
     - [`Entorno de desarrollo virutal`](#venv)
     - [`Instalación con pip`](#pip)
     - [`Instalación clonando el repositorio`](#github)
+- [`Ejecutar bot`](#ejecutar)
 - [`Elementos básicos del script del bot`](#basicos)
     - [`Importar módulos`](#import)
     - [`Logging`](#logging)
@@ -36,9 +27,9 @@ $ python3 bot.py &
     - [`Control de usuarios`](#usuarios)
     - [`Comando /start`](#start)
     - [`Comando /help `](#help)
+    - [`Sugerir comandos`](#sugerir)
     - [`Comandos no definidos`](#echo)
     - [`Log de errores`](#error)
-- [`Ejecución del script del bot`](#ejecutar)
 - [`Funciones para ejecutar comandos en Linux`](#comandos_linux)
     - [`Función que devuelve la respuesta en forma de texto`](#terminal_texto)
     - [`Función que devuelve la respuesta en forma de imagen`](#terminal_imagen)
@@ -57,11 +48,21 @@ $ python3 bot.py &
     - [`Comando /procesos`](#procesos)
     - [`Comando servicios (/estado_servicio, /iniciar_servicio, /parar_servicio y /reiniciar_servicio)`](#servicios)
 
+[Inicio](#top)<br>
+
+<a name="bot"></a>
+
+## Bot de Telegram
+
+La plataforma de mensajería [`Telegram`](https://web.telegram.org/) tiene la opción de ejecutar bots dentro de ella. Estos bots puede hacer prácticamente cualquier cosa como mostrar noticias, crear herramientas personalizadas, integrarse con otros servicios o incluso crear juegos para un jugador o varios.
+
+Los usuarios pueden interactuar con el bot enviandoles mensajes o comandos desde el chat con el bot o añadiendolo a un grupo. También se pueden enviar solicitudes desde cualquier chat, grupo o canal escribiendo el nombre del bot y la consulta.
+
 <a name="crear"></a>
 
-## Crear un bot de Telegram
+### Crear un bot de Telegram
 
-El primer paso para crear un bot tenemos que iniciar [`BotFather`](https://telegram.me/BotFather), el bot principal que reconoce una serie de comandos, desde Telegram. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br><br>
+El primer paso para crear un bot es iniciar [`BotFather`](https://telegram.me/BotFather), el bot principal de telegram que reconoce una serie de comandos. Como respuesta, nos devuelve el `token` identificativo de nuestro bot.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather01.jpg" alt="BotFather" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather02.jpg" alt="start" width="350"/><br>
 
@@ -81,6 +82,16 @@ Podemos añadir una descripción para nuestro bot con `\setdescription`. Esta ap
 <a name="instalar"></a>
 
 ## Instalar python-telegram-bot
+
+Para programar el bot se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Configuraremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada comando de entrada que recibirá el bot y como responderá este.
+
+Para [`Python`](https://www.python.org/) existen varias librerías con las que desarrollar bots de [`Telegram`](https://web.telegram.org/) como por ejemplo [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot).
+
+El submódulo [`telegram.ext`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.html) proporciona una interfaz fácil de usar y le quita algo de trabajo al programador.
+
+Se compone de varias clases, pero las dos más importantes son [`telegram.ext.Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) y `[telegram.ext.Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html).
+
+[`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) que es una clase que ayuda al programador a codificar el bot. Recibe actualizaciones de [`Telegram`](https://web.telegram.org/) y las manda al [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html). El [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html) maneja las actualizaciones y las manda a los [`Handlers`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.handler.html).
 
 <a name="venv"></a>
 
@@ -161,6 +172,29 @@ $ sudo apt-get install build-essential python-dev
 
 <a name="basicos"></a>
 
+## Ejecutar bot
+
+Cuando hayamos desarrollado el script de nuestro bot, ejecutamos este en segundo plano.
+```
+$ python3 bot.py &
+```
+
+Para poder ver los procesos que tenemos en segundo plano escribimos `jobs` en nuestro terminal y aparece un número delante del estado del proceso. Para pasar a primer plano el bot y poder pararlo con `Ctrl-C` escibimos `fg` y el número que le corresponda.
+```
+$ jobs
+
+[1]+  Ejecutando              python3 bot.py &
+```
+```
+fg 1
+```
+
+Para ejecutar el bot se puede hacer en un `serverless` como [`AWS Lambda`](https://aws.amazon.com/es/lambda/), que permite ejecutar código y que el bot se quede a la espera de peticiones. `Serverless` es un modelo de ejecución en el que el proveedor de la nube (AWS) es responsable de ejecutar el fragmento de codigo mediante la asignación dinámica de recursos. 
+
+[Inicio](#top)<br>
+
+<a name="basicos"></a>
+
 ## [Elementos básicos del script del bot](https://github.com/helee18/python_sysadmin/blob/master/ejemplo-bot.py)
 
 <a name="import"></a>
@@ -212,7 +246,7 @@ if __name__ == '__main__':
 ### Introducción del token
 Definimos la función `main` y dentro de esta programamos el script del bot. Lo primero que tenemos que definir el `updater`, donde introducimos nuestro `token`.
 
-Hacemos uso de [`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) que es una clase que ayuda al programador a codificar el bot. Recibe actualizaciones de telegram y las manda al [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html). El [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html) maneja las actualizaciones y las manda a los [`Handlers`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.handler.html).
+Hacemos uso de [`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) que es la clase que recibe las actualizaciones de [`Telegram`](https://web.telegram.org/).
 
 Añadimos `user_content=True` para usar las nuevas devoluciones basadas en contexto (`context based callbacks`). [`CallbackContext`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide-to-Version-12.0#what-exactly-is-callbackcontext) es un objeto que contiene contexto adicional de update, error o job. Esto almacena chat_data, user_data, job, error y argumentos. Puede producirse un fallo de uso de la antigua API dependiendo de la versión si no se añade, aunque en la versión 13 no hace falta ya que por defecto es `True`.
 ```
@@ -300,8 +334,8 @@ Hay que tener en cuenta que los `ids` no se ponen entre comillas porque son dato
 ids = [ID1, ID2, ID3]
 ```
 
-Para poder conocer el `id` de un usuario, tenemos que iniciar el bot [`userinfobot`](https://telegram.me/userinfobot) y este nos dará nuestra información.
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/userinfobot.jpg" alt="start" width="350"/>
+Para poder conocer el `id` de un usuario, tenemos que iniciar el bot [`userinfobot`](https://telegram.me/userinfobot) y este nos dará nuestra información.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/userinfobot.jpg" alt="start" width="350"/><br>
 
 Al igual que con el `token` tenemos que importar la lista de `ids`.
 ```
@@ -368,6 +402,17 @@ def help(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/help.jpg" alt="help" width="350"/><br>
+
+[Inicio](#top)<br>
+
+<a name="sugerir"></a>
+
+### Sugerir comandos
+También podemos hacer que el bot nos sugiera que comandos queremos mandar. Para esto tenemos que mandarle al [`BotFather`](https://telegram.me/BotFather) el comando `/setcommands` y después la lista de comandos de los que dispone el bot junto con su descripción.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather08.jpg" alt="setcommands" width="350"/><br>
+
+Cuando escribamos `/` en la barra de mensaje en la conversación con el bot o le demos al botón, nos saldrán todos los comandos que podemos enviar.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sugerir_comandos.jpg" alt="sugerir_comandos" width="350"/><br>
 
 [Inicio](#top)<br>
 
@@ -448,7 +493,7 @@ Después utilizamos el método [`readlines()`](https://uniwebsidad.com/libros/py
         salida += i 
 ```
 
-Eliminamos el último caracter, que será el salto de línea o retorno de carro (\n).
+Eliminamos el último caracter, que será el salto de línea o retorno de carro (`\n`).
 ```
     salida = salida[:-1]
 ```

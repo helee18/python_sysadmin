@@ -30,6 +30,3 @@ def terminal_imagen(entrada):
     
     # Ejecutamos el comando en el terminal
     os.popen(entrada)
-
-    # Dar permiso de ejecución
-    # os.popen('sudo chown helena:helena images/image.png')

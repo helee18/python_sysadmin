@@ -1,14 +1,20 @@
 ## WEBGRAFIA
 
-### Segundo plano
-
-https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/
-
 ### Creacion del bot
 
 https://core.telegram.org/bots
 
 https://www.youtube.com/watch?v=h2J6-03MsnQ 
+
+### Segundo plano
+
+https://www.atareao.es/como/procesos-en-segundo-plano-en-linux/
+
+### Serverless
+
+https://aws.amazon.com/es/lambda/
+
+https://serverless-stack.com/chapters/es/what-is-serverless.html
 
 ### Modulo os
 
@@ -64,9 +70,9 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Transition-guide
 
 https://python-telegram-bot.readthedocs.io/en/stable/telegram.update.html
 
-### Texto en negrita
+### setcommands
 
-https://stackoverflow.com/questions/52163959/how-can-i-bold-text-in-telepot-telegram-bot  
+https://stackoverflow.com/questions/34457568/how-to-show-options-in-telegram-bot
 
 ### Función terminal
 

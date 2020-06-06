@@ -156,17 +156,16 @@ def help(update,context):
         # Listamos todos los comandos
         update.message.reply_text(
             'LISTA DE COMANDOS \n\n'
-            '/start - inicio del bot \n\n'
             '/cancel - cancelar un comando \n\n'
             '/nombre - nombre del servidor \n\n'
             '/ip - ip del servidor \n\n'
             '/red - red a la que está conectado el servidor \n\n'
             '/arquitectura - arquitectura del sistema del servidor \n\n'
-            '/version - version de Linux del servidor \n\n'
+            '/version - versión de Linux del servidor \n\n'
+            '/usuarios - usuarios conectados al servidor \n\n'
             '/espacio - espacio del sistema del servidor \n\n'
             '/memoria - memoria del servidor \n\n'
             '/procesos - procesos en ejecución en el servidor \n\n'
-            '/usuarios - usuarios conectados al servidor \n\n'
             '/estado_servicio (servicio) - estado de un servicio \n\n'
             '/iniciar_servicio (servicio) - iniciar un servicio \n\n'
             '/parar_servicio (servicio) - parar un servicio \n\n'
@@ -304,6 +303,31 @@ def version(update,context):
             'No perteneces a los usuarios autorizados'
         )
 
+def usuarios(update,context):
+    # Comprobamos si es un usuario autorizado
+    if update.message.chat_id in ids:
+        # Declaramos las variable globales
+        global comando_linux, respuesta
+        # Definimos el comando linux que queremos ejecutar
+        comando_linux = 'who'
+        # Preparamos la respuesta
+        respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
+
+        # Preguntamos y cambiamos el teclado por las opciones
+        keyboard = [['Texto', 'Imagen']]
+        update.message.reply_text(
+            '¿Quieres la respuesta en texto o en imagen?',
+            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+        )
+        
+        # Devolvemos el estado de la conversacion al que pasamos
+        return TIPO
+    else:
+        # Si no es un usuario autorizado
+        update.message.reply_text(
+            'No perteneces a los usuarios autorizados'
+        )
+
 def espacio(update,context):
     # Comprobamos si es un usuario autorizado
     if update.message.chat_id in ids:
@@ -379,31 +403,6 @@ def procesos(update,context):
             'No perteneces a los usuarios autorizados'
         )
 
-def usuarios(update,context):
-    # Comprobamos si es un usuario autorizado
-    if update.message.chat_id in ids:
-        # Declaramos las variable globales
-        global comando_linux, respuesta
-        # Definimos el comando linux que queremos ejecutar
-        comando_linux = 'who'
-        # Preparamos la respuesta
-        respuesta = 'Los usuarios que están conectados al servidor ' + terminal_texto('hostname') + ' son: '
-
-        # Preguntamos y cambiamos el teclado por las opciones
-        keyboard = [['Texto', 'Imagen']]
-        update.message.reply_text(
-            '¿Quieres la respuesta en texto o en imagen?',
-            reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        )
-        
-        # Devolvemos el estado de la conversacion al que pasamos
-        return TIPO
-    else:
-        # Si no es un usuario autorizado
-        update.message.reply_text(
-            'No perteneces a los usuarios autorizados'
-        )
-
 def servicios(update,context):
     # Comprobamos si es un usuario autorizado
     if update.message.chat_id in ids:
@@ -415,7 +414,7 @@ def servicios(update,context):
             # Declaramos el comando que se tiene que ejecutar
             if 'estado_servicio' in update.message.text:
                 # Comando para ver el estado
-                comando_linux = '/etc/init.d/' + context.args[0] + ' status | grep "Active"'
+                comando_linux = '/etc/init.d/' + context.args[0] + ' status | head -n3'
             elif 'iniciar_servicio' in update.message.text:
                 # Comando para iniciar
                 comando_linux = 'sudo /etc/init.d/' + context.args[0] + ' start'
@@ -464,10 +463,10 @@ def main():
                       CommandHandler('red', red),
                       CommandHandler('arquitectura', arquitectura),
                       CommandHandler('version', version),
+                      CommandHandler('usuarios', usuarios),
                       CommandHandler('espacio', espacio),
                       CommandHandler('memoria', memoria),
                       CommandHandler('procesos', procesos),
-                      CommandHandler('usuarios', usuarios),
                       CommandHandler('estado_servicio', servicios, pass_args=True),
                       CommandHandler('iniciar_servicio', servicios, pass_args=True),
                       CommandHandler('parar_servicio', servicios, pass_args=True),
