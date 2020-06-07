@@ -12,7 +12,7 @@ Dispone de una serie de comandos para monitorizar el servidor como puede ser: `/
 - [`Bot de Telegram`](#bot)
     - [`Crear un bot de Telegram`](#crear)
 - [`Instalar python-telegram-bot`](#instalar)
-    - [`Entorno de desarrollo virutal`](#venv)
+    - [`Entorno de desarrollo virtual`](#venv)
     - [`Instalación con pip`](#pip)
     - [`Instalación clonando el repositorio`](#github)
 - [`Ejecutar bot`](#ejecutar)
@@ -66,16 +66,15 @@ El primer paso para crear un bot es iniciar [`BotFather`](https://telegram.me/Bo
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather01.jpg" alt="BotFather" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather02.jpg" alt="start" width="350"/><br>
 
-Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario.<br>
+Creamos un nuevo bot con `/newbot` y le ponemos nombre al bot y al usuario. [`BotFather`](https://telegram.me/BotFather) nos devolverá el `token` que será el número identificativo de nuestro bot.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather03.jpg" alt="newbot" width="350"/><br>
 
-Desde el [`BotFather`](https://telegram.me/BotFather) se puede modificar los bots. Por ejemplo, se puede cambiar el nombre con `/setname` y añadir una foto con `/setuserpic`. En cualquier momento podemos mandar el comadno `/help` para ver la lista de comandos que podemos usar dependiendo de lo que queramos hacer.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather04.jpg" alt="setname" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather05.jpg" alt="setuserpic" width="350"/><br>
+Desde el [`BotFather`](https://telegram.me/BotFather) se puede modificar los bots. Por ejemplo, se puede cambiar el nombre con `/setname` y añadir una foto con `/setuserpic`.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather04.jpg" alt="setname/setuserpic" width="350"/><br>
 
 Podemos añadir una descripción para nuestro bot con `\setdescription`. Esta aparecerá antes de iniciarlo.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather06.jpg" alt="setdescription" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="descripcion" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather05.jpg" alt="setdescription" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather06.jpg" alt="descripcion" width="350"/><br>
 
 [Inicio](#top)<br>
 
@@ -83,7 +82,7 @@ Podemos añadir una descripción para nuestro bot con `\setdescription`. Esta ap
 
 ## Instalar python-telegram-bot
 
-Para programar el bot se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Configuraremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada comando de entrada que recibirá el bot y como responderá este.
+Para programar el bot se puede hacer uso de [`Python`](https://www.python.org/), un lenguaje de programación multiplataforma. Configuraremos al bot para que responda a las distintas peticiones que le hagamos. Esto lo haremos desarrollando un script en el que reflejaremos cada comando de entrada que recibirá el bot y cómo responderá este.
 
 Para [`Python`](https://www.python.org/) existen varias librerías con las que desarrollar bots de [`Telegram`](https://web.telegram.org/) como por ejemplo [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot).
 
@@ -97,15 +96,15 @@ Se compone de varias clases, pero las dos más importantes son [`telegram.ext.Up
 
 <a name="venv"></a>
 
-### Entorno de desarrollo virutal 
+### Entorno de desarrollo virtual 
 Para la gestión de paquetes y programas de python existen unos entornos virtuales de desarrollo. Con estos entorno virtuales, no hace falta tener permisos de administrador para tener estos espacios aislados, directorios, en los que instalar distintas versiones de programas y paquetes.
 
-Para poder crear un entorno virtual para instalar el módulo [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) primero tenemos que instalar el modulo [`venv`](https://docs.python.org/3/library/venv.html).
+Para poder crear un entorno virtual para instalar el módulo [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) primero tenemos que instalar el módulo [`venv`](https://docs.python.org/3/library/venv.html).
 ```
 $ sudo apt-get install python3-venv
 ```
 
-Después creamos un entorno con le nombre que queramos.
+Después creamos un entorno con el nombre que queramos.
 ```
 $ python3 -m venv [nombre]
 ```
@@ -115,9 +114,9 @@ Activamos el entorno de desarrollo.
 $ source [nombre]/bin/activate
 ```
 
-Una vez activamos el entorno de desarrollo virtual estaremos dentro de él, y es donde tenemos que instalar el modulo de [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot), o cualquier otro. Tendremos que ejecutar nuestro script dentro para poder hacer uso de los módulos que instalemos.
+Una vez activamos el entorno de desarrollo virtual estaremos dentro de él, y es donde tenemos que instalar el módulo de [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot), o cualquier otro. Tendremos que ejecutar nuestro script dentro para poder hacer uso de los módulos que instalemos.
 
-Cuando se termine de trabajar dentro del entorno, salimos de este desactivandolo y no tendremos acceso a ninguno de los modulos instalados dentro de él.
+Cuando se termine de trabajar dentro del entorno, salimos de este desactivandolo y no tendremos acceso a ninguno de los módulos instalados dentro de él.
 ```
 $ deactivate
 ```
@@ -181,17 +180,17 @@ Cuando hayamos desarrollado el script de nuestro bot, ejecutamos este en segundo
 $ python3 bot.py &
 ```
 
-Para poder ver los procesos que tenemos en segundo plano escribimos `jobs` en nuestro terminal y aparece un número delante del estado del proceso. Para pasar a primer plano el bot y poder pararlo con `Ctrl-C` escibimos `fg` y el número que le corresponda.
+Para poder ver los procesos que tenemos en segundo plano escribimos `jobs` en nuestro terminal y aparece un número delante del estado del proceso. Para pasar a primer plano el bot y poder pararlo con `Ctrl-C` escribimos `fg` y el número que le corresponda.
 ```
 $ jobs
 
 [1]+  Ejecutando              python3 bot.py &
 ```
 ```
-fg 1
+$ fg 1
 ```
 
-Para ejecutar el bot se puede hacer en un `serverless` como [`AWS Lambda`](https://aws.amazon.com/es/lambda/), que permite ejecutar código y que el bot se quede a la espera de peticiones. `Serverless` es un modelo de ejecución en el que el proveedor de la nube (AWS) es responsable de ejecutar el fragmento de codigo mediante la asignación dinámica de recursos. 
+Para ejecutar el bot se puede hacer en un `serverless` como [`AWS Lambda`](https://aws.amazon.com/es/lambda/), que permite ejecutar código y que el bot se quede a la espera de peticiones. `Serverless` es un modelo de ejecución en el que el proveedor de la nube (AWS) es responsable de ejecutar el fragmento de código mediante la asignación dinámica de recursos. 
 
 [Inicio](#top)<br>
 
@@ -236,7 +235,7 @@ Después, para el registro de errores definiremos una función en la que haremos
 <a name="main"></a>
 
 ### Función main
-Al final del código, llamamos a la función principal `main`, en la cual tendremos todo el código del bot. Para llamar a la función, comprobamos que el código se está ejecutando en el script principal, y no sea importado en otro. Esto se comprueba comparando que el atributo `__name__` con `__main__` ya que `__name__` adopta el nombre de `__main__` cuando se ejecuta en el script principal o adopta le nombre del módulo importado cuando no es así.
+Al final del código, llamamos a la función principal `main`, en la cual tendremos todo el código del bot. Para llamar a la función, comprobamos que el código se está ejecutando en el script principal, y no sea importado en otro. Esto se comprueba comparando que el atributo `__name__` con `__main__` ya que `__name__` adopta el nombre de `__main__` cuando se ejecuta en el script principal o adopta el nombre del módulo importado cuando no es así.
 ```
 if __name__ == '__main__':
     main()
@@ -256,12 +255,12 @@ def main():
     updater = Updater('TOKEN', use_context=True)
 ```
 
-Para mayor seguridad, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py) en el que definamos una variable a la que le asignamos el `token`. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otra maquina, tendremos que crear `auth.py` en el mismo directorio en el que esté el script antes de ejecutarlo.
+Para mayor seguridad, en el caso de que tengamos un repositorio, se puede crear otro archivo `.py` (auth.py) en el que definamos una variable a la que le asignamos el `token`. Este archivo no lo subiremos al repositorio, en el caso de utilizar el script del bot en otra máquina, tendremos que crear `auth.py` en el mismo directorio en el que esté el script antes de ejecutarlo.
 ```
 token = 'TOKEN'
 ```
 
-Para poder hacer uso de este, importamos el `token`del archivo `auth`.
+Para poder hacer uso de este, importamos el `token` del archivo `auth`.
 ```
 from auth import token
 ```
@@ -279,9 +278,9 @@ auth.py
 
 Subiremos este archivo a nuestro repositorio y después ignorará los archivos que hayamos incluido en este.
 ```
-git add .gitignore
-git commit -m "no subir a github"
-git push
+$ git add .gitignore
+$ git commit -m "no subir a github"
+$ git push
 ```
 [Inicio](#top)<br>
 
