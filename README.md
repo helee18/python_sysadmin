@@ -384,7 +384,7 @@ def start(update, context):
 <a name="help"></a>
 
 ### Comando `/help`
-Para poder recordar la lista de comandos que podemos utilizar en el bot y para que sirve cada uno, definimos el comando `/help`.
+Para poder recordar la lista de comandos que podemos utilizar en el bot y para qué sirve cada uno, definimos el comando `/help`.
 ```
     updater.dispatcher.add_handler(CommandHandler('help', help))
 ```
@@ -410,7 +410,7 @@ def help(update,context):
 
 ### Sugerir comandos
 También podemos hacer que el bot nos sugiera que comandos queremos mandar. Para esto tenemos que mandarle al [`BotFather`](https://telegram.me/BotFather) el comando `/setcommands` y después la lista de comandos de los que dispone el bot junto con su descripción.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather08.jpg" alt="setcommands" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/botfather07.jpg" alt="setcommands" width="350"/><br>
 
 Cuando escribamos `/` en la barra de mensaje en la conversación con el bot o le demos al botón, nos saldrán todos los comandos que podemos enviar.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/sugerir_comandos.jpg" alt="sugerir_comandos" width="350"/><br>
