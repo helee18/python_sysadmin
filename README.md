@@ -1002,6 +1002,7 @@ def usuarios(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios01.jpg" alt="usuarios01" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios02.jpg" alt="usuarios02"/><br>
 
@@ -1036,8 +1037,7 @@ def espacio(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio01.jpg" alt="espacio01" width="350"/><br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio02.jpg" alt="espacio02" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio03.jpg" alt="espacio03"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio02.jpg" alt="espacio02" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio03.jpg" alt="espacio03"/><br>
 
 [Inicio](#top)<br>
 
@@ -1069,9 +1069,7 @@ def memoria(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria01.jpg" alt="memoria01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria02.jpg" alt="memoria02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria01.jpg" alt="memoria01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria02.jpg" alt="memoria02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1103,7 +1101,6 @@ def procesos(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos01.jpg" alt="procesos01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos02.jpg" alt="procesos02"/><br>
 
 [Inicio](#top)<br>
