@@ -1103,8 +1103,7 @@ def procesos(update,context):
         )
 ```
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos01.jpg" alt="procesos01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos02.jpg" alt="procesos02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos01.jpg" alt="procesos01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos02.jpg" alt="procesos02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1260,16 +1259,18 @@ def imagen_servicios(update,context):
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_imagen_servicio.jpg" alt="error_imagen_servicio" width="350"/><br>
 
+---
+
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_01.jpg" alt="estado_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_02.jpg" alt="estado_servicio_02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_02.jpg" alt="estado_servicio_02"/><br>
 
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_01.jpg" alt="iniciar_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_02.jpg" alt="iniciar_servicio_02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_02.jpg" alt="iniciar_servicio_02"/><br>
 
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_01.jpg" alt="parar_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_02.jpg" alt="parar_servicio_02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_02.jpg" alt="parar_servicio_02"/><br>
 
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_01.jpg" alt="reiniciar_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_02.jpg" alt="reiniciar_servicio_02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_02.jpg" alt="reiniciar_servicio_02"/><br>
 
 [Inicio](#top)<br>
