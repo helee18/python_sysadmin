@@ -435,6 +435,7 @@ Definimos la función y es aquí donde programamos al bot para que repita el men
 def echo(update, context):
     update.message.reply_text(update.message.text)
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/no_definidos.jpg" alt="comandos_no_definidos" width="350"/><br>
 [Inicio](#top)<br>
 
 <a name="error"></a>
@@ -623,17 +624,19 @@ TIPO = range(1)
         },
 ```
 
-Por último declaramos [`fallbacks`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.fallbacks) donde definimos el comando que podemos usar en cualquier momento dentro de la conversación. Este llamará a una función en la que simplemente devolveremos [`ConversationHandler.END`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.END) para salir de la conversación.
+Por último declaramos [`fallbacks`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.fallbacks) donde definimos el comando que podemos usar en cualquier momento dentro de la conversación. Este llamará a una función en la que simplemente devolveremos [`ConversationHandler.END`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html#telegram.ext.ConversationHandler.END) para salir de la conversación. 
 ```
         fallbacks=[CommandHandler('cancel', cancel)]
 ```
 ```
 def cancel(update,context):
     update.message.reply_text(
-        'Se ha cancelado el comando'
+        'Se ha cancelado el comando',
+        reply_markup=ReplyKeyboardRemove()
     )
     return ConversationHandler.END
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/cancel.jpg" alt="cancel" width="350"/><br>
 
 Cuando definimos las funciones de los comandos tenemos que definir una variable global en la que haremos referencia al comando linux que queremos ejecutar según el comando que le hayamos mandado al bot.
 
@@ -665,6 +668,8 @@ from telegram import ReplyKeyboardMarkup
             reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/tex_img_01.jpg" alt="botón" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/tex_img_02.jpg" alt="opciones" width="350"/><br>
 
 Por último hacemos que la función devuelva el nombre del estado al que queremos pasar.
 ```
@@ -831,6 +836,9 @@ En el resto de comandos añadimos el nombre del servidor a la respuesta llamando
 ```
         respuesta = '' + terminal_texto('hostname') + ' es: '
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre01.jpg" alt="nombre01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre02.jpg" alt="nombre02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="ip"></a>
@@ -861,6 +869,9 @@ def ip(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip01.jpg" alt="ip01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip02.jpg" alt="ip02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="red"></a>
@@ -892,6 +903,9 @@ def red(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red01.jpg" alt="red01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red02.jpg" alt="red02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="arquitectura"></a>
@@ -922,6 +936,9 @@ def arquitectura(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura01.jpg" alt="arquitectura01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura02.jpg" alt="arquitectura02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="version"></a>
@@ -952,6 +969,9 @@ def version(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version01.jpg" alt="version01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version02.jpg" alt="version02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="usuarios"></a>
@@ -982,6 +1002,9 @@ def usuarios(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios01.jpg" alt="usuarios01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios02.jpg" alt="usuarios02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="espacio"></a>
@@ -1012,6 +1035,10 @@ def espacio(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio01.jpg" alt="espacio01" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio02.jpg" alt="espacio02" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio03.jpg" alt="espacio03" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="memoria"></a>
@@ -1042,6 +1069,9 @@ def memoria(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre_01.jpg" alt="nombre_0" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre_02.jpg" alt="nombre_01" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="procesos"></a>
@@ -1072,6 +1102,9 @@ def procesos(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos01.jpg" alt="procesos01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos02.jpg" alt="procesos02" width="350"/><br>
+
 [Inicio](#top)<br>
 
 <a name="servicios"></a>
@@ -1085,8 +1118,11 @@ $ sudo adduser bot
 $ sudo passwd -d bot
 ```
 
-Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario(`bot`), el host(`ALL`), que no va a tener contraseña(`NO PASSWD`) y los comandos que ejecutará sin contraseña.<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers.png" alt="sudoers" width="350"/><br>
+Podemos necesitar que el usuario tenga permisos para poder instalar con `apt-get install` servicios en el servidor. Para ello editamos el archivo `/etc/sudoers` y añadimos que los usuarios del grupo (`bot`) puedan ejecutar en el host (`NOMBRE_SERVIDOR`) como `root` del gurpo `root` el comando `/usr/bin/apt-get install` del cualquier servicio (`*`). También añadimos `/usr/bin/apt-get upodate` para poder hacerlo al principio del todo.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers01.png" alt="apt-get" width="350"/><br>
+
+Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario (`bot`) del grupo (`bot`), el servidor (`NOMBRE_SERVIDOR`), que no va a tener contraseña (`NO PASSWD`) y los comandos que ejecutará sin contraseña.<br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers02.png" alt="servicios" width="350"/><br>
 
 En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos distintos que llamarán a la misma función e incluirán que se puedan pasar argumentos [`pass_args=True`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html#telegram.ext.CommandHandler.pass_args) para que se introduzca un argumento con el nombre del servicio.
 ```
@@ -1117,6 +1153,7 @@ def servicios(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sin_nombre_servicio.png" alt="sin_nombre_servicio" width="350"/><br>
 
 En el caso de que si que se pase un argumento, veremos cuál es el comando que se ha pasado comprobando con [`in`](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations) si, por ejemplo, `estado_servidor` se encuentra en la texto recibido [`update.message.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.text).
 
@@ -1185,6 +1222,7 @@ def texto_servicios(update,context):
     finally:
         return ConversationHandler.END
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_texto_servicio.png" alt="error_texto_servicio" width="350"/><br>
 
 En el caso de `imagen_servicios` será una mezcla entre `texto_servicios` e `imagen` ya que podemos tener problemas con la imagen pero también puede darnos error el hecho de introducir el nombre del servicio mal. 
 
@@ -1219,4 +1257,17 @@ def imagen_servicios(update,context):
         # Terminamos la conversación
         return ConversationHandler.END
 ```
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_imagen_servicio.png" alt="error_imagen_servicio" width="350"/><br>
+
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_01.jpg" alt="estado_servicio_01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_02.jpg" alt="estado_servicio_02" width="350"/><br>
+
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_01.jpg" alt="iniciar_servicio_01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_02.jpg" alt="iniciar_servicio_02" width="350"/><br>
+
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_01.jpg" alt="parar_servicio_01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_02.jpg" alt="parar_servicio_02" width="350"/><br>
+
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_01.jpg" alt="reiniciar_servicio_01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_02.jpg" alt="reiniciar_servicio_02" width="350"/><br>
 [Inicio](#top)<br>

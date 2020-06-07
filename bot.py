@@ -132,7 +132,9 @@ def imagen_servicios(update,context):
 
 def cancel(update,context):
     update.message.reply_text(
-        'Se ha cancelado el comando'
+        'Se ha cancelado el comando',
+        # Quitamos las opciones del teclado
+        reply_markup=ReplyKeyboardRemove()
     )
     return ConversationHandler.END
 
