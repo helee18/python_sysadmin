@@ -1069,6 +1069,7 @@ def memoria(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria01.jpg" alt="memoria01" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria02.jpg" alt="memoria02"/><br>
 
@@ -1261,16 +1262,12 @@ def imagen_servicios(update,context):
 
 ---
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_01.jpg" alt="estado_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_02.jpg" alt="estado_servicio_02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_01.jpg" alt="estado_servicio_01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_02.jpg" alt="estado_servicio_02"/><br>
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_01.jpg" alt="iniciar_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_02.jpg" alt="iniciar_servicio_02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_01.jpg" alt="iniciar_servicio_01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/iniciar_servicio_02.jpg" alt="iniciar_servicio_02"/><br>
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_01.jpg" alt="parar_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_02.jpg" alt="parar_servicio_02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_01.jpg" alt="parar_servicio_01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/parar_servicio_02.jpg" alt="parar_servicio_02"/><br>
 
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_01.jpg" alt="reiniciar_servicio_01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_02.jpg" alt="reiniciar_servicio_02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_01.jpg" alt="reiniciar_servicio_01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_02.jpg" alt="reiniciar_servicio_02"/><br>
 
 [Inicio](#top)<br>
