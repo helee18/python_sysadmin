@@ -1108,7 +1108,12 @@ $ sudo adduser bot
 $ sudo passwd -d bot
 ```
 
-Podemos necesitar que el usuario tenga permisos para poder instalar con `apt-get install` servicios en el servidor. Para ello editamos el archivo `/etc/sudoers` y añadimos que los usuarios del grupo (`bot`) puedan ejecutar en el host (`NOMBRE_SERVIDOR`) como `root` del gurpo `root` el comando `/usr/bin/apt-get install` del cualquier servicio (`*`). También añadimos `/usr/bin/apt-get upodate` para poder hacerlo al principio del todo.<br>
+Podemos necesitar que el usuario tenga permisos para poder instalar con `apt-get install` servicios en el servidor si nos sale un error al intentar instalarlos.
+```
+Disculpe, el usuario bot no está autorizado para ejecutar «/usr/bin/apt-get update» como root en helena-pc
+```
+
+Para ello editamos el archivo `/etc/sudoers` y añadimos que los usuarios del grupo (`bot`) puedan ejecutar en el host (`NOMBRE_SERVIDOR`) como `root` del gurpo `root` el comando `/usr/bin/apt-get install` del cualquier servicio (`*`). También añadimos `/usr/bin/apt-get upodate` para poder hacerlo al principio del todo.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers01.png" alt="apt-get" width="350"/><br>
 
 Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario (`bot`) del grupo (`bot`), el servidor (`NOMBRE_SERVIDOR`), que no va a tener contraseña (`NO PASSWD`) y los comandos que ejecutará sin contraseña.<br>
