@@ -837,7 +837,7 @@ En el resto de comandos añadimos el nombre del servidor a la respuesta llamando
         respuesta = '' + terminal_texto('hostname') + ' es: '
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre01.jpg" alt="nombre01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre02.jpg" alt="nombre02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre02.jpg" alt="nombre02"/><br>
 
 [Inicio](#top)<br>
 
@@ -870,7 +870,7 @@ def ip(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip01.jpg" alt="ip01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip02.jpg" alt="ip02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip02.jpg" alt="ip02"/><br>
 
 [Inicio](#top)<br>
 
@@ -904,7 +904,7 @@ def red(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/red01.jpg" alt="red01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red02.jpg" alt="red02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red02.jpg" alt="red02"/><br>
 
 [Inicio](#top)<br>
 
@@ -937,7 +937,7 @@ def arquitectura(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura01.jpg" alt="arquitectura01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura02.jpg" alt="arquitectura02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura02.jpg" alt="arquitectura02"/><br>
 
 [Inicio](#top)<br>
 
@@ -970,7 +970,7 @@ def version(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/version01.jpg" alt="version01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version02.jpg" alt="version02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version02.jpg" alt="version02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1003,7 +1003,7 @@ def usuarios(update,context):
         )
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios01.jpg" alt="usuarios01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios02.jpg" alt="usuarios02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios02.jpg" alt="usuarios02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1037,7 +1037,7 @@ def espacio(update,context):
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio01.jpg" alt="espacio01" width="350"/><br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio02.jpg" alt="espacio02" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio03.jpg" alt="espacio03" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/espacio03.jpg" alt="espacio03"/><br>
 
 [Inicio](#top)<br>
 
@@ -1069,8 +1069,8 @@ def memoria(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre_01.jpg" alt="nombre_0" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre_02.jpg" alt="nombre_01" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria01.jpg" alt="memoria01" width="350"/>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/memoria02.jpg" alt="memoria02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1102,8 +1102,9 @@ def procesos(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
+
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos01.jpg" alt="procesos01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos02.jpg" alt="procesos02" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/procesos02.jpg" alt="procesos02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1153,7 +1154,7 @@ def servicios(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sin_nombre_servicio.png" alt="sin_nombre_servicio" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/sin_nombre_servicio.jpg" alt="sin_nombre_servicio" width="350"/><br>
 
 En el caso de que si que se pase un argumento, veremos cuál es el comando que se ha pasado comprobando con [`in`](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations) si, por ejemplo, `estado_servidor` se encuentra en la texto recibido [`update.message.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.text).
 
@@ -1222,7 +1223,7 @@ def texto_servicios(update,context):
     finally:
         return ConversationHandler.END
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_texto_servicio.png" alt="error_texto_servicio" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_texto_servicio.jpg" alt="error_texto_servicio" width="350"/><br>
 
 En el caso de `imagen_servicios` será una mezcla entre `texto_servicios` e `imagen` ya que podemos tener problemas con la imagen pero también puede darnos error el hecho de introducir el nombre del servicio mal. 
 
@@ -1257,7 +1258,7 @@ def imagen_servicios(update,context):
         # Terminamos la conversación
         return ConversationHandler.END
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_imagen_servicio.png" alt="error_imagen_servicio" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_imagen_servicio.jpg" alt="error_imagen_servicio" width="350"/><br>
 
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_01.jpg" alt="estado_servicio_01" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/estado_servicio_02.jpg" alt="estado_servicio_02" width="350"/><br>
@@ -1270,4 +1271,5 @@ def imagen_servicios(update,context):
 
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_01.jpg" alt="reiniciar_servicio_01" width="350"/>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/reiniciar_servicio_02.jpg" alt="reiniciar_servicio_02" width="350"/><br>
+
 [Inicio](#top)<br>
