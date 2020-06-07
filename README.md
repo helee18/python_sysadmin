@@ -24,7 +24,7 @@ Dispone de una serie de comandos para monitorizar el servidor como puede ser: `/
     - [`Inicio bot y espera`](#inicio)
     - [`Controladores de comandos`](#controladores_comandos)
     - [`Funciones de comandos`](#funciones)
-    - [`Control de usuarios`](#usuarios)
+    - [`Control de usuarios`](#control_usuarios)
     - [`Comando /start`](#start)
     - [`Comando /help `](#help)
     - [`Sugerir comandos`](#sugerir)
@@ -326,7 +326,7 @@ def funcion(update, context):
 ```
 [Inicio](#top)<br>
 
-<a name="usuarios"></a>
+<a name="control_usuarios"></a>
 
 ### Control de usuarios
 Para poder tener un controlar los usuarios que pueden interactuar con el bot, hacemos una lista con los `ids` de los usuarios a los que autorizamos para consultar o administrar nuestro servidor en el mismo archivo en el que guardamos nuestro `token` (`auth.py`).
@@ -668,8 +668,7 @@ from telegram import ReplyKeyboardMarkup
             reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/tex_img_01.jpg" alt="botón" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/tex_img_02.jpg" alt="opciones" width="350"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/tex_img_01.jpg" alt="botón" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/tex_img_02.jpg" alt="opciones" width="350"/><br>
 
 Por último hacemos que la función devuelva el nombre del estado al que queremos pasar.
 ```
@@ -836,8 +835,7 @@ En el resto de comandos añadimos el nombre del servidor a la respuesta llamando
 ```
         respuesta = '' + terminal_texto('hostname') + ' es: '
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre01.jpg" alt="nombre01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre02.jpg" alt="nombre02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre01.jpg" alt="nombre01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/nombre02.jpg" alt="nombre02"/><br>
 
 [Inicio](#top)<br>
 
@@ -869,8 +867,7 @@ def ip(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip01.jpg" alt="ip01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip02.jpg" alt="ip02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip01.jpg" alt="ip01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/ip02.jpg" alt="ip02"/><br>
 
 [Inicio](#top)<br>
 
@@ -903,8 +900,7 @@ def red(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red01.jpg" alt="red01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red02.jpg" alt="red02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/red01.jpg" alt="red01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/red02.jpg" alt="red02"/><br>
 
 [Inicio](#top)<br>
 
@@ -936,8 +932,7 @@ def arquitectura(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura01.jpg" alt="arquitectura01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura02.jpg" alt="arquitectura02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura01.jpg" alt="arquitectura01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/arquitectura02.jpg" alt="arquitectura02"/><br>
 
 [Inicio](#top)<br>
 
@@ -969,8 +964,7 @@ def version(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version01.jpg" alt="version01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version02.jpg" alt="version02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/version01.jpg" alt="version01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/version02.jpg" alt="version02"/><br>
 
 [Inicio](#top)<br>
 
@@ -1002,9 +996,7 @@ def usuarios(update,context):
             'No perteneces a los usuarios autorizados'
         )
 ```
-<br>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios01.jpg" alt="usuarios01" width="350"/>
-<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios02.jpg" alt="usuarios02"/><br>
+<img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios01.jpg" alt="usuarios01" width="350"/> <img src="https://github.com/helee18/python_sysadmin/blob/master/images/usuarios02.jpg" alt="usuarios02"/><br>
 
 [Inicio](#top)<br>
 
