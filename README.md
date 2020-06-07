@@ -89,9 +89,11 @@ Para [`Python`](https://www.python.org/) existen varias librerías con las que d
 
 El submódulo [`telegram.ext`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.html) proporciona una interfaz fácil de usar y le quita algo de trabajo al programador.
 
-Se compone de varias clases, pero las dos más importantes son [`telegram.ext.Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) y `[telegram.ext.Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html).
+Se compone de varias clases, pero las dos más importantes son [`telegram.ext.Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) y [`telegram.ext.Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html).
 
 [`Updater`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html) que es una clase que ayuda al programador a codificar el bot. Recibe actualizaciones de [`Telegram`](https://web.telegram.org/) y las manda al [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html). El [`Dispatcher`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html) maneja las actualizaciones y las manda a los [`Handlers`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.handler.html).
+
+[Inicio](#top)<br>
 
 <a name="venv"></a>
 
