@@ -495,7 +495,7 @@ Después utilizamos el método [`readlines()`](https://uniwebsidad.com/libros/py
         salida += i 
 ```
 
-Eliminamos el último caracter, que será el salto de línea o retorno de carro (`\n`).
+Eliminamos el último carácter, que será el salto de línea o retorno de carro (`\n`).
 ```
     salida = salida[:-1]
 ```
@@ -556,7 +556,7 @@ $ sudo nano /etc/ImageMagick-6/policy.xml
 
 Definimos la función `terminal_imagen` en la que ejecutamos el comando linux que le pasamos pero convirtiendo la respuesta del sistema en una imagen.
 
-Para que no haya problemas con las imagenes, al principio de esta función borramos con [`popen`](https://docs.python.org/3/library/os.html#os.popen) y [`rm -f`](https://linux.die.net/man/1/rm) la imagen si existe sin pedir confirmación de si queremos borrarla. Para borrarla utilizamos el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) y comprobamos que existe con [`os.path.exists`](https://docs.python.org/3/library/os.path.html#os.path.exists).
+Para que no haya problemas con las imágenes, al principio de esta función borramos con [`popen`](https://docs.python.org/3/library/os.html#os.popen) y [`rm -f`](https://linux.die.net/man/1/rm) la imagen si existe sin pedir confirmación de si queremos borrarla. Para borrarla utilizamos el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) y comprobamos que existe con [`os.path.exists`](https://docs.python.org/3/library/os.path.html#os.path.exists).
 ```
 def terminal_imagen(entrada):
     if os.path.exists('image.png'): 
@@ -579,7 +579,7 @@ Con [`popen`](https://docs.python.org/3/library/os.html#os.popen) ejecutamos el 
 ## Conversación bot-usuario
 Cuando mandamos comando al bot para recibir información del servidor o administrarlo remotamente requerimos una respuesta de este con la información solicitada o una confirmación de que lo que queríamos hacer se ha hecho correctamente. Esta respuesta la podemos querer en forma de mensaje de texto o de imagen.
 
-Para poder decirle al bot de que forma queremos que nos responda, tenemos que configurar una conversación entre el bot y el usuario.
+Para poder decirle al bot de qué forma queremos que nos responda, tenemos que configurar una conversación entre el bot y el usuario.
 
 El primer paso es definir un nuevo manejador dentro la función principal, este tendrá dentro la variable `conv_handler` que declararemos encima, también dentro de la función principal, con la estructura de la conversación.
 ```
@@ -772,14 +772,14 @@ Por último salimos de la conversación devolviendo [`ConversationHandler.END`](
 
 ## [Comandos para monitorizar un servidor](https://github.com/helee18/python_sysadmin/blob/master/bot.py)
 
-Con todos los comandos que utilicemos para monitorizar nuestro servidor tendremos la opción de elegir si recibir la información con texto o con imagenes. Por ello definimos los [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) dentro del controlador de la conversación del usuario con el bot para decir como recibir la respuesta.
+Con todos los comandos que utilicemos para monitorizar nuestro servidor tendremos la opción de elegir si recibir la información con texto o con imágenes. Por ello definimos los [`CommandHandler`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.commandhandler.html) dentro del controlador de la conversación del usuario con el bot para decir cómo recibir la respuesta.
 ```
 conv_handler = ConversationHandler(
         entry_points=[CommandHandler('comando', funcion)],
          
 ```
 
-La estructura de las funciones de la mayoria de comandos es la siguiente:
+La estructura de las funciones de la mayoría de comandos es la siguiente:
 ```
 def funcion(update,context):
     if update.message.chat_id in ids:
@@ -804,7 +804,7 @@ def funcion(update,context):
 <a name="nombre"></a>
 
 ### Comando `/nombre`
-Podemos conocer el nombre del servidor añadiendo comando que le pida al sistema que le diga cual es el nombre del servidor en el que se esta ejecutando el script ([`hostname`](https://linux.die.net/man/1/hostname)).
+Podemos conocer el nombre del servidor añadiendo comando que le pida al sistema que le diga cual es el nombre del servidor en el que se está ejecutando el script ([`hostname`](https://linux.die.net/man/1/hostname)).
 ```
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('nombre', nombre),
@@ -841,7 +841,7 @@ En el resto de comandos añadimos el nombre del servidor a la respuesta llamando
 <a name="ip"></a>
 
 ### Comando `/ip`
-Con este comando consultamos cual es la ip del servidor en el que se está ejecutando el script del bot. El comando linux que le pasamos para que nos devuelva la ip es [`hostname -I`](https://linux.die.net/man/1/hostname).
+Con este comando consultamos cuál es la ip del servidor en el que se está ejecutando el script del bot. El comando linux que le pasamos para que nos devuelva la ip es [`hostname -I`](https://linux.die.net/man/1/hostname).
 ```
     conv_handler = ConversationHandler(
         entry_points=[...
@@ -873,7 +873,7 @@ def ip(update,context):
 <a name="red"></a>
 
 ### Comando `/red`
-Conoceremos la red a la que está conectador nuestro servidor con [`iwgetid`](https://linux.die.net/man/8/iwgetid).
+Conoceremos la red a la que está conectado nuestro servidor con [`iwgetid`](https://linux.die.net/man/8/iwgetid).
 ```
     conv_handler = ConversationHandler(
         entry_points=[...
@@ -938,7 +938,7 @@ def arquitectura(update,context):
 <a name="version"></a>
 
 ### Comando `/version`
-Para conocer la versión de Linux del servidor tenemos que ejecutar la linea de comando [`uname -r](https://linux.die.net/man/1/uname) en el terminal de este.
+Para conocer la versión de Linux del servidor tenemos que ejecutar la línea de comando [`uname -r`](https://linux.die.net/man/1/uname) en el terminal de este.
 ```
     conv_handler = ConversationHandler(
         entry_points=[...
@@ -1112,7 +1112,7 @@ Podemos necesitar que el usuario tenga permisos para poder instalar con `apt-get
 Disculpe, el usuario bot no está autorizado para ejecutar «/usr/bin/apt-get update» como root en helena-pc
 ```
 
-Para ello editamos el archivo `/etc/sudoers` y añadimos que los usuarios del grupo (`bot`) puedan ejecutar en el host (`NOMBRE_SERVIDOR`) como `root` del gurpo `root` el comando `/usr/bin/apt-get install` del cualquier servicio (`*`). También añadimos `/usr/bin/apt-get upodate` para poder hacerlo al principio del todo.<br>
+Para ello editamos el archivo `/etc/sudoers` y añadimos que los usuarios del grupo (`bot`) puedan ejecutar en el host (`NOMBRE_SERVIDOR`) como `root` del grupo `root` el comando `/usr/bin/apt-get install` del cualquier servicio (`*`). También añadimos `/usr/bin/apt-get upodate` para poder hacerlo al principio del todo.<br>
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/sudoers01.png" alt="apt-get" width="350"/><br>
 
 Después tenemos que editar el archivo `/etc/sudoers` donde añadimos el usuario (`bot`) del grupo (`bot`), el servidor (`NOMBRE_SERVIDOR`), que no va a tener contraseña (`NO PASSWD`) y los comandos que ejecutará sin contraseña.<br>
@@ -1130,7 +1130,7 @@ En el caso de los servicios, lo haremos de otra forma. Tendremos cuatro comandos
 
 Aunque podrías hacerlo con la conversación con el bot, desarrollaremos la función de otra forma. 
 
-Con el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) comprobaremos que se pasa un argumento. Para referirnos a los argumentos usamos [`context.args`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments) y calculamos cuantos son con [`len()`](https://docs.python.org/3/library/functions.html#len). En caso de que no sea un argumento, el bot nos responde con un aviso y nos da un ejemplo de como tenemos que hacer uso del comando.
+Con el condicional [`if`](https://docs.python.org/3/reference/compound_stmts.html#if) comprobaremos que se pasa un argumento. Para referirnos a los argumentos usamos [`context.args`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#commandhandlers-with-arguments) y calculamos cuántos son con [`len()`](https://docs.python.org/3/library/functions.html#len). En caso de que no sea un argumento, el bot nos responde con un aviso y nos da un ejemplo de cómo tenemos que hacer uso del comando.
 ```
 def servicios(update,context):
     if update.message.chat_id in ids:
@@ -1151,9 +1151,9 @@ def servicios(update,context):
 
 En el caso de que si que se pase un argumento, veremos cuál es el comando que se ha pasado comprobando con [`in`](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations) si, por ejemplo, `estado_servidor` se encuentra en la texto recibido [`update.message.text`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.message.html#telegram.Message.text).
 
-Segun lo que pidamos el comando linux será uno u otro. En todos los casos lo haremos con [`/etc/init.d/SERVICIO`](https://www.linuxtotal.com.mx/index.php?cont=info_admon_003) porque asi nos devuelve siempre un mensaje para confirmar si se ha ejecutado el comando. Usamos [`context.args[0]`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#deep-linking-start-parameters) para referirnos al parametro que se ha pasado, el servicio, y añadirlo a la linea de comando que el bot va a ejecutar.
+Segun lo que pidamos el comando linux será uno u otro. En todos los casos lo haremos con [`/etc/init.d/SERVICIO`](https://www.linuxtotal.com.mx/index.php?cont=info_admon_003) porque así nos devuelve siempre un mensaje para confirmar si se ha ejecutado el comando. Usamos [`context.args[0]`](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers#deep-linking-start-parameters) para referirnos al parámetro que se ha pasado, el servicio, y añadirlo a la línea de comando que el bot va a ejecutar.
 
-En el caso del estado, añadimos a la linea de comando [`head -n3`](https://linux.die.net/man/1/head) para que solo nos muestre las tres primeras línesas donde te dice el estado y desde cuándo.
+En el caso del estado, añadimos a la línea de comando [`head -n3`](https://linux.die.net/man/1/head) para que solo nos muestre las tres primeras líneas donde te dice el estado y desde cuándo.
 ```
             if 'estado_servicio' in update.message.text:
                 # Comando para ver el estado
@@ -1198,7 +1198,7 @@ Definimos las funciones `texto_servicios` e `imagen_servicios` que van a ser igu
 
 Además, en `texto_servicios` haremos uso de las excepciones de linux para intentar ejecutar el comando ([`try`](https://docs.python.org/3/reference/compound_stmts.html#try)) y si funciona mostrar el mensaje pero si da fallo ([`except`](https://docs.python.org/3/reference/compound_stmts.html#except)), mostrar un mensaje con cómo debe mandarse el mensaje al bot. Por último siempre saldremos de la conversación. 
 
-Tanto en el caso de que funcione cómo en el caso de que no, tenemos que eliminar el botón con las opciones de `Texto` o `Imagen` con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html).
+Tanto en el caso de que funcione como en el caso de que no, tenemos que eliminar el botón con las opciones de `Texto` o `Imagen` con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html).
 ```
 def texto_servicios(update,context):
     try:
@@ -1223,16 +1223,12 @@ En el caso de `imagen_servicios` será una mezcla entre `texto_servicios` e `ima
 Por esto mismo, en la respuesta del bot en el caso de que haya problemas comentaremos que puede ser por culpa de introducir mal el nombre del servicio.
 ```
 def imagen_servicios(update,context):
-    # Intentamos ejecutar el comando
     try:
-        # Llamamos a la funcion terminal, que ejecuta el comando pasado
         terminal_imagen(comando_linux)
 
-        # Si aun no existe esperamos un segundo
         if not os.path.exists('image.png'): 
             time.sleep(1)
 
-        # Respondemos con la imagen
         update.message.bot.send_photo(
             chat_id=update.message.chat_id, 
             photo=open('image.png', 'rb'),
@@ -1240,15 +1236,12 @@ def imagen_servicios(update,context):
             reply_markup=ReplyKeyboardRemove()
         ) 
     except:
-        # En caso de que haya algun error
         update.message.reply_text(
             '-No se puede mostrar la imagen- \n'
             'Puede que no se haya introducido el nombre exacto del servicio (apache2 o ssh)',
-            # Quitamos las opciones del teclado
             reply_markup=ReplyKeyboardRemove()
         )
     finally:
-        # Terminamos la conversación
         return ConversationHandler.END
 ```
 <img src="https://github.com/helee18/python_sysadmin/blob/master/images/error_imagen_servicio.jpg" alt="error_imagen_servicio" width="350"/><br>
