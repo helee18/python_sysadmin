@@ -5,7 +5,7 @@ import os
 # Funcion ejecutar comandos Linux y devolver texto
 
 def terminal_texto(entrada):
-    salida = ''
+    salida = '```'
     # Ejecutamos el comando en el terminal
     f = os.popen(entrada)
 
@@ -14,6 +14,7 @@ def terminal_texto(entrada):
         salida += i 
     # Eliminamos el salto de linea
     salida = salida[:-1]
+    salida = salida + '```'
  
     # Devolvemos la variable con la respuesta al comando
     return salida 

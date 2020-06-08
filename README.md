@@ -478,10 +478,10 @@ Hacemos uso del módulo [`os`](https://docs.python.org/3/library/os.html) utiliz
 <a name="terminal_texto"></a>
 
 ### Función que devuelve la respuesta en forma de texto
-Definimos la función `terminal_texto` declaramos una variable vacía que será con la que referenciaremos a lo que muestre el terminal como resultado del comando linux que le pasemos.
+Definimos la función `terminal_texto` declaramos una variable con la que referenciaremos a lo que muestre el terminal como resultado del comando linux que le pasemos. En la variable tendremos [```] y después lo pondremos al final para posteriormente mostrar el mensaje en modo `monospace`.
 ```
 def terminal_texto(entrada):
-    salida = ""
+    salida = '```'
 ```
 
 Ejecutamos el comando que recibimos de entrada con [`popen`](https://docs.python.org/3/library/os.html#os.popen). Esto lo guardamos en una variable (`f`).
@@ -492,12 +492,13 @@ Ejecutamos el comando que recibimos de entrada con [`popen`](https://docs.python
 Después utilizamos el método [`readlines()`](https://uniwebsidad.com/libros/python/capitulo-9/metodos-del-objeto-file) para leer las líneas del contenido referenciado con la variable `f` y con un bucle [`for`](https://docs.python.org/3/reference/compound_stmts.html#for) vamos referenciando caracter a caracter en la variable salida, previamente declarada.
 ```
     for i in f.readlines():
-        salida += i 
+        salida += i
 ```
 
-Eliminamos el último carácter, que será el salto de línea o retorno de carro (`\n`).
+Eliminamos el último carácter, que será el salto de línea o retorno de carro (`\n`). También añadimos [```] al igual que al principio.
 ```
     salida = salida[:-1]
+    salida = salida + '```'
 ```
 
 Por último devolvemos la variable con la respuesta para usarla y mostrar la información por la conversación con el bot por Telegram.
@@ -692,7 +693,7 @@ def texto(update,context):
     respuesta_sistema = terminal_texto(comando_linux)
 ```
 
-Programamos al bot para que responda haciendo uso de la variable `respuesta_sistema` y la variable `respuesta` declarada en la función del comando.
+Programamos al bot para que responda haciendo uso de la variable `respuesta_sistema` y la variable `respuesta` declarada en la función del comando. Para que muestre el texto en modo `monospace` añadimos `parse_mode` para que lea las [```] variable que hemos añadido antes y las interprete como `Markdown`.
 
 Es aquí donde, con [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) y el módulo [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html) eliminamos que salta en el teclado las opciones de `Texto` e `Imagen`.
 
@@ -703,6 +704,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 ```
     update.message.reply_text(
         respuesta + '\n' + respuesta_sistema,
+        parse_mode='Markdown',
         reply_markup=ReplyKeyboardRemove()
     )
 ```
@@ -722,10 +724,11 @@ def imagen(update,context):
     terminal_imagen(comando_linux)
 ```
 
-Hacemos que el bot responda primero con la variable `respuesta`, declarada en la función del comando, y eliminamos del teclado la opción de elegir entre `Texto` o `Imagen` con  [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) y el módulo [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html)
+Hacemos que el bot responda primero con la variable `respuesta`, declarada en la función del comando. Después interpretamos las [```] de la respuesta como `Markdown` y eliminamos del teclado la opción de elegir entre `Texto` o `Imagen` con  [`reply_markup`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.inlinequeryresultgame.html?highlight=reply_markup#telegram.InlineQueryResultGame.reply_markup) y el módulo [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html)
 ```
         update.message.reply_text(
             respuesta,
+            parse_mode='Markdown',
             reply_markup=ReplyKeyboardRemove()
         )
 ```
@@ -1198,6 +1201,8 @@ Definimos las funciones `texto_servicios` e `imagen_servicios` que van a ser igu
 
 Además, en `texto_servicios` haremos uso de las excepciones de linux para intentar ejecutar el comando ([`try`](https://docs.python.org/3/reference/compound_stmts.html#try)) y si funciona mostrar el mensaje pero si da fallo ([`except`](https://docs.python.org/3/reference/compound_stmts.html#except)), mostrar un mensaje con cómo debe mandarse el mensaje al bot. Por último siempre saldremos de la conversación. 
 
+Con `parse_mode` interpretamos la respuesta como `Markdown` y se muestra como `monospace` por las [```] que añadimos en `terminal_texto`.
+
 Tanto en el caso de que funcione como en el caso de que no, tenemos que eliminar el botón con las opciones de `Texto` o `Imagen` con [`ReplyKeyboardRemove`](https://python-telegram-bot.readthedocs.io/en/stable/telegram.replykeyboardremove.html).
 ```
 def texto_servicios(update,context):
@@ -1206,6 +1211,7 @@ def texto_servicios(update,context):
 
         update.message.reply_text(
             respuesta_sistema,
+            parse_mode='Markdown',
             reply_markup=ReplyKeyboardRemove()
         )
     except:

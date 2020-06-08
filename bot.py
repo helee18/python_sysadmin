@@ -37,6 +37,7 @@ def texto(update,context):
     # Respondemos al comando con el mensaje
     update.message.reply_text(
         respuesta + '\n\n' + respuesta_sistema,
+        parse_mode='Markdown',
         # Quitamos las opciones del teclado
         reply_markup=ReplyKeyboardRemove()
     )
@@ -51,6 +52,7 @@ def imagen(update,context):
     # Respondemos
     update.message.reply_text(
         respuesta,
+        parse_mode='Markdown',
         # Quitamos las opciones del teclado
         reply_markup=ReplyKeyboardRemove()
     )
@@ -85,6 +87,7 @@ def texto_servicios(update,context):
         # Respondemos al comando con el mensaje
         update.message.reply_text(
             respuesta_sistema,
+            parse_mode='Markdown',
             # Quitamos las opciones del teclado
             reply_markup=ReplyKeyboardRemove()
         )
